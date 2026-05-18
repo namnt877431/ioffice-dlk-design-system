@@ -10,6 +10,9 @@
 
   <!-- Material Symbols -->
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+  <!-- Iconify (Material Symbols và các bộ icon khác) -->
+  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- DLK Design System -->
@@ -124,14 +127,14 @@
     }
     .icon-search:focus { border-color: #003f87; }
     .icon-search-wrap { position: relative; margin-bottom: 14px; }
-    .icon-search-wrap .material-symbols-outlined {
+    .icon-search-wrap .bi {
       position: absolute; left: 10px; top: 50%;
       transform: translateY(-50%);
       font-size: 18px; color: #727784; pointer-events: none;
     }
     .icon-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
       gap: 6px;
       max-height: 320px;
       overflow-y: auto;
@@ -154,7 +157,7 @@
     }
     .icon-item:hover { background: #f0f4ff; border-color: #acc7ff; }
     .icon-item.selected { background: #e3ecf8; border-color: #003f87; }
-    .icon-item .material-symbols-outlined { font-size: 22px; color: #424752; }
+    .icon-item iconify-icon { font-size: 22px; color: #424752; }
     .icon-item span.icon-name {
       font-size: 10px; color: #727784; line-height: 1.2;
       word-break: break-all; font-family: 'Consolas', monospace;
@@ -168,11 +171,44 @@
       grid-column: 1/-1; text-align: center;
       color: #727784; font-size: 13px; padding: 24px 0;
     }
+    .icon-code {
+      font-size: 9px; color: #9da3ae;
+      font-family: 'Consolas', monospace;
+      word-break: break-all; line-height: 1.2;
+      display: block;
+    }
+    .icon-item:hover .icon-code { color: #003f87; }
+    .icon-item.selected .icon-code { color: #003f87; }
+
+    /* Selected icon info bar */
+    #icon-selected-bar {
+      display: none;
+      align-items: center; gap: 10px;
+      background: #e8f0fb; border: 1px solid #acc7ff;
+      border-radius: 8px; padding: 8px 12px;
+      margin-bottom: 10px; flex-wrap: wrap;
+    }
+    #icon-selected-bar iconify-icon { font-size: 24px; color: #003f87; flex-shrink: 0; }
+    #icon-selected-bar .icon-sel-label { font-size: 13px; font-weight: 600; color: #191c1d; }
+    #icon-selected-bar code {
+      background: #fff; border: 1px solid #c2c6d4; border-radius: 4px;
+      padding: 2px 8px; font-size: 12px; color: #003f87;
+      font-family: 'Consolas', monospace; flex: 1; min-width: 0;
+    }
+    #icon-sel-copy {
+      flex-shrink: 0; padding: 4px 12px; border-radius: 6px;
+      border: 1px solid #003f87; background: #003f87; color: #fff;
+      font-size: 12px; font-family: 'Inter', sans-serif;
+      cursor: pointer; transition: background 0.15s;
+      display: flex; align-items: center; gap: 4px;
+    }
+    #icon-sel-copy:hover { background: #00347a; }
+    #icon-sel-copy.copied { background: #1a7f37; border-color: #1a7f37; }
 
     /* ---- Builder ---- */
     .builder-grid {
       display: grid;
-      grid-template-columns: 320px 1fr;
+      grid-template-columns: 1fr 1fr;
       gap: 24px;
     }
     .builder-grid > * { min-width: 0; }
@@ -254,23 +290,23 @@
     }
     .builder-copy-btn {
       position: absolute;
-      top: 8px; right: 8px;
+      top: 6px; right: 6px;
       background: #30363d;
       border: none;
-      border-radius: 5px;
+      border-radius: 4px;
       color: #e6edf3;
-      font-size: 12px;
+      font-size: 10px;
       font-family: 'Inter', sans-serif;
-      padding: 4px 10px;
+      padding: 2px 6px;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
       transition: background 0.15s;
     }
     .builder-copy-btn:hover { background: #444d56; }
     .builder-copy-btn.copied { background: #1a7f37; color: #fff; }
-    .builder-copy-btn .material-symbols-outlined { font-size: 14px; }
+    .builder-copy-btn iconify-icon { font-size: 12px; }
 
     /* Item row trong dropdown builder */
     .b-item-row {
@@ -326,16 +362,16 @@
 
     <!-- Nhóm nút góc phải -->
     <div style="display:flex; align-items:center; gap:8px;">
-      <a href="index3.html" target="_blank" style="
+      <button onclick="window.open('index3.html','_blank')" style="
         display:inline-flex; align-items:center; gap:8px;
         background:rgba(255,255,255,0.15); color:#fff; border:1px solid rgba(255,255,255,0.3);
         padding:8px 16px; border-radius:8px; cursor:pointer;
         font-family:'Inter',sans-serif; font-size:13px; font-weight:600;
-        text-decoration:none; transition:background 0.15s;
+        transition:background 0.15s;
       " onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">
         <span class="material-symbols-outlined" style="font-size:18px;">open_in_new</span>
         Xem giao diện
-      </a>
+      </button>
       <button onclick="downloadCSS()" style="
         display:inline-flex; align-items:center; gap:8px;
         background:rgba(255,255,255,0.15); color:#fff; border:1px solid rgba(255,255,255,0.3);
@@ -349,13 +385,117 @@
     </div>
   </div>
 
+  <!-- ===== HƯỚNG DẪN SỬ DỤNG ===== -->
+  <div class="demo-section">
+    <div class="demo-label">Hướng dẫn sử dụng</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+
+      <!-- Bước 1 -->
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="width:22px;height:22px;border-radius:50%;background:#003f87;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</span>
+          <span style="font-size:13px;font-weight:600;color:#191c1d;">Thêm vào <code style="background:#f3f4f5;padding:1px 5px;border-radius:3px;font-size:12px;">&lt;head&gt;</code></span>
+        </div>
+        <div style="background:#1e2329;border-radius:8px;padding:14px 16px;font-family:'Consolas',monospace;font-size:12px;color:#e6edf3;line-height:1.8;position:relative;">
+<span style="color:#8b949e;"><!-- 1. DLK Design System CSS --></span>
+<br>&lt;<span style="color:#7ee787;">link</span> <span style="color:#79c0ff;">rel</span>=<span style="color:#a5d6ff;">"stylesheet"</span>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#79c0ff;">href</span>=<span style="color:#a5d6ff;">"dlk-design-system.css"</span>&gt;
+<br><br><span style="color:#8b949e;"><!-- 2. Iconify (nếu dùng icon) --></span>
+<br>&lt;<span style="color:#7ee787;">script</span> <span style="color:#79c0ff;">src</span>=<span style="color:#a5d6ff;">"https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"</span>&gt;&lt;/<span style="color:#7ee787;">script</span>&gt;
+          <button onclick="copyStep1(this)" style="position:absolute;top:8px;right:8px;background:#30363d;border:none;border-radius:5px;color:#e6edf3;font-size:11px;font-family:'Inter',sans-serif;padding:3px 9px;cursor:pointer;display:flex;align-items:center;gap:4px;">
+            <iconify-icon icon="material-symbols:content-copy" style="font-size:13px;"></iconify-icon> Copy
+          </button>
+        </div>
+      </div>
+
+      <!-- Bước 2 -->
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="width:22px;height:22px;border-radius:50%;background:#003f87;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</span>
+          <span style="font-size:13px;font-weight:600;color:#191c1d;">Dùng trong HTML — copy từ Builder bên dưới</span>
+        </div>
+        <div style="background:#1e2329;border-radius:8px;padding:14px 16px;font-family:'Consolas',monospace;font-size:12px;color:#e6edf3;line-height:1.8;">
+<span style="color:#8b949e;">/* Nút đơn */</span>
+<br>&lt;<span style="color:#7ee787;">button</span> <span style="color:#79c0ff;">class</span>=<span style="color:#a5d6ff;">"dlk-btn dlk-btn-text"</span>&gt;
+<br>&nbsp;&nbsp;&lt;<span style="color:#7ee787;">iconify-icon</span> <span style="color:#79c0ff;">icon</span>=<span style="color:#a5d6ff;">"material-symbols:save"</span>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#79c0ff;">class</span>=<span style="color:#a5d6ff;">"dlk-btn-icon-start"</span>&gt;&lt;/<span style="color:#7ee787;">iconify-icon</span>&gt;
+<br>&nbsp;&nbsp;Lưu hồ sơ
+<br>&lt;/<span style="color:#7ee787;">button</span>&gt;
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Classes reference -->
+    <div style="margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+
+      <div style="background:#f8f9fa;border-radius:8px;padding:12px 14px;">
+        <div style="font-size:11px;font-weight:700;color:#003f87;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Variant</div>
+        <div style="display:flex;flex-direction:column;gap:4px;font-family:'Consolas',monospace;font-size:11px;color:#424752;line-height:1.6;">
+          <span><span style="color:#003f87;">dlk-btn-text</span> — Ghost (mặc định)</span>
+          <span><span style="color:#003f87;">dlk-btn-filled</span> — Nền xanh</span>
+          <span><span style="color:#003f87;">dlk-btn-outlined</span> — Viền</span>
+          <span><span style="color:#003f87;">dlk-btn-tonal</span> — Nền xám nhạt</span>
+          <span><span style="color:#003f87;">dlk-btn-danger</span> — Đỏ</span>
+          <span><span style="color:#003f87;">dlk-btn-danger-outlined</span> — Viền đỏ</span>
+        </div>
+      </div>
+
+      <div style="background:#f8f9fa;border-radius:8px;padding:12px 14px;">
+        <div style="font-size:11px;font-weight:700;color:#003f87;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Size &amp; Icon</div>
+        <div style="display:flex;flex-direction:column;gap:4px;font-family:'Consolas',monospace;font-size:11px;color:#424752;line-height:1.6;">
+          <span><span style="color:#003f87;">dlk-btn-sm</span> — Nhỏ</span>
+          <span><span style="color:#8b949e;">(trống)</span> — Vừa (mặc định)</span>
+          <span><span style="color:#003f87;">dlk-btn-lg</span> — Lớn</span>
+          <span style="margin-top:4px;"><span style="color:#003f87;">dlk-btn-icon-start</span> — Icon trái</span>
+          <span><span style="color:#003f87;">dlk-btn-icon-end</span> — Icon phải</span>
+          <span><span style="color:#003f87;">dlk-btn-icon-only</span> — Chỉ icon</span>
+        </div>
+      </div>
+
+      <div style="background:#f8f9fa;border-radius:8px;padding:12px 14px;">
+        <div style="font-size:11px;font-weight:700;color:#003f87;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Dropdown</div>
+        <div style="display:flex;flex-direction:column;gap:4px;font-family:'Consolas',monospace;font-size:11px;color:#424752;line-height:1.6;">
+          <span><span style="color:#003f87;">dlk-dropdown</span> — Wrapper</span>
+          <span><span style="color:#003f87;">dlk-dropdown-toggle</span> — Nút mở</span>
+          <span><span style="color:#003f87;">dlk-dropdown-menu</span> — Menu</span>
+          <span><span style="color:#003f87;">dlk-dropdown-menu-end</span> — Menu phải</span>
+          <span><span style="color:#003f87;">dlk-dropdown-item</span> — Mục</span>
+          <span><span style="color:#003f87;">dlk-dropdown-item-danger</span> — Mục đỏ</span>
+          <span><span style="color:#003f87;">dlk-dropdown-divider</span> — Đường kẻ</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- ===== END HƯỚNG DẪN ===== -->
+
   <!-- ===== ICON BROWSER ===== -->
   <div class="demo-section">
-    <div class="demo-label">Icon Browser — click để dùng trong Builder</div>
-    <div class="icon-search-wrap">
-      <span class="material-symbols-outlined">search</span>
-      <input class="icon-search" id="icon-search" type="text" placeholder="Tìm icon... (vd: save, delete, send)">
+    <div class="demo-label" style="display:flex;align-items:center;justify-content:space-between;">
+      <span>Icon Browser — click để dùng trong Builder</span>
+      <a href="https://icon-sets.iconify.design/?query=" target="_blank" style="font-size:11px;color:#003f87;font-weight:600;text-decoration:none;display:flex;align-items:center;gap:4px;">
+        <iconify-icon icon="material-symbols:open-in-new" style="font-size:14px;"></iconify-icon>
+        Tìm thêm tại iconify.design
+      </a>
     </div>
+    <div class="icon-search-wrap">
+      <iconify-icon icon="material-symbols:search"></iconify-icon>
+      <input class="icon-search" id="icon-search" type="text" placeholder="Tìm icon... (vd: save, delete, word, search)">
+    </div>
+
+    <!-- Selected icon info bar -->
+    <div id="icon-selected-bar">
+      <iconify-icon id="icon-sel-preview" icon="material-symbols:save"></iconify-icon>
+      <span class="icon-sel-label" id="icon-sel-label">Lưu</span>
+      <code id="icon-sel-code">material-symbols:save</code>
+      <button id="icon-sel-copy">
+        <iconify-icon icon="material-symbols:content-copy"></iconify-icon>
+        Copy ID
+      </button>
+    </div>
+
     <div class="icon-grid" id="icon-grid"></div>
   </div>
   <!-- ===== END ICON BROWSER ===== -->
@@ -395,8 +535,8 @@
         </div>
 
         <div class="builder-field">
-          <label>Icon (Material Symbols) — để trống nếu không dùng</label>
-          <input type="text" id="b-icon" value="save" placeholder="vd: save, delete, send...">
+          <label>Iconify icon ID — để trống nếu không dùng</label>
+          <input type="text" id="b-icon" value="material-symbols:save" placeholder="vd: material-symbols:save, mdi:file-word...">
         </div>
 
         <div class="builder-field">
@@ -473,7 +613,7 @@
           <div class="builder-code-box" style="position:relative;">
             <code id="b-code"></code>
             <button class="builder-copy-btn" id="b-copy-btn">
-              <span class="material-symbols-outlined">content_copy</span>
+              <iconify-icon icon="material-symbols:content-copy" style="font-size:12px;"></iconify-icon>
               Copy
             </button>
           </div>
@@ -965,221 +1105,199 @@
 
   <script>
     /* ===================== ICON BROWSER ===================== */
-    const FILE_ICONS = [
-      {
-        name: 'word', label: 'Word',
-        svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="20" height="20"><rect width="20" height="20" rx="3" fill="#2B7CD3"/><text x="10" y="14.5" text-anchor="middle" fill="white" font-family="Arial,sans-serif" font-size="12" font-weight="700">W</text></svg>`,
-        svgLg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="18" height="18"><rect width="20" height="20" rx="3" fill="#2B7CD3"/><text x="10" y="14.5" text-anchor="middle" fill="white" font-family="Arial,sans-serif" font-size="12" font-weight="700">W</text></svg>`,
-      },
-      {
-        name: 'excel', label: 'Excel',
-        svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="20" height="20"><rect width="20" height="20" rx="3" fill="#217346"/><text x="10" y="14.5" text-anchor="middle" fill="white" font-family="Arial,sans-serif" font-size="12" font-weight="700">X</text></svg>`,
-        svgLg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="18" height="18"><rect width="20" height="20" rx="3" fill="#217346"/><text x="10" y="14.5" text-anchor="middle" fill="white" font-family="Arial,sans-serif" font-size="12" font-weight="700">X</text></svg>`,
-      },
-      {
-        name: 'pdf', label: 'PDF',
-        svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="20" height="20"><rect width="20" height="20" rx="3" fill="#D32F2F"/><text x="10" y="13.5" text-anchor="middle" fill="white" font-family="Arial,sans-serif" font-size="7.5" font-weight="700">PDF</text></svg>`,
-        svgLg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="18" height="18"><rect width="20" height="20" rx="3" fill="#D32F2F"/><text x="10" y="13.5" text-anchor="middle" fill="white" font-family="Arial,sans-serif" font-size="7.5" font-weight="700">PDF</text></svg>`,
-      },
-    ];
-
+    // Dùng Iconify — lưu full icon ID (prefix:name)
+    // File types: mdi (Material Design Icons) — có icon Word/Excel/PDF đúng nghĩa
+    // Còn lại: material-symbols
     const ICONS = [
+      // File types — dùng mdi vì có icon Office chính xác
+      { cat: 'File types',           icon: 'mdi:file-word',                  label: 'Word' },
+      { cat: 'File types',           icon: 'mdi:file-excel',                 label: 'Excel' },
+      { cat: 'File types',           icon: 'mdi:file-pdf-box',               label: 'PDF' },
+      { cat: 'File types',           icon: 'mdi:folder-zip',                 label: 'ZIP' },
+      { cat: 'File types',           icon: 'material-symbols:image',         label: 'Ảnh' },
+      { cat: 'File types',           icon: 'material-symbols:video-file',    label: 'Video' },
+      { cat: 'File types',           icon: 'material-symbols:audio-file',    label: 'Audio' },
+      { cat: 'File types',           icon: 'material-symbols:code',          label: 'Code' },
       // Hành động chung
-      { name: 'save',               label: 'Lưu' },
-      { name: 'save_as',            label: 'Lưu thành' },
-      { name: 'delete',             label: 'Xoá' },
-      { name: 'delete_forever',     label: 'Xoá vĩnh viễn' },
-      { name: 'close',              label: 'Đóng' },
-      { name: 'add',                label: 'Thêm' },
-      { name: 'add_circle',         label: 'Thêm (tròn)' },
-      { name: 'remove',             label: 'Bỏ' },
-      { name: 'edit',               label: 'Sửa' },
-      { name: 'edit_note',          label: 'Sửa ghi chú' },
-      { name: 'check',              label: 'Tích' },
-      { name: 'check_circle',       label: 'Hoàn thành' },
-      { name: 'cancel',             label: 'Huỷ' },
-      { name: 'search',             label: 'Tìm kiếm' },
-      { name: 'filter_list',        label: 'Lọc' },
-      { name: 'sort',               label: 'Sắp xếp' },
-      { name: 'refresh',            label: 'Làm mới' },
-      { name: 'sync',               label: 'Đồng bộ' },
-      { name: 'autorenew',          label: 'Xử lý lại' },
-      { name: 'download',           label: 'Tải xuống' },
-      { name: 'upload',             label: 'Tải lên' },
-      { name: 'upload_file',        label: 'Tải file' },
-      { name: 'attach_file',        label: 'Đính kèm' },
-      { name: 'link',               label: 'Liên kết' },
-      { name: 'open_in_new',        label: 'Mở tab mới' },
-      { name: 'content_copy',       label: 'Sao chép' },
-      { name: 'content_paste',      label: 'Dán' },
-      { name: 'print',              label: 'In' },
-      { name: 'share',              label: 'Chia sẻ' },
-      { name: 'send',               label: 'Gửi' },
-      { name: 'forward',            label: 'Chuyển tiếp' },
-      { name: 'reply',              label: 'Trả lời' },
-      { name: 'undo',               label: 'Hoàn tác' },
-      { name: 'redo',               label: 'Làm lại' },
-      { name: 'swap_horiz',         label: 'Chuyển ngang' },
-      { name: 'swap_vert',          label: 'Chuyển dọc' },
-      { name: 'more_horiz',         label: 'Thêm nữa' },
-      { name: 'more_vert',          label: 'Thêm (dọc)' },
-      { name: 'settings',           label: 'Cài đặt' },
-      { name: 'tune',               label: 'Tuỳ chỉnh' },
-      { name: 'visibility',         label: 'Xem' },
-      { name: 'visibility_off',     label: 'Ẩn' },
-      { name: 'zoom_in',            label: 'Phóng to' },
-      { name: 'zoom_out',           label: 'Thu nhỏ' },
+      { cat: 'Hành động',            icon: 'material-symbols:save',                  label: 'Lưu' },
+      { cat: 'Hành động',            icon: 'material-symbols:save-as',               label: 'Lưu thành' },
+      { cat: 'Hành động',            icon: 'material-symbols:delete',                label: 'Xoá' },
+      { cat: 'Hành động',            icon: 'material-symbols:delete-forever',        label: 'Xoá vĩnh viễn' },
+      { cat: 'Hành động',            icon: 'material-symbols:close',                 label: 'Đóng' },
+      { cat: 'Hành động',            icon: 'material-symbols:add',                   label: 'Thêm' },
+      { cat: 'Hành động',            icon: 'material-symbols:add-circle',            label: 'Thêm (tròn)' },
+      { cat: 'Hành động',            icon: 'material-symbols:remove',                label: 'Bỏ' },
+      { cat: 'Hành động',            icon: 'material-symbols:edit',                  label: 'Sửa' },
+      { cat: 'Hành động',            icon: 'material-symbols:edit-note',             label: 'Sửa ghi chú' },
+      { cat: 'Hành động',            icon: 'material-symbols:check',                 label: 'Tích' },
+      { cat: 'Hành động',            icon: 'material-symbols:check-circle',          label: 'Hoàn thành' },
+      { cat: 'Hành động',            icon: 'material-symbols:cancel',                label: 'Huỷ' },
+      { cat: 'Hành động',            icon: 'material-symbols:search',                label: 'Tìm kiếm' },
+      { cat: 'Hành động',            icon: 'material-symbols:manage-search',         label: 'Tìm nâng cao' },
+      { cat: 'Hành động',            icon: 'material-symbols:filter-list',           label: 'Lọc' },
+      { cat: 'Hành động',            icon: 'material-symbols:sort',                  label: 'Sắp xếp' },
+      { cat: 'Hành động',            icon: 'material-symbols:refresh',               label: 'Làm mới' },
+      { cat: 'Hành động',            icon: 'material-symbols:sync',                  label: 'Đồng bộ' },
+      { cat: 'Hành động',            icon: 'material-symbols:download',              label: 'Tải xuống' },
+      { cat: 'Hành động',            icon: 'material-symbols:upload',                label: 'Tải lên' },
+      { cat: 'Hành động',            icon: 'material-symbols:file-upload',           label: 'Tải file lên' },
+      { cat: 'Hành động',            icon: 'material-symbols:attach-file',           label: 'Đính kèm' },
+      { cat: 'Hành động',            icon: 'material-symbols:link',                  label: 'Liên kết' },
+      { cat: 'Hành động',            icon: 'material-symbols:open-in-new',           label: 'Mở tab mới' },
+      { cat: 'Hành động',            icon: 'material-symbols:content-copy',          label: 'Sao chép' },
+      { cat: 'Hành động',            icon: 'material-symbols:content-paste',         label: 'Dán' },
+      { cat: 'Hành động',            icon: 'material-symbols:print',                 label: 'In' },
+      { cat: 'Hành động',            icon: 'material-symbols:share',                 label: 'Chia sẻ' },
+      { cat: 'Hành động',            icon: 'material-symbols:send',                  label: 'Gửi' },
+      { cat: 'Hành động',            icon: 'material-symbols:forward',               label: 'Chuyển tiếp' },
+      { cat: 'Hành động',            icon: 'material-symbols:reply',                 label: 'Trả lời' },
+      { cat: 'Hành động',            icon: 'material-symbols:undo',                  label: 'Hoàn tác' },
+      { cat: 'Hành động',            icon: 'material-symbols:more-horiz',            label: 'Thêm nữa' },
+      { cat: 'Hành động',            icon: 'material-symbols:more-vert',             label: 'Thêm (dọc)' },
+      { cat: 'Hành động',            icon: 'material-symbols:settings',              label: 'Cài đặt' },
+      { cat: 'Hành động',            icon: 'material-symbols:tune',                  label: 'Tuỳ chỉnh' },
+      { cat: 'Hành động',            icon: 'material-symbols:visibility',            label: 'Xem' },
+      { cat: 'Hành động',            icon: 'material-symbols:visibility-off',        label: 'Ẩn' },
+      { cat: 'Hành động',            icon: 'material-symbols:zoom-in',               label: 'Phóng to' },
+      { cat: 'Hành động',            icon: 'material-symbols:zoom-out',              label: 'Thu nhỏ' },
       // Điều hướng
-      { name: 'arrow_back',         label: 'Quay lại' },
-      { name: 'arrow_forward',      label: 'Tiếp theo' },
-      { name: 'keyboard_arrow_up',   label: 'Lên' },
-      { name: 'keyboard_arrow_down', label: 'Xuống' },
-      { name: 'keyboard_arrow_left', label: 'Trái' },
-      { name: 'keyboard_arrow_right','label': 'Phải' },
-      { name: 'expand_more',        label: 'Mở rộng' },
-      { name: 'expand_less',        label: 'Thu gọn' },
-      { name: 'chevron_right',      label: 'Mũi tên phải' },
-      { name: 'first_page',         label: 'Trang đầu' },
-      { name: 'last_page',          label: 'Trang cuối' },
-      { name: 'navigate_before',    label: 'Trang trước' },
-      { name: 'navigate_next',      label: 'Trang sau' },
+      { cat: 'Điều hướng',           icon: 'material-symbols:arrow-back',            label: 'Quay lại' },
+      { cat: 'Điều hướng',           icon: 'material-symbols:arrow-forward',         label: 'Tiếp theo' },
+      { cat: 'Điều hướng',           icon: 'material-symbols:keyboard-arrow-up',     label: 'Lên' },
+      { cat: 'Điều hướng',           icon: 'material-symbols:keyboard-arrow-down',   label: 'Xuống' },
+      { cat: 'Điều hướng',           icon: 'material-symbols:keyboard-arrow-left',   label: 'Trái' },
+      { cat: 'Điều hướng',           icon: 'material-symbols:keyboard-arrow-right',  label: 'Phải' },
+      { cat: 'Điều hướng',           icon: 'material-symbols:first-page',            label: 'Trang đầu' },
+      { cat: 'Điều hướng',           icon: 'material-symbols:last-page',             label: 'Trang cuối' },
+      { cat: 'Điều hướng',           icon: 'material-symbols:navigate-before',       label: 'Trang trước' },
+      { cat: 'Điều hướng',           icon: 'material-symbols:navigate-next',         label: 'Trang sau' },
       // Văn bản / Tài liệu
-      { name: 'description',        label: 'Tài liệu' },
-      { name: 'article',            label: 'Bài viết' },
-      { name: 'folder',             label: 'Thư mục' },
-      { name: 'folder_open',        label: 'Mở thư mục' },
-      { name: 'create_new_folder',  label: 'Tạo thư mục' },
-      { name: 'draft',              label: 'Bản nháp' },
-      { name: 'note_add',           label: 'Thêm ghi chú' },
-      { name: 'summarize',          label: 'Tóm tắt' },
-      { name: 'assignment',         label: 'Phân công' },
-      { name: 'assignment_turned_in','label': 'Đã hoàn thành' },
-      { name: 'task',               label: 'Nhiệm vụ' },
-      { name: 'task_alt',           label: 'Hoàn thành' },
-      { name: 'checklist',          label: 'Danh sách' },
-      { name: 'list_alt',           label: 'Danh sách chi tiết' },
-      { name: 'history',            label: 'Lịch sử' },
-      { name: 'history_edu',        label: 'Lịch sử VB' },
-      { name: 'inventory_2',        label: 'Hồ sơ' },
-      { name: 'archive',            label: 'Lưu trữ' },
-      { name: 'unarchive',          label: 'Bỏ lưu trữ' },
-      { name: 'inbox',              label: 'Hộp thư đến' },
-      { name: 'outbox',             label: 'Hộp thư đi' },
-      { name: 'mark_email_read',    label: 'Email đã đọc' },
-      { name: 'mail',               label: 'Thư' },
+      { cat: 'Văn bản / Tài liệu',   icon: 'material-symbols:article',               label: 'Bài viết' },
+      { cat: 'Văn bản / Tài liệu',   icon: 'material-symbols:folder',                label: 'Thư mục' },
+      { cat: 'Văn bản / Tài liệu',   icon: 'material-symbols:folder-open',           label: 'Mở thư mục' },
+      { cat: 'Văn bản / Tài liệu',   icon: 'material-symbols:create-new-folder',     label: 'Tạo thư mục' },
+      { cat: 'Văn bản / Tài liệu',   icon: 'material-symbols:draft',                 label: 'Bản nháp' },
+      { cat: 'Văn bản / Tài liệu',   icon: 'material-symbols:note-add',              label: 'Thêm file' },
+      { cat: 'Văn bản / Tài liệu',   icon: 'material-symbols:summarize',             label: 'Tóm tắt' },
+      { cat: 'Văn bản / Tài liệu',   icon: 'material-symbols:assignment-turned-in',  label: 'Phân công' },
+      { cat: 'Văn bản / Tài liệu',   icon: 'material-symbols:checklist',             label: 'Danh sách tích' },
+      { cat: 'Văn bản / Tài liệu',   icon: 'material-symbols:format-list-bulleted',  label: 'Danh sách' },
+      { cat: 'Văn bản / Tài liệu',   icon: 'material-symbols:history',               label: 'Lịch sử' },
+      { cat: 'Văn bản / Tài liệu',   icon: 'material-symbols:manage-history',        label: 'Lịch sử VB' },
+      { cat: 'Văn bản / Tài liệu',   icon: 'material-symbols:archive',               label: 'Lưu trữ' },
+      { cat: 'Văn bản / Tài liệu',   icon: 'material-symbols:inbox',                 label: 'Hộp thư đến' },
+      { cat: 'Văn bản / Tài liệu',   icon: 'material-symbols:mail',                  label: 'Thư' },
+      { cat: 'Văn bản / Tài liệu',   icon: 'material-symbols:mark-email-read',       label: 'Email đã đọc' },
       // Trạng thái / Thông báo
-      { name: 'info',               label: 'Thông tin' },
-      { name: 'warning',            label: 'Cảnh báo' },
-      { name: 'error',              label: 'Lỗi' },
-      { name: 'help',               label: 'Trợ giúp' },
-      { name: 'notifications',      label: 'Thông báo' },
-      { name: 'flag',               label: 'Gắn cờ' },
-      { name: 'bookmark',           label: 'Đánh dấu' },
-      { name: 'bookmark_add',       label: 'Thêm dấu' },
-      { name: 'bookmark_added',     label: 'Đã đánh dấu' },
-      { name: 'star',               label: 'Quan trọng' },
-      { name: 'new_releases',       label: 'Mới' },
-      { name: 'priority_high',      label: 'Ưu tiên cao' },
-      { name: 'pending',            label: 'Đang chờ' },
-      { name: 'lock',               label: 'Khoá' },
-      { name: 'lock_open',          label: 'Mở khoá' },
+      { cat: 'Trạng thái',           icon: 'material-symbols:info',                  label: 'Thông tin' },
+      { cat: 'Trạng thái',           icon: 'material-symbols:warning',               label: 'Cảnh báo' },
+      { cat: 'Trạng thái',           icon: 'material-symbols:error',                 label: 'Lỗi' },
+      { cat: 'Trạng thái',           icon: 'material-symbols:help',                  label: 'Trợ giúp' },
+      { cat: 'Trạng thái',           icon: 'material-symbols:notifications',         label: 'Thông báo' },
+      { cat: 'Trạng thái',           icon: 'material-symbols:flag',                  label: 'Gắn cờ' },
+      { cat: 'Trạng thái',           icon: 'material-symbols:bookmark',              label: 'Đánh dấu' },
+      { cat: 'Trạng thái',           icon: 'material-symbols:bookmark-add',          label: 'Thêm dấu' },
+      { cat: 'Trạng thái',           icon: 'material-symbols:bookmark-added',        label: 'Đã đánh dấu' },
+      { cat: 'Trạng thái',           icon: 'material-symbols:star',                  label: 'Quan trọng' },
+      { cat: 'Trạng thái',           icon: 'material-symbols:hourglass-empty',       label: 'Đang chờ' },
+      { cat: 'Trạng thái',           icon: 'material-symbols:lock',                  label: 'Khoá' },
+      { cat: 'Trạng thái',           icon: 'material-symbols:lock-open',             label: 'Mở khoá' },
       // Người dùng / Tổ chức
-      { name: 'person',             label: 'Người dùng' },
-      { name: 'group',              label: 'Nhóm' },
-      { name: 'manage_accounts',    label: 'Quản lý TK' },
-      { name: 'supervisor_account', label: 'Quản lý' },
-      { name: 'badge',              label: 'Huy hiệu' },
-      { name: 'business',           label: 'Tổ chức' },
-      { name: 'domain',             label: 'Đơn vị' },
-      { name: 'apartment',          label: 'Phòng ban' },
-      { name: 'how_to_reg',         label: 'Xác nhận' },
+      { cat: 'Người dùng',           icon: 'material-symbols:person',                label: 'Người dùng' },
+      { cat: 'Người dùng',           icon: 'material-symbols:group',                 label: 'Nhóm' },
+      { cat: 'Người dùng',           icon: 'material-symbols:manage-accounts',       label: 'Quản lý TK' },
+      { cat: 'Người dùng',           icon: 'material-symbols:badge',                 label: 'Huy hiệu' },
+      { cat: 'Người dùng',           icon: 'material-symbols:how-to-reg',            label: 'Xác nhận' },
+      { cat: 'Người dùng',           icon: 'material-symbols:corporate-fare',        label: 'Tổ chức' },
       // Hành chính / Quy trình
-      { name: 'gavel',              label: 'Ban hành' },
-      { name: 'approval',           label: 'Phê duyệt' },
-      { name: 'verified',           label: 'Đã xác thực' },
-      { name: 'grading',            label: 'Chấm điểm' },
-      { name: 'rate_review',        label: 'Đánh giá' },
-      { name: 'rule',               label: 'Quy tắc' },
-      { name: 'policy',             label: 'Chính sách' },
-      { name: 'account_balance',    label: 'Ngân sách' },
-      { name: 'payments',           label: 'Thanh toán' },
-      { name: 'receipt_long',       label: 'Biên bản' },
-      { name: 'calculate',          label: 'Tính toán' },
-      { name: 'schedule',           label: 'Lịch hẹn' },
-      { name: 'event',              label: 'Sự kiện' },
-      { name: 'calendar_today',     label: 'Hôm nay' },
-      { name: 'date_range',         label: 'Khoảng ngày' },
+      { cat: 'Hành chính',           icon: 'material-symbols:gavel',                 label: 'Ban hành' },
+      { cat: 'Hành chính',           icon: 'material-symbols:approval',              label: 'Phê duyệt' },
+      { cat: 'Hành chính',           icon: 'material-symbols:policy',                label: 'Chính sách' },
+      { cat: 'Hành chính',           icon: 'material-symbols:account-balance',       label: 'Ngân sách' },
+      { cat: 'Hành chính',           icon: 'material-symbols:credit-card',           label: 'Thanh toán' },
+      { cat: 'Hành chính',           icon: 'material-symbols:receipt',               label: 'Biên bản' },
+      { cat: 'Hành chính',           icon: 'material-symbols:calculate',             label: 'Tính toán' },
+      { cat: 'Hành chính',           icon: 'material-symbols:event-available',       label: 'Lịch hẹn' },
+      { cat: 'Hành chính',           icon: 'material-symbols:event',                 label: 'Sự kiện' },
+      { cat: 'Hành chính',           icon: 'material-symbols:today',                 label: 'Hôm nay' },
+      { cat: 'Hành chính',           icon: 'material-symbols:date-range',            label: 'Khoảng ngày' },
       // Ký số / Bảo mật
-      { name: 'draw',               label: 'Ký tay' },
-      { name: 'signature',          label: 'Chữ ký' },
-      { name: 'fingerprint',        label: 'Vân tay' },
-      { name: 'verified_user',      label: 'Xác thực' },
-      { name: 'security',           label: 'Bảo mật' },
-      { name: 'key',                label: 'Khoá' },
-      { name: 'encrypted',          label: 'Mã hoá' },
+      { cat: 'Ký số / Bảo mật',      icon: 'material-symbols:draw',                  label: 'Ký tay' },
+      { cat: 'Ký số / Bảo mật',      icon: 'material-symbols:fingerprint',           label: 'Vân tay' },
+      { cat: 'Ký số / Bảo mật',      icon: 'material-symbols:security',              label: 'Bảo mật' },
+      { cat: 'Ký số / Bảo mật',      icon: 'material-symbols:key',                   label: 'Khoá' },
     ];
 
     const iconGrid   = document.getElementById('icon-grid');
     const iconSearch = document.getElementById('icon-search');
 
-    let selectedFileSvg = null; // SVG icon tuỳ chỉnh (Word/Excel/PDF)
-
-    function selectIcon(div, isFile, ic) {
+    function selectIcon(div, ic) {
       document.querySelectorAll('.icon-item').forEach(el => el.classList.remove('selected'));
       div.classList.add('selected');
-      if (isFile) {
-        selectedFileSvg = ic;
-        document.getElementById('b-icon').value = '';
-      } else {
-        selectedFileSvg = null;
-        document.getElementById('b-icon').value = ic.name;
-      }
+      document.getElementById('b-icon').value = ic.icon;
+
+      // Cập nhật selected bar
+      const bar = document.getElementById('icon-selected-bar');
+      bar.style.display = 'flex';
+      document.getElementById('icon-sel-preview').setAttribute('icon', ic.icon);
+      document.getElementById('icon-sel-label').textContent = ic.label;
+      document.getElementById('icon-sel-code').textContent = ic.icon;
+
       document.getElementById('b-variant').scrollIntoView({ behavior: 'smooth', block: 'center' });
       renderBuilder();
     }
+
+    document.getElementById('icon-sel-copy').addEventListener('click', () => {
+      const code = document.getElementById('icon-sel-code').textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        const btn = document.getElementById('icon-sel-copy');
+        btn.classList.add('copied');
+        btn.innerHTML = '<iconify-icon icon="material-symbols:check"></iconify-icon> Đã copy!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.innerHTML = '<iconify-icon icon="material-symbols:content-copy"></iconify-icon> Copy ID';
+        }, 1800);
+      });
+    });
 
     function renderIcons(filter) {
       const q = (filter || '').toLowerCase().trim();
       iconGrid.innerHTML = '';
 
-      // --- File type icons (luôn hiện, lọc theo tên/label) ---
-      const filteredFile = q
-        ? FILE_ICONS.filter(ic => ic.name.includes(q) || ic.label.toLowerCase().includes(q))
-        : FILE_ICONS;
-
-      if (filteredFile.length) {
-        const cat = document.createElement('div');
-        cat.className = 'icon-category-label';
-        cat.textContent = 'File types';
-        iconGrid.appendChild(cat);
-        filteredFile.forEach(ic => {
-          const div = document.createElement('div');
-          div.className = 'icon-item';
-          div.title = ic.label;
-          div.innerHTML = `<span style="display:inline-flex;">${ic.svg}</span>
-                           <span class="icon-name">${ic.label}</span>`;
-          div.addEventListener('click', () => selectIcon(div, true, ic));
-          iconGrid.appendChild(div);
-        });
-      }
-
-      // --- Material Symbols ---
       const filtered = q
-        ? ICONS.filter(ic => ic.name.includes(q) || ic.label.toLowerCase().includes(q))
+        ? ICONS.filter(ic => ic.icon.includes(q) || ic.label.toLowerCase().includes(q) || ic.cat.toLowerCase().includes(q))
         : ICONS;
 
-      if (!filtered.length && !filteredFile.length) {
+      if (!filtered.length) {
         iconGrid.innerHTML = '<div class="icon-no-result">Không tìm thấy icon nào</div>';
         return;
       }
+
+      // Nhóm theo category
+      const cats = [];
+      const bycat = {};
       filtered.forEach(ic => {
-        const div = document.createElement('div');
-        div.className = 'icon-item';
-        div.title = ic.name;
-        div.innerHTML = `<span class="material-symbols-outlined">${ic.name}</span>
-                         <span class="icon-name">${ic.name}</span>`;
-        div.addEventListener('click', () => selectIcon(div, false, ic));
-        iconGrid.appendChild(div);
+        if (!bycat[ic.cat]) { bycat[ic.cat] = []; cats.push(ic.cat); }
+        bycat[ic.cat].push(ic);
+      });
+
+      cats.forEach(cat => {
+        const header = document.createElement('div');
+        header.className = 'icon-category-label';
+        header.textContent = cat;
+        iconGrid.appendChild(header);
+
+        bycat[cat].forEach(ic => {
+          const div = document.createElement('div');
+          div.className = 'icon-item';
+          div.title = `${ic.label} — ${ic.icon}`;
+          const shortName = ic.icon.split(':')[1] || ic.icon;
+          div.innerHTML = `<iconify-icon icon="${ic.icon}"></iconify-icon>
+                           <span class="icon-name">${ic.label}</span>
+                           <span class="icon-code">${shortName}</span>`;
+          div.addEventListener('click', () => selectIcon(div, ic));
+          iconGrid.appendChild(div);
+        });
       });
     }
 
@@ -1207,10 +1325,10 @@
 
     // ---- Dropdown items state ----
     let dropItems = [
-      { type: 'item', icon: 'save',    label: 'Lưu hồ sơ',   danger: false },
-      { type: 'item', icon: 'save_as', label: 'Lưu bản nháp', danger: false },
+      { type: 'item', icon: 'material-symbols:save',    label: 'Lưu hồ sơ',   danger: false },
+      { type: 'item', icon: 'material-symbols:save-as', label: 'Lưu bản nháp', danger: false },
       { type: 'divider' },
-      { type: 'item', icon: 'delete',  label: 'Xoá',          danger: true  },
+      { type: 'item', icon: 'material-symbols:delete',  label: 'Xoá',          danger: true  },
     ];
 
     function addItemRow(item, idx) {
@@ -1222,7 +1340,7 @@
       } else {
         row.className = 'b-item-row';
         row.innerHTML = `
-          <input type="text" placeholder="Icon" value="${item.icon || ''}" data-field="icon" data-idx="${idx}" style="width:90px;flex:none;">
+          <input type="text" placeholder="material-symbols:save" value="${item.icon || ''}" data-field="icon" data-idx="${idx}" style="width:160px;flex:none;">
           <input type="text" placeholder="Label" value="${item.label || ''}" data-field="label" data-idx="${idx}">
           <select data-field="danger" data-idx="${idx}">
             <option value="0" ${!item.danger ? 'selected' : ''}>Thường</option>
@@ -1280,12 +1398,9 @@
       const classes    = ['dlk-btn', variant, size].filter(Boolean).join(' ') + extraClass;
 
       let iconPart = '';
-      if (selectedFileSvg) {
-        // SVG file icon — nhúng trực tiếp
-        iconPart = `<span class="dlk-btn-icon-${pos}" style="display:inline-flex;flex-shrink:0;">${selectedFileSvg.svgLg}</span>`;
-      } else if (icon) {
+      if (icon) {
         const colorAttr = color ? ` style="color:${color};"` : '';
-        iconPart = `<span class="material-symbols-outlined dlk-btn-icon-${pos}"${colorAttr}>${icon}</span>`;
+        iconPart = `<iconify-icon icon="${icon}" class="dlk-btn-icon-${pos}"${colorAttr}></iconify-icon>`;
       }
 
       let inner = '';
@@ -1303,7 +1418,7 @@
         if (item.type === 'divider') return `  <hr class="dlk-dropdown-divider">`;
         const dangerClass = item.danger ? ' dlk-dropdown-item-danger' : '';
         const iconPart    = item.icon
-          ? `\n      <span class="material-symbols-outlined">${item.icon}</span>` : '';
+          ? `\n      <iconify-icon icon="${item.icon}"></iconify-icon>` : '';
         return `  <li><button class="dlk-dropdown-item${dangerClass}">${iconPart}\n      ${item.label}\n    </button></li>`;
       }).join('\n');
       return `<ul class="dlk-dropdown-menu${alignClass}">\n${itemLines}\n</ul>`;
@@ -1366,11 +1481,7 @@
 
     [bVariant, bSize, bLabel, bIconPos].forEach(el => el.addEventListener('input', renderBuilder));
     bIcon.addEventListener('input', () => {
-      if (bIcon.value.trim()) {
-        // Gõ tay icon name → xoá file icon
-        selectedFileSvg = null;
-        document.querySelectorAll('.icon-item').forEach(el => el.classList.remove('selected'));
-      }
+      document.querySelectorAll('.icon-item').forEach(el => el.classList.remove('selected'));
       renderBuilder();
     });
 
@@ -1378,10 +1489,10 @@
       const code = buildCode();
       navigator.clipboard.writeText(code).then(() => {
         bCopyBtn.classList.add('copied');
-        bCopyBtn.innerHTML = '<span class="material-symbols-outlined">check</span> Đã copy!';
+        bCopyBtn.innerHTML = '<iconify-icon icon="material-symbols:check" style="font-size:12px;"></iconify-icon> Đã copy!';
         setTimeout(() => {
           bCopyBtn.classList.remove('copied');
-          bCopyBtn.innerHTML = '<span class="material-symbols-outlined">content_copy</span> Copy';
+          bCopyBtn.innerHTML = '<iconify-icon icon="material-symbols:content-copy" style="font-size:12px;"></iconify-icon> Copy';
         }, 2000);
         showToast();
       });
@@ -1463,6 +1574,18 @@
       });
     });
     /* ===================== END DROPDOWN ===================== */
+
+    /* ===================== COPY STEP 1 ===================== */
+    function copyStep1(btn) {
+      const code = `<!-- DLK Design System CSS -->\n<link rel="stylesheet" href="dlk-design-system.css">\n\n<!-- Iconify (nếu dùng icon) -->\n<script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"><\/script>`;
+      navigator.clipboard.writeText(code).then(() => {
+        const orig = btn.innerHTML;
+        btn.innerHTML = '<iconify-icon icon="material-symbols:check" style="font-size:13px;"></iconify-icon> Đã copy!';
+        btn.style.background = '#1a7f37';
+        setTimeout(() => { btn.innerHTML = orig; btn.style.background = '#30363d'; }, 2000);
+        showToast();
+      });
+    }
 
     /* ===================== DOWNLOAD CSS ===================== */
     function downloadCSS() {
