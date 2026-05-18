@@ -172,9 +172,10 @@
     /* ---- Builder ---- */
     .builder-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 320px 1fr;
       gap: 24px;
     }
+    .builder-grid > * { min-width: 0; }
     .builder-field { display: flex; flex-direction: column; gap: 6px; }
     .builder-field label { font-size: 12px; font-weight: 600; color: #424752; }
     .builder-field input[type=text],
@@ -246,7 +247,8 @@
       font-family: 'Consolas', 'Fira Code', monospace;
       font-size: 12px;
       color: #79c0ff;
-      white-space: pre;
+      white-space: pre-wrap;
+      word-break: break-all;
       overflow-x: auto;
       position: relative;
     }
@@ -963,6 +965,24 @@
 
   <script>
     /* ===================== ICON BROWSER ===================== */
+    const FILE_ICONS = [
+      {
+        name: 'word', label: 'Word',
+        svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="20" height="20"><rect width="20" height="20" rx="3" fill="#2B7CD3"/><text x="10" y="14.5" text-anchor="middle" fill="white" font-family="Arial,sans-serif" font-size="12" font-weight="700">W</text></svg>`,
+        svgLg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="18" height="18"><rect width="20" height="20" rx="3" fill="#2B7CD3"/><text x="10" y="14.5" text-anchor="middle" fill="white" font-family="Arial,sans-serif" font-size="12" font-weight="700">W</text></svg>`,
+      },
+      {
+        name: 'excel', label: 'Excel',
+        svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="20" height="20"><rect width="20" height="20" rx="3" fill="#217346"/><text x="10" y="14.5" text-anchor="middle" fill="white" font-family="Arial,sans-serif" font-size="12" font-weight="700">X</text></svg>`,
+        svgLg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="18" height="18"><rect width="20" height="20" rx="3" fill="#217346"/><text x="10" y="14.5" text-anchor="middle" fill="white" font-family="Arial,sans-serif" font-size="12" font-weight="700">X</text></svg>`,
+      },
+      {
+        name: 'pdf', label: 'PDF',
+        svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="20" height="20"><rect width="20" height="20" rx="3" fill="#D32F2F"/><text x="10" y="13.5" text-anchor="middle" fill="white" font-family="Arial,sans-serif" font-size="7.5" font-weight="700">PDF</text></svg>`,
+        svgLg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="18" height="18"><rect width="20" height="20" rx="3" fill="#D32F2F"/><text x="10" y="13.5" text-anchor="middle" fill="white" font-family="Arial,sans-serif" font-size="7.5" font-weight="700">PDF</text></svg>`,
+      },
+    ];
+
     const ICONS = [
       // Hành động chung
       { name: 'save',               label: 'Lưu' },
@@ -1102,14 +1122,53 @@
     const iconGrid   = document.getElementById('icon-grid');
     const iconSearch = document.getElementById('icon-search');
 
+    let selectedFileSvg = null; // SVG icon tuỳ chỉnh (Word/Excel/PDF)
+
+    function selectIcon(div, isFile, ic) {
+      document.querySelectorAll('.icon-item').forEach(el => el.classList.remove('selected'));
+      div.classList.add('selected');
+      if (isFile) {
+        selectedFileSvg = ic;
+        document.getElementById('b-icon').value = '';
+      } else {
+        selectedFileSvg = null;
+        document.getElementById('b-icon').value = ic.name;
+      }
+      document.getElementById('b-variant').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      renderBuilder();
+    }
+
     function renderIcons(filter) {
       const q = (filter || '').toLowerCase().trim();
+      iconGrid.innerHTML = '';
+
+      // --- File type icons (luôn hiện, lọc theo tên/label) ---
+      const filteredFile = q
+        ? FILE_ICONS.filter(ic => ic.name.includes(q) || ic.label.toLowerCase().includes(q))
+        : FILE_ICONS;
+
+      if (filteredFile.length) {
+        const cat = document.createElement('div');
+        cat.className = 'icon-category-label';
+        cat.textContent = 'File types';
+        iconGrid.appendChild(cat);
+        filteredFile.forEach(ic => {
+          const div = document.createElement('div');
+          div.className = 'icon-item';
+          div.title = ic.label;
+          div.innerHTML = `<span style="display:inline-flex;">${ic.svg}</span>
+                           <span class="icon-name">${ic.label}</span>`;
+          div.addEventListener('click', () => selectIcon(div, true, ic));
+          iconGrid.appendChild(div);
+        });
+      }
+
+      // --- Material Symbols ---
       const filtered = q
         ? ICONS.filter(ic => ic.name.includes(q) || ic.label.toLowerCase().includes(q))
         : ICONS;
 
-      iconGrid.innerHTML = '';
-      if (!filtered.length) {
+      if (!filtered.length && !filteredFile.length) {
         iconGrid.innerHTML = '<div class="icon-no-result">Không tìm thấy icon nào</div>';
         return;
       }
@@ -1119,16 +1178,7 @@
         div.title = ic.name;
         div.innerHTML = `<span class="material-symbols-outlined">${ic.name}</span>
                          <span class="icon-name">${ic.name}</span>`;
-        div.addEventListener('click', () => {
-          // Điền vào builder
-          document.getElementById('b-icon').value = ic.name;
-          // Highlight
-          document.querySelectorAll('.icon-item').forEach(el => el.classList.remove('selected'));
-          div.classList.add('selected');
-          // Cuộn xuống builder
-          document.getElementById('b-variant').scrollIntoView({ behavior: 'smooth', block: 'center' });
-          renderBuilder();
-        });
+        div.addEventListener('click', () => selectIcon(div, false, ic));
         iconGrid.appendChild(div);
       });
     }
@@ -1228,14 +1278,19 @@
 
       const extraClass = isDropdown ? ' dlk-dropdown-toggle' : '';
       const classes    = ['dlk-btn', variant, size].filter(Boolean).join(' ') + extraClass;
-      const colorAttr  = color ? ` style="color:${color};"` : '';
-      const iconSpan   = icon
-        ? `<span class="material-symbols-outlined dlk-btn-icon-${pos}"${colorAttr}>${icon}</span>`
-        : '';
+
+      let iconPart = '';
+      if (selectedFileSvg) {
+        // SVG file icon — nhúng trực tiếp
+        iconPart = `<span class="dlk-btn-icon-${pos}" style="display:inline-flex;flex-shrink:0;">${selectedFileSvg.svgLg}</span>`;
+      } else if (icon) {
+        const colorAttr = color ? ` style="color:${color};"` : '';
+        iconPart = `<span class="material-symbols-outlined dlk-btn-icon-${pos}"${colorAttr}>${icon}</span>`;
+      }
 
       let inner = '';
-      if (icon && pos === 'start') inner = `\n  ${iconSpan}\n  ${label}\n`;
-      else if (icon && pos === 'end') inner = `\n  ${label}\n  ${iconSpan}\n`;
+      if (iconPart && pos === 'start') inner = `\n  ${iconPart}\n  ${label}\n`;
+      else if (iconPart && pos === 'end') inner = `\n  ${label}\n  ${iconPart}\n`;
       else inner = `\n  ${label}\n`;
 
       return `<button class="${classes}">${inner}</button>`;
@@ -1309,7 +1364,15 @@
       renderBuilder();
     });
 
-    [bVariant, bSize, bLabel, bIcon, bIconPos].forEach(el => el.addEventListener('input', renderBuilder));
+    [bVariant, bSize, bLabel, bIconPos].forEach(el => el.addEventListener('input', renderBuilder));
+    bIcon.addEventListener('input', () => {
+      if (bIcon.value.trim()) {
+        // Gõ tay icon name → xoá file icon
+        selectedFileSvg = null;
+        document.querySelectorAll('.icon-item').forEach(el => el.classList.remove('selected'));
+      }
+      renderBuilder();
+    });
 
     bCopyBtn.addEventListener('click', () => {
       const code = buildCode();
