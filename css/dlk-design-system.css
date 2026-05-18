@@ -1,0 +1,378 @@
+/* ==========================================================================
+   DLK Design System
+   Prefix: dlk- (tránh conflict với Bootstrap)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Design Tokens (CSS Custom Properties)
+   -------------------------------------------------------------------------- */
+:root {
+  /* Colors */
+  --dlk-primary:                   #003f87;
+  --dlk-on-primary:                #ffffff;
+  --dlk-primary-container:         #0056b3;
+  --dlk-on-primary-container:      #bbd0ff;
+  --dlk-primary-fixed-dim:         #acc7ff;
+
+  --dlk-secondary:                 #924c00;
+  --dlk-on-secondary:              #ffffff;
+  --dlk-secondary-container:       #fd8b18;
+  --dlk-on-secondary-container:    #623000;
+
+  --dlk-tertiary:                  #004761;
+  --dlk-on-tertiary:               #ffffff;
+  --dlk-tertiary-container:        #006081;
+  --dlk-on-tertiary-container:     #95d9ff;
+
+  --dlk-error:                     #ba1a1a;
+  --dlk-on-error:                  #ffffff;
+  --dlk-error-container:           #ffdad6;
+  --dlk-on-error-container:        #93000a;
+
+  --dlk-surface:                   #f8f9fa;
+  --dlk-on-surface:                #191c1d;
+  --dlk-surface-variant:           #e1e3e4;
+  --dlk-on-surface-variant:        #424752;
+  --dlk-surface-container-low:     #f3f4f5;
+  --dlk-surface-container:         #edeeef;
+  --dlk-surface-container-high:    #e7e8e9;
+  --dlk-outline:                   #727784;
+  --dlk-outline-variant:           #c2c6d4;
+  --dlk-inverse-surface:           #2e3132;
+  --dlk-inverse-on-surface:        #f0f1f2;
+
+  /* Typography */
+  --dlk-font-family:               'Inter', sans-serif;
+  --dlk-font-size-sm:              12px;
+  --dlk-font-size-md:              14px;
+  --dlk-font-size-lg:              16px;
+  --dlk-font-weight-medium:        500;
+  --dlk-font-weight-semibold:      600;
+  --dlk-line-height-label:         16px;
+
+  /* Spacing */
+  --dlk-btn-padding-x-sm:          10px;
+  --dlk-btn-padding-y-sm:          4px;
+  --dlk-btn-padding-x-md:          14px;
+  --dlk-btn-padding-y-md:          6px;
+  --dlk-btn-padding-x-lg:          20px;
+  --dlk-btn-padding-y-lg:          10px;
+  --dlk-btn-gap:                   6px;
+
+  /* Border radius */
+  --dlk-radius-full:               9999px;
+  --dlk-radius-md:                 8px;
+  --dlk-radius-sm:                 4px;
+
+  /* Transition */
+  --dlk-transition:                background-color 0.15s ease, color 0.15s ease,
+                                   border-color 0.15s ease, box-shadow 0.15s ease,
+                                   opacity 0.15s ease;
+
+  /* Elevation / Shadow */
+  --dlk-shadow-sm:                 0 1px 2px rgba(0, 0, 0, 0.08);
+  --dlk-shadow-md:                 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+
+/* ==========================================================================
+   Button — Base
+   ========================================================================== */
+.dlk-btn {
+  display:          inline-flex;
+  align-items:      center;
+  justify-content:  center;
+  gap:              var(--dlk-btn-gap);
+  padding:          var(--dlk-btn-padding-y-md) var(--dlk-btn-padding-x-md);
+
+  font-family:      var(--dlk-font-family);
+  font-size:        var(--dlk-font-size-md);
+  font-weight:      var(--dlk-font-weight-medium);
+  line-height:      var(--dlk-line-height-label);
+  white-space:      nowrap;
+  text-decoration:  none;
+  vertical-align:   middle;
+
+  border:           1px solid transparent;
+  border-radius:    var(--dlk-radius-full);
+  cursor:           pointer;
+  user-select:      none;
+
+  background-color: transparent;
+  color:            inherit;
+  transition:       var(--dlk-transition);
+  box-shadow:       none;
+
+  /* Reset Bootstrap nếu có */
+  outline:          none;
+  -webkit-appearance: none;
+}
+
+.dlk-btn:focus-visible {
+  outline: 2px solid var(--dlk-primary);
+  outline-offset: 2px;
+}
+
+.dlk-btn:disabled,
+.dlk-btn.dlk-disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+
+/* ==========================================================================
+   Button Sizes
+   ========================================================================== */
+.dlk-btn-sm {
+  padding:    var(--dlk-btn-padding-y-sm) var(--dlk-btn-padding-x-sm);
+  font-size:  var(--dlk-font-size-sm);
+  line-height: var(--dlk-line-height-label);
+}
+
+.dlk-btn-lg {
+  padding:    var(--dlk-btn-padding-y-lg) var(--dlk-btn-padding-x-lg);
+  font-size:  var(--dlk-font-size-lg);
+}
+
+
+/* ==========================================================================
+   Button Variants
+   ========================================================================== */
+
+/* --- Filled (Primary) --- */
+.dlk-btn-filled {
+  background-color: var(--dlk-primary);
+  color:            var(--dlk-on-primary);
+  border-color:     transparent;
+  box-shadow:       var(--dlk-shadow-sm);
+}
+.dlk-btn-filled:hover {
+  background-color: #00347a;
+  box-shadow:       var(--dlk-shadow-md);
+  color:            var(--dlk-on-primary);
+}
+.dlk-btn-filled:active {
+  background-color: #002d6b;
+  box-shadow:       none;
+}
+
+/* --- Filled Tonal (Secondary Container) --- */
+.dlk-btn-tonal {
+  background-color: var(--dlk-surface-container-high);
+  color:            var(--dlk-on-surface-variant);
+  border-color:     transparent;
+}
+.dlk-btn-tonal:hover {
+  background-color: var(--dlk-surface-container);
+  color:            var(--dlk-on-surface);
+}
+.dlk-btn-tonal:active {
+  background-color: var(--dlk-surface-variant);
+}
+
+/* --- Outlined --- */
+.dlk-btn-outlined {
+  background-color: transparent;
+  color:            var(--dlk-primary);
+  border-color:     var(--dlk-outline);
+}
+.dlk-btn-outlined:hover {
+  background-color: var(--dlk-surface-container-low);
+  border-color:     var(--dlk-primary);
+  color:            var(--dlk-primary);
+}
+.dlk-btn-outlined:active {
+  background-color: var(--dlk-surface-container);
+}
+
+/* --- Text / Ghost --- */
+/* Không nền, không viền. Text màu primary (xanh dương). Icon có thể tự màu riêng.
+   Hover: nền xanh dương nhạt (8% primary). */
+.dlk-btn-text {
+  background-color: transparent;
+  color:            var(--dlk-primary);
+  border-color:     transparent;
+}
+.dlk-btn-text:hover {
+  background-color: rgba(0, 63, 135, 0.08); /* primary #003f87 @ 8% */
+  color:            var(--dlk-primary);
+}
+.dlk-btn-text:active {
+  background-color: rgba(0, 63, 135, 0.14);
+}
+
+/* --- Danger / Error (Filled) --- */
+.dlk-btn-danger {
+  background-color: var(--dlk-error);
+  color:            var(--dlk-on-error);
+  border-color:     transparent;
+  box-shadow:       var(--dlk-shadow-sm);
+}
+.dlk-btn-danger:hover {
+  background-color: #a5171a;
+  box-shadow:       var(--dlk-shadow-md);
+  color:            var(--dlk-on-error);
+}
+.dlk-btn-danger:active {
+  background-color: #8f1316;
+  box-shadow:       none;
+}
+
+/* --- Danger Outlined --- */
+.dlk-btn-danger-outlined {
+  background-color: transparent;
+  color:            var(--dlk-error);
+  border-color:     var(--dlk-error);
+}
+.dlk-btn-danger-outlined:hover {
+  background-color: var(--dlk-error-container);
+  color:            var(--dlk-on-error-container);
+}
+.dlk-btn-danger-outlined:active {
+  background-color: #f5c6c6;
+}
+
+
+/* ==========================================================================
+   Button — Icon slot
+   Dùng với <span class="material-symbols-outlined"> hoặc <svg>
+   ========================================================================== */
+.dlk-btn .dlk-btn-icon-start,
+.dlk-btn .dlk-btn-icon-end {
+  display:     inline-flex;
+  align-items: center;
+  font-size:   18px;
+  flex-shrink: 0;
+}
+
+/* Icon-only button (square) */
+.dlk-btn-icon-only {
+  padding:       var(--dlk-btn-padding-y-md);
+  aspect-ratio:  1;
+  border-radius: var(--dlk-radius-full);
+}
+.dlk-btn-icon-only.dlk-btn-sm {
+  padding: var(--dlk-btn-padding-y-sm);
+}
+.dlk-btn-icon-only.dlk-btn-lg {
+  padding: var(--dlk-btn-padding-y-lg);
+}
+
+
+/* ==========================================================================
+   Dropdown Button
+   ========================================================================== */
+
+/* Wrapper — position: relative để menu định vị */
+.dlk-dropdown {
+  position: relative;
+  display:  inline-flex;
+}
+
+/* Mũi tên tự động khi có class dlk-dropdown-toggle */
+.dlk-dropdown-toggle::after {
+  content:       '';
+  display:       inline-block;
+  width:         0;
+  height:        0;
+  margin-left:   6px;
+  vertical-align: middle;
+  border-top:    5px solid currentColor;
+  border-right:  4px solid transparent;
+  border-left:   4px solid transparent;
+  flex-shrink:   0;
+  transition:    transform 0.2s;
+}
+.dlk-dropdown.open .dlk-dropdown-toggle::after {
+  transform: rotate(-180deg);
+}
+
+/* Menu */
+.dlk-dropdown-menu {
+  position:         absolute;
+  top:              calc(100% + 4px);
+  left:             0;
+  min-width:        160px;
+  background:       #ffffff;
+  border:           1px solid var(--dlk-outline-variant);
+  border-radius:    var(--dlk-radius-md);
+  box-shadow:       0 4px 16px rgba(0, 0, 0, 0.12);
+  padding:          4px 0;
+  margin:           0;
+  list-style:       none;
+  z-index:          1050;
+
+  opacity:          0;
+  transform:        translateY(-6px);
+  pointer-events:   none;
+  transition:       opacity 0.15s, transform 0.15s;
+}
+.dlk-dropdown-menu.dlk-dropdown-menu-end {
+  left:  auto;
+  right: 0;
+}
+.dlk-dropdown.open .dlk-dropdown-menu {
+  opacity:        1;
+  transform:      translateY(0);
+  pointer-events: auto;
+}
+
+/* Item */
+.dlk-dropdown-item {
+  display:      flex;
+  align-items:  center;
+  gap:          8px;
+  width:        100%;
+  padding:      7px 14px;
+  font-family:  var(--dlk-font-family);
+  font-size:    var(--dlk-font-size-md);
+  font-weight:  var(--dlk-font-weight-medium);
+  color:        var(--dlk-on-surface);
+  background:   transparent;
+  border:       none;
+  cursor:       pointer;
+  text-align:   left;
+  white-space:  nowrap;
+  transition:   background 0.12s;
+  text-decoration: none;
+}
+.dlk-dropdown-item .material-symbols-outlined {
+  font-size:  18px;
+  flex-shrink: 0;
+  color:      var(--dlk-on-surface-variant);
+}
+.dlk-dropdown-item:hover {
+  background: var(--dlk-surface-container-low);
+  color:      var(--dlk-primary);
+}
+.dlk-dropdown-item:hover .material-symbols-outlined {
+  color: var(--dlk-primary);
+}
+.dlk-dropdown-item:active {
+  background: var(--dlk-surface-container);
+}
+.dlk-dropdown-item.dlk-dropdown-item-danger {
+  color: var(--dlk-error);
+}
+.dlk-dropdown-item.dlk-dropdown-item-danger .material-symbols-outlined {
+  color: var(--dlk-error);
+}
+.dlk-dropdown-item.dlk-dropdown-item-danger:hover {
+  background: var(--dlk-error-container);
+  color:      var(--dlk-on-error-container);
+}
+.dlk-dropdown-item:disabled,
+.dlk-dropdown-item.disabled {
+  opacity:        0.38;
+  cursor:         not-allowed;
+  pointer-events: none;
+}
+
+/* Divider */
+.dlk-dropdown-divider {
+  height:     1px;
+  background: var(--dlk-outline-variant);
+  margin:     4px 0;
+  border:     none;
+}

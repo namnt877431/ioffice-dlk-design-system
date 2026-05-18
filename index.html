@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DLK Design System — Button Demo</title>
+
+  <!-- Bootstrap (giả lập môi trường thật) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+  <!-- Material Symbols -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- DLK Design System -->
+  <link rel="stylesheet" href="css/dlk-design-system.css">
+
+  <style>
+    body { font-family: 'Inter', sans-serif; background: #f8f9fa; padding: 32px; }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 20;
+      font-size: 20px;
+    }
+    .demo-section { background: #fff; border-radius: 12px; padding: 24px; margin-bottom: 24px; }
+    .demo-label { font-size: 11px; font-weight: 600; color: #727784; text-transform: uppercase;
+                  letter-spacing: 0.08em; margin-bottom: 12px; }
+    .demo-row { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+
+    /* Click-to-copy wrapper */
+    .dlk-copyable {
+      position: relative;
+      display: inline-flex;
+    }
+    .dlk-copyable::after {
+      content: 'Click để copy code';
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1e2329;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 500;
+      white-space: nowrap;
+      padding: 4px 8px;
+      border-radius: 4px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+    .dlk-copyable:hover::after { opacity: 1; }
+
+    /* Toast thông báo đã copy */
+    #dlk-toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(12px);
+      background: #1e2329;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 10px 18px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s, transform 0.2s;
+      z-index: 9999;
+    }
+    #dlk-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Code preview panel */
+    #dlk-code-panel {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: #1e2329;
+      color: #e6edf3;
+      font-family: 'Consolas', 'Fira Code', monospace;
+      font-size: 13px;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-top: 1px solid #30363d;
+      transform: translateY(100%);
+      transition: transform 0.2s;
+      z-index: 9998;
+    }
+    #dlk-code-panel.show { transform: translateY(0); }
+    #dlk-code-panel code {
+      flex: 1;
+      white-space: pre;
+      overflow-x: auto;
+      color: #79c0ff;
+    }
+    #dlk-code-close {
+      cursor: pointer;
+      color: #8b949e;
+      font-size: 18px;
+      line-height: 1;
+      padding: 2px 6px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+    #dlk-code-close:hover { color: #fff; background: #30363d; }
+
+    /* ---- Icon Browser ---- */
+    .icon-search {
+      width: 100%;
+      border: 1px solid #c2c6d4;
+      border-radius: 8px;
+      padding: 8px 12px 8px 36px;
+      font-size: 13px;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      color: #191c1d;
+      box-sizing: border-box;
+    }
+    .icon-search:focus { border-color: #003f87; }
+    .icon-search-wrap { position: relative; margin-bottom: 14px; }
+    .icon-search-wrap .material-symbols-outlined {
+      position: absolute; left: 10px; top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px; color: #727784; pointer-events: none;
+    }
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+      gap: 6px;
+      max-height: 320px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+    .icon-grid::-webkit-scrollbar { width: 6px; }
+    .icon-grid::-webkit-scrollbar-track { background: #f3f4f5; border-radius: 3px; }
+    .icon-grid::-webkit-scrollbar-thumb { background: #c2c6d4; border-radius: 3px; }
+    .icon-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 4px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 1.5px solid transparent;
+      transition: background 0.1s, border-color 0.1s;
+      text-align: center;
+    }
+    .icon-item:hover { background: #f0f4ff; border-color: #acc7ff; }
+    .icon-item.selected { background: #e3ecf8; border-color: #003f87; }
+    .icon-item .material-symbols-outlined { font-size: 22px; color: #424752; }
+    .icon-item span.icon-name {
+      font-size: 10px; color: #727784; line-height: 1.2;
+      word-break: break-all; font-family: 'Consolas', monospace;
+    }
+    .icon-category-label {
+      font-size: 10px; font-weight: 700; color: #003f87;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      padding: 8px 0 4px; grid-column: 1 / -1;
+    }
+    .icon-no-result {
+      grid-column: 1/-1; text-align: center;
+      color: #727784; font-size: 13px; padding: 24px 0;
+    }
+
+    /* ---- Builder ---- */
+    .builder-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .builder-field { display: flex; flex-direction: column; gap: 6px; }
+    .builder-field label { font-size: 12px; font-weight: 600; color: #424752; }
+    .builder-field input[type=text],
+    .builder-field select {
+      border: 1px solid #c2c6d4;
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 13px;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      color: #191c1d;
+    }
+    .builder-field input[type=text]:focus,
+    .builder-field select:focus { border-color: #003f87; }
+
+    .builder-swatches {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+    .swatch {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      flex-shrink: 0;
+      transition: transform 0.1s, border-color 0.1s;
+    }
+    .swatch:hover { transform: scale(1.15); }
+    .swatch.active { border-color: #191c1d; }
+    .swatch-none {
+      width: 22px; height: 22px; border-radius: 50%;
+      cursor: pointer; border: 2px solid #c2c6d4;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; color: #727784; flex-shrink: 0;
+      transition: transform 0.1s;
+    }
+    .swatch-none:hover { transform: scale(1.15); }
+    .swatch-none.active { border-color: #191c1d; }
+
+    input[type=color].swatch-picker {
+      width: 22px; height: 22px;
+      border: 2px solid #c2c6d4;
+      border-radius: 50%;
+      padding: 0;
+      cursor: pointer;
+      background: none;
+      flex-shrink: 0;
+    }
+    input[type=color].swatch-picker::-webkit-color-swatch-wrapper { padding: 0; }
+    input[type=color].swatch-picker::-webkit-color-swatch { border: none; border-radius: 50%; }
+
+    .builder-preview-box {
+      background: #f8f9fa;
+      border: 1px solid #e1e3e4;
+      border-radius: 8px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 72px;
+    }
+    .builder-code-box {
+      background: #1e2329;
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'Consolas', 'Fira Code', monospace;
+      font-size: 12px;
+      color: #79c0ff;
+      white-space: pre;
+      overflow-x: auto;
+      position: relative;
+    }
+    .builder-copy-btn {
+      position: absolute;
+      top: 8px; right: 8px;
+      background: #30363d;
+      border: none;
+      border-radius: 5px;
+      color: #e6edf3;
+      font-size: 12px;
+      font-family: 'Inter', sans-serif;
+      padding: 4px 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: background 0.15s;
+    }
+    .builder-copy-btn:hover { background: #444d56; }
+    .builder-copy-btn.copied { background: #1a7f37; color: #fff; }
+    .builder-copy-btn .material-symbols-outlined { font-size: 14px; }
+
+    /* Item row trong dropdown builder */
+    .b-item-row {
+      display: flex; align-items: center; gap: 6px;
+      background: #f8f9fa; border-radius: 6px; padding: 6px 8px;
+    }
+    .b-item-row input[type=text] {
+      flex: 1; border: 1px solid #c2c6d4; border-radius: 5px;
+      padding: 4px 8px; font-size: 12px; font-family: 'Inter',sans-serif;
+      outline: none; min-width: 0;
+    }
+    .b-item-row input[type=text]:focus { border-color: #003f87; }
+    .b-item-row select {
+      border: 1px solid #c2c6d4; border-radius: 5px;
+      padding: 4px 6px; font-size: 12px; font-family: 'Inter',sans-serif;
+      outline: none; background: #fff;
+    }
+    .b-item-row .b-item-del {
+      cursor: pointer; color: #dc3545; font-size: 16px;
+      padding: 2px; line-height: 1; background: none; border: none;
+      flex-shrink: 0;
+    }
+    .b-item-row .b-item-del:hover { color: #a5171a; }
+    .b-divider-row {
+      display: flex; align-items: center; gap: 6px;
+      background: #f8f9fa; border-radius: 6px; padding: 5px 8px;
+      color: #727784; font-size: 12px;
+    }
+    .b-divider-row .b-item-del {
+      cursor: pointer; color: #dc3545; font-size: 16px;
+      padding: 2px; line-height: 1; background: none; border: none;
+      margin-left: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <div style="
+    display:flex; align-items:center; justify-content:space-between;
+    background:#003f87; border-radius:12px;
+    padding:12px 20px; margin-bottom:24px;
+  ">
+    <!-- Logo + Tiêu đề -->
+    <div style="display:flex; align-items:center; gap:14px;">
+      <div style="padding:4px; background:rgba(255,255,255,0.12); border-radius:6px; display:flex; align-items:center;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 105.27 132.26" style="height:36px;width:auto;"><defs><style>.cls-1{fill:#fff;}</style></defs><g><g><path class="cls-1" d="M99.26,42.33C97.45,50,93.21,58.89,86.87,67.67a113.28,113.28,0,0,1-10.3,12.24c-8.42,8.65-17.42,15.12-25.7,19a48.91,48.91,0,0,0,36-16A48.6,48.6,0,0,0,99.26,42.33Z"></path><path class="cls-1" d="M86.87,52.41c8.35-12.31,14.4-24.77,16.27-34.78a43.7,43.7,0,0,0,.72-6.33v-.72c-.07-4.83-1.65-8.28-5.83-10-2.88-.94-6.69-.72-11.16.65a54.65,54.65,0,0,0-12,5.83,48.9,48.9,0,0,0-61.2,10.3C1.19,30.88-2.26,52.91,5.58,69.55l.08-.08C2.42,61.63,2.2,52.27,4.07,43.84a35.16,35.16,0,0,1,1.37-5c.14-.43.29-.79.43-1.22A15.86,15.86,0,0,1,7,35.13c5.12-10.8,14.19-17.06,21-13.9s8.35,13.83,3.31,25.56c-1.44,3-4.82,9.51-8.78,16.42-9.87,17.14-18.15,39.46-3.89,41.9,4.39.44,9.36-.79,14.68-3.31C51.37,94.53,72.47,73.65,86.87,52.41ZM86.87,5C95.58,2.51,98.75,8,92,23.18a33.52,33.52,0,0,0-5.11-6.7A70,70,0,0,0,78.16,9,35.83,35.83,0,0,1,86.87,5Z"></path><polygon class="cls-1" points="87.11 115.01 87.04 118.06 94.42 118.06 94.42 132.2 97.83 132.2 97.83 117.99 105.27 117.99 105.27 115.01 87.11 115.01"></polygon><path class="cls-1" d="M74.18,115H62.54V132.2h3.6v-6.28h5.42l2.62-.06c5.43.06,6.46-3.54,6.46-5.37S79.73,115,74.18,115Zm-.36,7.92H66.14v-5h7.68c2.13.06,3.17,1.22,3.17,2.44C77.05,121.77,76,122.81,73.82,122.87Z"></path><polygon class="cls-1" points="46.08 128.05 34.38 115.01 30.11 115.01 30.11 132.2 33.53 132.2 33.53 119.21 45.29 132.2 49.44 132.2 49.44 115.01 46.08 115.01 46.08 128.05"></polygon><polygon class="cls-1" points="10.67 128.54 3.72 114.95 0 114.95 8.78 132.26 12.44 132.26 21.33 115.01 17.68 115.01 10.67 128.54"></polygon></g></g></svg>
+      </div>
+      <div>
+        <div style="color:#fff; font-weight:700; font-size:16px; line-height:1.3;">DLK Design System</div>
+        <div style="color:rgba(255,255,255,0.65); font-size:12px; font-weight:400;">Buttons — iOffice</div>
+      </div>
+    </div>
+
+    <!-- Nút tải CSS -->
+    <button onclick="downloadCSS()" style="
+      display:inline-flex; align-items:center; gap:8px;
+      background:rgba(255,255,255,0.15); color:#fff; border:1px solid rgba(255,255,255,0.3);
+      padding:8px 16px; border-radius:8px; cursor:pointer;
+      font-family:'Inter',sans-serif; font-size:13px; font-weight:600;
+      transition:background 0.15s;
+    " onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">
+      <span class="material-symbols-outlined" style="font-size:18px;">download</span>
+      Tải dlk-design-system.css
+    </button>
+  </div>
+
+  <!-- ===== ICON BROWSER ===== -->
+  <div class="demo-section">
+    <div class="demo-label">Icon Browser — click để dùng trong Builder</div>
+    <div class="icon-search-wrap">
+      <span class="material-symbols-outlined">search</span>
+      <input class="icon-search" id="icon-search" type="text" placeholder="Tìm icon... (vd: save, delete, send)">
+    </div>
+    <div class="icon-grid" id="icon-grid"></div>
+  </div>
+  <!-- ===== END ICON BROWSER ===== -->
+
+  <!-- ===== BUILDER ===== -->
+  <div class="demo-section" style="border: 2px solid #003f87;">
+    <div class="demo-label" style="color:#003f87;">Button Builder — tạo & copy code</div>
+
+    <div class="builder-grid" style="margin-bottom:16px;">
+      <!-- Cột trái: tuỳ chỉnh -->
+      <div style="display:flex;flex-direction:column;gap:14px;">
+
+        <div class="builder-field">
+          <label>Variant</label>
+          <select id="b-variant">
+            <option value="dlk-btn-text">Text (ghost)</option>
+            <option value="dlk-btn-filled">Filled</option>
+            <option value="dlk-btn-outlined">Outlined</option>
+            <option value="dlk-btn-tonal">Tonal</option>
+            <option value="dlk-btn-danger">Danger</option>
+            <option value="dlk-btn-danger-outlined">Danger Outlined</option>
+          </select>
+        </div>
+
+        <div class="builder-field">
+          <label>Size</label>
+          <select id="b-size">
+            <option value="">Medium (mặc định)</option>
+            <option value="dlk-btn-sm">Small</option>
+            <option value="dlk-btn-lg">Large</option>
+          </select>
+        </div>
+
+        <div class="builder-field">
+          <label>Label</label>
+          <input type="text" id="b-label" value="Lưu hồ sơ">
+        </div>
+
+        <div class="builder-field">
+          <label>Icon (Material Symbols) — để trống nếu không dùng</label>
+          <input type="text" id="b-icon" value="save" placeholder="vd: save, delete, send...">
+        </div>
+
+        <div class="builder-field">
+          <label>Vị trí icon</label>
+          <select id="b-icon-pos">
+            <option value="start">Trước (start)</option>
+            <option value="end">Sau (end)</option>
+          </select>
+        </div>
+
+        <div class="builder-field">
+          <label>Màu icon</label>
+          <div class="builder-swatches" id="b-swatches">
+            <span class="swatch-none active" data-color="" title="Không màu riêng (kế thừa)">–</span>
+            <span class="swatch" style="background:#1a56a0;" data-color="#1a56a0" title="#1a56a0 Navy"></span>
+            <span class="swatch" style="background:#337ab7;" data-color="#337ab7" title="#337ab7 Blue"></span>
+            <span class="swatch" style="background:#e8952a;" data-color="#e8952a" title="#e8952a Amber"></span>
+            <span class="swatch" style="background:#fd8b18;" data-color="#fd8b18" title="#fd8b18 Orange"></span>
+            <span class="swatch" style="background:#dc3545;" data-color="#dc3545" title="#dc3545 Red"></span>
+            <span class="swatch" style="background:#ba1a1a;" data-color="#ba1a1a" title="#ba1a1a Error"></span>
+            <span class="swatch" style="background:#5bc0de;" data-color="#5bc0de" title="#5bc0de Teal"></span>
+            <span class="swatch" style="background:#006081;" data-color="#006081" title="#006081 Tertiary"></span>
+            <span class="swatch" style="background:#6c757d;" data-color="#6c757d" title="#6c757d Gray"></span>
+            <span class="swatch" style="background:#003f87;" data-color="#003f87" title="#003f87 Primary"></span>
+            <input type="color" class="swatch-picker" id="b-color-picker" value="#e8952a" title="Chọn màu tuỳ ý">
+          </div>
+          <div style="font-size:11px;color:#727784;margin-top:4px;">
+            Màu đang chọn: <code id="b-color-display" style="color:#003f87;">kế thừa</code>
+          </div>
+        </div>
+
+        <!-- Dropdown toggle -->
+        <div class="builder-field">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+            <input type="checkbox" id="b-is-dropdown" style="width:15px;height:15px;cursor:pointer;">
+            Là Dropdown button
+          </label>
+        </div>
+
+        <!-- Dropdown items (ẩn khi chưa bật) -->
+        <div id="b-dropdown-section" style="display:none;border:1px solid #c2c6d4;border-radius:8px;padding:12px;display:none;flex-direction:column;gap:10px;">
+          <div style="font-size:12px;font-weight:600;color:#424752;margin-bottom:2px;">Dropdown items</div>
+
+          <div id="b-items-list" style="display:flex;flex-direction:column;gap:6px;"></div>
+
+          <div style="display:flex;gap:6px;margin-top:4px;">
+            <button type="button" id="b-add-item" style="flex:1;padding:5px 10px;border:1px dashed #c2c6d4;border-radius:6px;background:transparent;font-size:12px;color:#424752;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;">
+              <span class="material-symbols-outlined" style="font-size:15px;">add</span> Thêm item
+            </button>
+            <button type="button" id="b-add-divider" style="padding:5px 10px;border:1px dashed #c2c6d4;border-radius:6px;background:transparent;font-size:12px;color:#424752;cursor:pointer;">
+              — Thêm divider
+            </button>
+          </div>
+
+          <div class="builder-field" style="margin-top:2px;">
+            <label style="font-size:11px;">Vị trí menu</label>
+            <select id="b-menu-align" style="font-size:12px;padding:4px 8px;border:1px solid #c2c6d4;border-radius:6px;">
+              <option value="">Trái (mặc định)</option>
+              <option value="dlk-dropdown-menu-end">Phải (end)</option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Cột phải: preview + code -->
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="builder-field">
+          <label>Preview</label>
+          <div class="builder-preview-box" id="b-preview" style="overflow:visible;min-height:80px;align-items:flex-start;padding-top:20px;"></div>
+        </div>
+        <div class="builder-field" style="flex:1;">
+          <label>Code</label>
+          <div class="builder-code-box" style="position:relative;">
+            <code id="b-code"></code>
+            <button class="builder-copy-btn" id="b-copy-btn">
+              <span class="material-symbols-outlined">content_copy</span>
+              Copy
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ===== END BUILDER ===== -->
+
+  <!-- Variants -->
+  <div class="demo-section">
+    <div class="demo-label">Variants</div>
+    <div class="demo-row">
+      <button class="dlk-btn dlk-btn-filled">Filled</button>
+      <button class="dlk-btn dlk-btn-tonal">Tonal</button>
+      <button class="dlk-btn dlk-btn-outlined">Outlined</button>
+      <button class="dlk-btn dlk-btn-text">Text</button>
+      <button class="dlk-btn dlk-btn-danger">Danger</button>
+      <button class="dlk-btn dlk-btn-danger-outlined">Danger Outlined</button>
+    </div>
+  </div>
+
+  <!-- Sizes -->
+  <div class="demo-section">
+    <div class="demo-label">Sizes</div>
+    <div class="demo-row">
+      <button class="dlk-btn dlk-btn-filled dlk-btn-sm">Small</button>
+      <button class="dlk-btn dlk-btn-filled">Medium (default)</button>
+      <button class="dlk-btn dlk-btn-filled dlk-btn-lg">Large</button>
+    </div>
+  </div>
+
+  <!-- With Icons -->
+  <div class="demo-section">
+    <div class="demo-label">With Icons</div>
+    <div class="demo-row">
+      <button class="dlk-btn dlk-btn-filled">
+        <span class="material-symbols-outlined dlk-btn-icon-start">add</span>
+        Tạo mới
+      </button>
+      <button class="dlk-btn dlk-btn-outlined">
+        <span class="material-symbols-outlined dlk-btn-icon-start">save</span>
+        Lưu
+      </button>
+      <button class="dlk-btn dlk-btn-text">
+        <span class="material-symbols-outlined dlk-btn-icon-start">undo</span>
+        Trả lại VB
+      </button>
+      <button class="dlk-btn dlk-btn-text">
+        Chuyển
+        <span class="material-symbols-outlined dlk-btn-icon-end" style="font-size:16px;">keyboard_arrow_down</span>
+      </button>
+      <button class="dlk-btn dlk-btn-danger">
+        <span class="material-symbols-outlined dlk-btn-icon-start">delete</span>
+        Xóa
+      </button>
+    </div>
+  </div>
+
+  <!-- Icon Only -->
+  <div class="demo-section">
+    <div class="demo-label">Icon Only</div>
+    <div class="demo-row">
+      <button class="dlk-btn dlk-btn-filled dlk-btn-icon-only" title="Thêm">
+        <span class="material-symbols-outlined">add</span>
+      </button>
+      <button class="dlk-btn dlk-btn-tonal dlk-btn-icon-only" title="Lọc">
+        <span class="material-symbols-outlined">filter_list</span>
+      </button>
+      <button class="dlk-btn dlk-btn-outlined dlk-btn-icon-only" title="Chỉnh sửa">
+        <span class="material-symbols-outlined">edit</span>
+      </button>
+      <button class="dlk-btn dlk-btn-text dlk-btn-icon-only" title="Tìm kiếm">
+        <span class="material-symbols-outlined">search</span>
+      </button>
+      <button class="dlk-btn dlk-btn-danger dlk-btn-icon-only" title="Xóa">
+        <span class="material-symbols-outlined">delete</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Disabled -->
+  <div class="demo-section">
+    <div class="demo-label">Disabled State</div>
+    <div class="demo-row">
+      <button class="dlk-btn dlk-btn-filled" disabled>Filled</button>
+      <button class="dlk-btn dlk-btn-tonal" disabled>Tonal</button>
+      <button class="dlk-btn dlk-btn-outlined" disabled>Outlined</button>
+      <button class="dlk-btn dlk-btn-text" disabled>Text</button>
+      <button class="dlk-btn dlk-btn-danger" disabled>Danger</button>
+    </div>
+  </div>
+
+  <!-- Dropdown Button -->
+  <div class="demo-section">
+    <div class="demo-label">Dropdown Button</div>
+    <div class="demo-row" style="align-items:flex-start;">
+
+      <!-- Text dropdown -->
+      <div class="dlk-dropdown">
+        <button class="dlk-btn dlk-btn-text dlk-dropdown-toggle">
+          <span class="material-symbols-outlined dlk-btn-icon-start">swap_horiz</span>
+          Chuyển
+        </button>
+        <ul class="dlk-dropdown-menu">
+          <li><button class="dlk-dropdown-item">
+            <span class="material-symbols-outlined">forward</span>Chuyển xử lý
+          </button></li>
+          <li><button class="dlk-dropdown-item">
+            <span class="material-symbols-outlined">sync</span>Luân chuyển
+          </button></li>
+          <li><button class="dlk-dropdown-item">
+            <span class="material-symbols-outlined">reply</span>Trả lại
+          </button></li>
+        </ul>
+      </div>
+
+      <!-- Text dropdown không icon -->
+      <div class="dlk-dropdown">
+        <button class="dlk-btn dlk-btn-text dlk-dropdown-toggle">
+          Văn bản trả lời
+        </button>
+        <ul class="dlk-dropdown-menu">
+          <li><button class="dlk-dropdown-item">
+            <span class="material-symbols-outlined">description</span>Tạo văn bản mới
+          </button></li>
+          <li><button class="dlk-dropdown-item">
+            <span class="material-symbols-outlined">folder_open</span>Chọn từ hồ sơ
+          </button></li>
+        </ul>
+      </div>
+
+      <!-- Outlined dropdown -->
+      <div class="dlk-dropdown">
+        <button class="dlk-btn dlk-btn-outlined dlk-dropdown-toggle">
+          Xuất file
+        </button>
+        <ul class="dlk-dropdown-menu">
+          <li><button class="dlk-dropdown-item">
+            <span class="material-symbols-outlined">picture_as_pdf</span>Xuất PDF
+          </button></li>
+          <li><button class="dlk-dropdown-item">
+            <span class="material-symbols-outlined">table_view</span>Xuất Excel
+          </button></li>
+          <li><button class="dlk-dropdown-item">
+            <span class="material-symbols-outlined">article</span>Xuất Word
+          </button></li>
+          <hr class="dlk-dropdown-divider">
+          <li><button class="dlk-dropdown-item" disabled>
+            <span class="material-symbols-outlined">print</span>In (không có máy in)
+          </button></li>
+        </ul>
+      </div>
+
+      <!-- Filled dropdown -->
+      <div class="dlk-dropdown">
+        <button class="dlk-btn dlk-btn-filled dlk-dropdown-toggle">
+          <span class="material-symbols-outlined dlk-btn-icon-start">save</span>
+          Lưu
+        </button>
+        <ul class="dlk-dropdown-menu dlk-dropdown-menu-end">
+          <li><button class="dlk-dropdown-item">
+            <span class="material-symbols-outlined">save</span>Lưu hồ sơ
+          </button></li>
+          <li><button class="dlk-dropdown-item">
+            <span class="material-symbols-outlined">save_as</span>Lưu thành bản nháp
+          </button></li>
+          <hr class="dlk-dropdown-divider">
+          <li><button class="dlk-dropdown-item dlk-dropdown-item-danger">
+            <span class="material-symbols-outlined">delete</span>Huỷ và xoá
+          </button></li>
+        </ul>
+      </div>
+
+      <!-- Dropdown menu-end (mở về bên phải) -->
+      <div class="dlk-dropdown">
+        <button class="dlk-btn dlk-btn-text dlk-dropdown-toggle">
+          <span class="material-symbols-outlined dlk-btn-icon-start">more_horiz</span>
+          Thêm thao tác
+        </button>
+        <ul class="dlk-dropdown-menu dlk-dropdown-menu-end">
+          <li><button class="dlk-dropdown-item">
+            <span class="material-symbols-outlined">edit</span>Chỉnh sửa
+          </button></li>
+          <li><button class="dlk-dropdown-item">
+            <span class="material-symbols-outlined">content_copy</span>Nhân bản
+          </button></li>
+          <li><button class="dlk-dropdown-item">
+            <span class="material-symbols-outlined">history</span>Xem lịch sử
+          </button></li>
+          <hr class="dlk-dropdown-divider">
+          <li><button class="dlk-dropdown-item dlk-dropdown-item-danger">
+            <span class="material-symbols-outlined">delete_forever</span>Xoá vĩnh viễn
+          </button></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toolbar example — khớp với ảnh thật -->
+  <div class="demo-section">
+    <div class="demo-label">Toolbar example — Action Toolbar</div>
+    <div style="background:#fff; padding:12px 16px; border-radius:12px; border:1px solid #c2c6d4;
+                display:flex; align-items:center; gap:4px; flex-wrap:wrap;">
+      <button class="dlk-btn dlk-btn-text">
+        <span class="material-symbols-outlined dlk-btn-icon-start" style="color:#fd8b18;">undo</span>
+        Trả lại VB
+      </button>
+      <button class="dlk-btn dlk-btn-text">
+        <span class="material-symbols-outlined dlk-btn-icon-start">swap_horiz</span>
+        Chuyển
+        <span class="material-symbols-outlined dlk-btn-icon-end" style="font-size:16px;">keyboard_arrow_down</span>
+      </button>
+      <button class="dlk-btn dlk-btn-text">
+        <span class="material-symbols-outlined dlk-btn-icon-start">sync</span>
+        Luân chuyển
+      </button>
+      <button class="dlk-btn dlk-btn-text">
+        <span class="material-symbols-outlined dlk-btn-icon-start">forward</span>
+        Chuyển xử lý
+      </button>
+      <button class="dlk-btn dlk-btn-text">
+        <span class="material-symbols-outlined dlk-btn-icon-start">reply</span>
+        Văn bản trả lời
+        <span class="material-symbols-outlined dlk-btn-icon-end" style="font-size:16px;">keyboard_arrow_down</span>
+      </button>
+      <button class="dlk-btn dlk-btn-text">
+        <span class="material-symbols-outlined dlk-btn-icon-start">save</span>
+        Lưu hồ sơ
+      </button>
+      <button class="dlk-btn dlk-btn-text">
+        <span class="material-symbols-outlined dlk-btn-icon-start">print</span>
+        In phiếu trình
+      </button>
+      <button class="dlk-btn dlk-btn-text">
+        <span class="material-symbols-outlined dlk-btn-icon-start" style="color:#006081;">add_circle</span>
+        Tạo việc
+      </button>
+      <button class="dlk-btn dlk-btn-text">
+        <span class="material-symbols-outlined dlk-btn-icon-start">check_circle</span>
+        Kết thúc văn bản
+      </button>
+    </div>
+  </div>
+
+  <!-- Icon tuỳ chọn -->
+  <div class="demo-section">
+    <div class="demo-label">Icon — tuỳ chọn (có hoặc không)</div>
+    <div class="demo-row">
+      <button class="dlk-btn dlk-btn-text">
+        <span class="material-symbols-outlined dlk-btn-icon-start" style="color:#1a56a0;">save</span>
+        Có icon
+      </button>
+      <button class="dlk-btn dlk-btn-text">
+        Không icon
+      </button>
+      <button class="dlk-btn dlk-btn-text">
+        Dropdown
+        <span class="material-symbols-outlined dlk-btn-icon-end" style="font-size:16px;">keyboard_arrow_down</span>
+      </button>
+      <button class="dlk-btn dlk-btn-filled">
+        <span class="material-symbols-outlined dlk-btn-icon-start">add</span>
+        Có icon
+      </button>
+      <button class="dlk-btn dlk-btn-filled">
+        Không icon
+      </button>
+      <button class="dlk-btn dlk-btn-outlined">
+        <span class="material-symbols-outlined dlk-btn-icon-start" style="color:#dc3545;">delete</span>
+        Có icon
+      </button>
+      <button class="dlk-btn dlk-btn-outlined">
+        Không icon
+      </button>
+    </div>
+  </div>
+
+  <!-- Redesign từ Bootstrap cũ -->
+  <div class="demo-section">
+    <div class="demo-label">Redesign từ Bootstrap — màu nền cũ → màu icon mới</div>
+
+    <!-- So sánh: Bootstrap cũ -->
+    <div style="font-size:11px; color:#727784; margin-bottom:8px;">Bootstrap cũ</div>
+    <div class="demo-row" style="margin-bottom:20px;">
+      <button style="background:#337ab7;color:#fff;border:none;padding:6px 12px;border-radius:4px;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
+        <span class="material-symbols-outlined" style="font-size:16px;">autorenew</span> Xử lý
+      </button>
+      <button style="background:#6c757d;color:#fff;border:none;padding:6px 12px;border-radius:4px;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
+        <span class="material-symbols-outlined" style="font-size:16px;">visibility</span> Xem
+      </button>
+      <button style="background:#337ab7;color:#fff;border:none;padding:6px 12px;border-radius:4px;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
+        <span class="material-symbols-outlined" style="font-size:16px;">save</span> Lưu hồ sơ
+      </button>
+      <button style="background:#337ab7;color:#fff;border:none;padding:6px 12px;border-radius:4px;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
+        <span class="material-symbols-outlined" style="font-size:16px;">send</span> Tạo việc
+      </button>
+      <button style="background:#dc3545;color:#fff;border:none;padding:6px 12px;border-radius:4px;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
+        <span class="material-symbols-outlined" style="font-size:16px;">close</span> Xoá
+      </button>
+      <button style="background:#5bc0de;color:#fff;border:none;padding:6px 12px;border-radius:4px;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
+        <span class="material-symbols-outlined" style="font-size:16px;">bookmark_added</span> Đánh dấu
+      </button>
+    </div>
+
+    <!-- DLK mới -->
+    <div style="font-size:11px; color:#727784; margin-bottom:8px;">DLK Design System mới</div>
+    <div class="demo-row">
+      <!-- Xử lý: icon màu #337ab7 (xanh Bootstrap cũ) -->
+      <button class="dlk-btn dlk-btn-text">
+        <span class="material-symbols-outlined dlk-btn-icon-start" style="color:#337ab7;">autorenew</span>
+        Xử lý
+      </button>
+
+      <!-- Xem: icon màu #6c757d (xám Bootstrap cũ) -->
+      <button class="dlk-btn dlk-btn-text">
+        <span class="material-symbols-outlined dlk-btn-icon-start" style="color:#6c757d;">visibility</span>
+        Xem
+      </button>
+
+      <!-- Lưu hồ sơ: icon màu #337ab7 -->
+      <button class="dlk-btn dlk-btn-text">
+        <span class="material-symbols-outlined dlk-btn-icon-start" style="color:#337ab7;">save</span>
+        Lưu hồ sơ
+      </button>
+
+      <!-- Tạo việc: icon màu #337ab7 -->
+      <button class="dlk-btn dlk-btn-text">
+        <span class="material-symbols-outlined dlk-btn-icon-start" style="color:#337ab7;">send</span>
+        Tạo việc
+      </button>
+
+      <!-- Xoá: icon màu #dc3545 (đỏ Bootstrap cũ) -->
+      <button class="dlk-btn dlk-btn-text">
+        <span class="material-symbols-outlined dlk-btn-icon-start" style="color:#dc3545;">close</span>
+        Xoá
+      </button>
+
+      <!-- Đánh dấu: icon màu #5bc0de (teal Bootstrap cũ) -->
+      <button class="dlk-btn dlk-btn-text">
+        <span class="material-symbols-outlined dlk-btn-icon-start" style="color:#5bc0de;">bookmark_added</span>
+        Đánh dấu
+      </button>
+    </div>
+  </div>
+
+
+  <!-- Toolbar 2 — Lưu / Chuyển / Ban hành / Xoá / Đóng -->
+  <div class="demo-section">
+    <div class="demo-label">Toolbar 2 — Lưu · Chuyển · Ban hành · Xoá · Đóng</div>
+
+    <div style="font-size:11px; color:#727784; margin-bottom:8px;">Bootstrap cũ</div>
+    <div class="demo-row" style="margin-bottom:20px;">
+      <button style="background:#1a56a0;color:#fff;border:none;padding:6px 12px;border-radius:4px;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
+        <span class="material-symbols-outlined" style="font-size:16px;">save</span> Lưu
+      </button>
+      <button style="background:#e8952a;color:#fff;border:none;padding:6px 12px;border-radius:4px;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
+        Chuyển <span class="material-symbols-outlined" style="font-size:14px;">arrow_drop_up</span>
+      </button>
+      <button style="background:#e8952a;color:#fff;border:none;padding:6px 12px;border-radius:4px;font-size:14px;cursor:pointer;">
+        Luân chuyển
+      </button>
+      <button style="background:#e8952a;color:#fff;border:none;padding:6px 12px;border-radius:4px;font-size:14px;cursor:pointer;">
+        Ban hành
+      </button>
+      <button style="background:#1a56a0;color:#fff;border:none;padding:6px 12px;border-radius:4px;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
+        <span class="material-symbols-outlined" style="font-size:16px;">add</span> Lưu hồ sơ
+      </button>
+      <button style="background:#1a56a0;color:#fff;border:none;padding:6px 12px;border-radius:4px;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
+        <span class="material-symbols-outlined" style="font-size:16px;">send</span> Tạo việc
+      </button>
+      <button style="background:#dc3545;color:#fff;border:none;padding:6px 12px;border-radius:4px;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
+        <span class="material-symbols-outlined" style="font-size:16px;">close</span> Xoá
+      </button>
+      <button style="background:#5bc0de;color:#fff;border:none;padding:6px 12px;border-radius:4px;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
+        <span class="material-symbols-outlined" style="font-size:16px;">bookmark_added</span> Đánh dấu
+      </button>
+      <button style="background:#dc3545;color:#fff;border:none;padding:6px 12px;border-radius:4px;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
+        <span class="material-symbols-outlined" style="font-size:16px;">close</span> Đóng
+      </button>
+    </div>
+
+    <div style="font-size:11px; color:#727784; margin-bottom:8px;">DLK Design System mới</div>
+    <div class="demo-row">
+      <!-- Lưu: navy blue #1a56a0 → icon save màu #1a56a0 -->
+      <button class="dlk-btn dlk-btn-text">
+        <span class="material-symbols-outlined dlk-btn-icon-start" style="color:#1a56a0;">save</span>
+        Lưu
+      </button>
+
+      <!-- Chuyển: không có icon dẫn đầu, chỉ có mũi tên dropdown -->
+      <button class="dlk-btn dlk-btn-text">
+        Chuyển
+        <span class="material-symbols-outlined dlk-btn-icon-end" style="font-size:16px;">keyboard_arrow_up</span>
+      </button>
+
+      <!-- Luân chuyển: không có icon trong bản gốc -->
+      <button class="dlk-btn dlk-btn-text">
+        Luân chuyển
+      </button>
+
+      <!-- Ban hành: không có icon trong bản gốc -->
+      <button class="dlk-btn dlk-btn-text">
+        Ban hành
+      </button>
+
+      <!-- Lưu hồ sơ: navy blue #1a56a0 → icon add/save màu #1a56a0 -->
+      <button class="dlk-btn dlk-btn-text">
+        <span class="material-symbols-outlined dlk-btn-icon-start" style="color:#1a56a0;">create_new_folder</span>
+        Lưu hồ sơ
+      </button>
+
+      <!-- Tạo việc: navy blue #1a56a0 → icon send màu #1a56a0 -->
+      <button class="dlk-btn dlk-btn-text">
+        <span class="material-symbols-outlined dlk-btn-icon-start" style="color:#1a56a0;">send</span>
+        Tạo việc
+      </button>
+
+      <!-- Xoá: đỏ #dc3545 → icon delete màu #dc3545 -->
+      <button class="dlk-btn dlk-btn-text">
+        <span class="material-symbols-outlined dlk-btn-icon-start" style="color:#dc3545;">delete</span>
+        Xoá
+      </button>
+
+      <!-- Đánh dấu: teal #5bc0de → icon bookmark màu #5bc0de -->
+      <button class="dlk-btn dlk-btn-text">
+        <span class="material-symbols-outlined dlk-btn-icon-start" style="color:#5bc0de;">bookmark_added</span>
+        Đánh dấu
+      </button>
+
+      <!-- Đóng: đỏ #dc3545 → icon close màu #dc3545 -->
+      <button class="dlk-btn dlk-btn-text">
+        <span class="material-symbols-outlined dlk-btn-icon-start" style="color:#dc3545;">close</span>
+        Đóng
+      </button>
+    </div>
+  </div>
+
+  <!-- Toolbar 3 — Tìm kiếm / Tìm kiếm nâng cao / Đánh dấu -->
+  <div class="demo-section">
+    <div class="demo-label">Toolbar 3 — Tìm kiếm · Đánh dấu</div>
+
+    <div style="font-size:11px; color:#727784; margin-bottom:8px;">Bootstrap cũ</div>
+    <div class="demo-row" style="margin-bottom:20px;">
+      <button style="background:#337ab7;color:#fff;border:none;padding:6px 12px;border-radius:4px;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
+        <span class="material-symbols-outlined" style="font-size:16px;">search</span> Tìm kiếm
+      </button>
+      <button style="background:#337ab7;color:#fff;border:none;padding:6px 12px;border-radius:4px;font-size:14px;cursor:pointer;">
+        Tìm kiếm nâng cao
+      </button>
+      <button style="background:#5bc0de;color:#fff;border:none;padding:6px 12px;border-radius:4px;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
+        <span class="material-symbols-outlined" style="font-size:16px;">bookmark_added</span> Đánh dấu
+      </button>
+    </div>
+
+    <div style="font-size:11px; color:#727784; margin-bottom:8px;">DLK Design System mới</div>
+    <div class="demo-row">
+      <!-- Tìm kiếm: xanh #337ab7 → icon search màu #337ab7 -->
+      <button class="dlk-btn dlk-btn-text">
+        <span class="material-symbols-outlined dlk-btn-icon-start" style="color:#337ab7;">search</span>
+        Tìm kiếm
+      </button>
+
+      <!-- Tìm kiếm nâng cao: xanh #337ab7, không có icon trong bản gốc -->
+      <button class="dlk-btn dlk-btn-text">
+        <span class="material-symbols-outlined dlk-btn-icon-start" style="color:#337ab7;">manage_search</span>
+        Tìm kiếm nâng cao
+      </button>
+
+      <!-- Đánh dấu: teal #5bc0de → icon bookmark màu #5bc0de -->
+      <button class="dlk-btn dlk-btn-text">
+        <span class="material-symbols-outlined dlk-btn-icon-start" style="color:#5bc0de;">bookmark_added</span>
+        Đánh dấu
+      </button>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="dlk-toast">
+    <span class="material-symbols-outlined" style="font-size:16px;color:#3fb950;">check_circle</span>
+    Đã copy code!
+  </div>
+
+  <!-- Code panel -->
+  <div id="dlk-code-panel">
+    <code id="dlk-code-content"></code>
+    <span id="dlk-code-close" title="Đóng">✕</span>
+  </div>
+
+  <script>
+    /* ===================== ICON BROWSER ===================== */
+    const ICONS = [
+      // Hành động chung
+      { name: 'save',               label: 'Lưu' },
+      { name: 'save_as',            label: 'Lưu thành' },
+      { name: 'delete',             label: 'Xoá' },
+      { name: 'delete_forever',     label: 'Xoá vĩnh viễn' },
+      { name: 'close',              label: 'Đóng' },
+      { name: 'add',                label: 'Thêm' },
+      { name: 'add_circle',         label: 'Thêm (tròn)' },
+      { name: 'remove',             label: 'Bỏ' },
+      { name: 'edit',               label: 'Sửa' },
+      { name: 'edit_note',          label: 'Sửa ghi chú' },
+      { name: 'check',              label: 'Tích' },
+      { name: 'check_circle',       label: 'Hoàn thành' },
+      { name: 'cancel',             label: 'Huỷ' },
+      { name: 'search',             label: 'Tìm kiếm' },
+      { name: 'filter_list',        label: 'Lọc' },
+      { name: 'sort',               label: 'Sắp xếp' },
+      { name: 'refresh',            label: 'Làm mới' },
+      { name: 'sync',               label: 'Đồng bộ' },
+      { name: 'autorenew',          label: 'Xử lý lại' },
+      { name: 'download',           label: 'Tải xuống' },
+      { name: 'upload',             label: 'Tải lên' },
+      { name: 'upload_file',        label: 'Tải file' },
+      { name: 'attach_file',        label: 'Đính kèm' },
+      { name: 'link',               label: 'Liên kết' },
+      { name: 'open_in_new',        label: 'Mở tab mới' },
+      { name: 'content_copy',       label: 'Sao chép' },
+      { name: 'content_paste',      label: 'Dán' },
+      { name: 'print',              label: 'In' },
+      { name: 'share',              label: 'Chia sẻ' },
+      { name: 'send',               label: 'Gửi' },
+      { name: 'forward',            label: 'Chuyển tiếp' },
+      { name: 'reply',              label: 'Trả lời' },
+      { name: 'undo',               label: 'Hoàn tác' },
+      { name: 'redo',               label: 'Làm lại' },
+      { name: 'swap_horiz',         label: 'Chuyển ngang' },
+      { name: 'swap_vert',          label: 'Chuyển dọc' },
+      { name: 'more_horiz',         label: 'Thêm nữa' },
+      { name: 'more_vert',          label: 'Thêm (dọc)' },
+      { name: 'settings',           label: 'Cài đặt' },
+      { name: 'tune',               label: 'Tuỳ chỉnh' },
+      { name: 'visibility',         label: 'Xem' },
+      { name: 'visibility_off',     label: 'Ẩn' },
+      { name: 'zoom_in',            label: 'Phóng to' },
+      { name: 'zoom_out',           label: 'Thu nhỏ' },
+      // Điều hướng
+      { name: 'arrow_back',         label: 'Quay lại' },
+      { name: 'arrow_forward',      label: 'Tiếp theo' },
+      { name: 'keyboard_arrow_up',   label: 'Lên' },
+      { name: 'keyboard_arrow_down', label: 'Xuống' },
+      { name: 'keyboard_arrow_left', label: 'Trái' },
+      { name: 'keyboard_arrow_right','label': 'Phải' },
+      { name: 'expand_more',        label: 'Mở rộng' },
+      { name: 'expand_less',        label: 'Thu gọn' },
+      { name: 'chevron_right',      label: 'Mũi tên phải' },
+      { name: 'first_page',         label: 'Trang đầu' },
+      { name: 'last_page',          label: 'Trang cuối' },
+      { name: 'navigate_before',    label: 'Trang trước' },
+      { name: 'navigate_next',      label: 'Trang sau' },
+      // Văn bản / Tài liệu
+      { name: 'description',        label: 'Tài liệu' },
+      { name: 'article',            label: 'Bài viết' },
+      { name: 'folder',             label: 'Thư mục' },
+      { name: 'folder_open',        label: 'Mở thư mục' },
+      { name: 'create_new_folder',  label: 'Tạo thư mục' },
+      { name: 'draft',              label: 'Bản nháp' },
+      { name: 'note_add',           label: 'Thêm ghi chú' },
+      { name: 'summarize',          label: 'Tóm tắt' },
+      { name: 'assignment',         label: 'Phân công' },
+      { name: 'assignment_turned_in','label': 'Đã hoàn thành' },
+      { name: 'task',               label: 'Nhiệm vụ' },
+      { name: 'task_alt',           label: 'Hoàn thành' },
+      { name: 'checklist',          label: 'Danh sách' },
+      { name: 'list_alt',           label: 'Danh sách chi tiết' },
+      { name: 'history',            label: 'Lịch sử' },
+      { name: 'history_edu',        label: 'Lịch sử VB' },
+      { name: 'inventory_2',        label: 'Hồ sơ' },
+      { name: 'archive',            label: 'Lưu trữ' },
+      { name: 'unarchive',          label: 'Bỏ lưu trữ' },
+      { name: 'inbox',              label: 'Hộp thư đến' },
+      { name: 'outbox',             label: 'Hộp thư đi' },
+      { name: 'mark_email_read',    label: 'Email đã đọc' },
+      { name: 'mail',               label: 'Thư' },
+      // Trạng thái / Thông báo
+      { name: 'info',               label: 'Thông tin' },
+      { name: 'warning',            label: 'Cảnh báo' },
+      { name: 'error',              label: 'Lỗi' },
+      { name: 'help',               label: 'Trợ giúp' },
+      { name: 'notifications',      label: 'Thông báo' },
+      { name: 'flag',               label: 'Gắn cờ' },
+      { name: 'bookmark',           label: 'Đánh dấu' },
+      { name: 'bookmark_add',       label: 'Thêm dấu' },
+      { name: 'bookmark_added',     label: 'Đã đánh dấu' },
+      { name: 'star',               label: 'Quan trọng' },
+      { name: 'new_releases',       label: 'Mới' },
+      { name: 'priority_high',      label: 'Ưu tiên cao' },
+      { name: 'pending',            label: 'Đang chờ' },
+      { name: 'lock',               label: 'Khoá' },
+      { name: 'lock_open',          label: 'Mở khoá' },
+      // Người dùng / Tổ chức
+      { name: 'person',             label: 'Người dùng' },
+      { name: 'group',              label: 'Nhóm' },
+      { name: 'manage_accounts',    label: 'Quản lý TK' },
+      { name: 'supervisor_account', label: 'Quản lý' },
+      { name: 'badge',              label: 'Huy hiệu' },
+      { name: 'business',           label: 'Tổ chức' },
+      { name: 'domain',             label: 'Đơn vị' },
+      { name: 'apartment',          label: 'Phòng ban' },
+      { name: 'how_to_reg',         label: 'Xác nhận' },
+      // Hành chính / Quy trình
+      { name: 'gavel',              label: 'Ban hành' },
+      { name: 'approval',           label: 'Phê duyệt' },
+      { name: 'verified',           label: 'Đã xác thực' },
+      { name: 'grading',            label: 'Chấm điểm' },
+      { name: 'rate_review',        label: 'Đánh giá' },
+      { name: 'rule',               label: 'Quy tắc' },
+      { name: 'policy',             label: 'Chính sách' },
+      { name: 'account_balance',    label: 'Ngân sách' },
+      { name: 'payments',           label: 'Thanh toán' },
+      { name: 'receipt_long',       label: 'Biên bản' },
+      { name: 'calculate',          label: 'Tính toán' },
+      { name: 'schedule',           label: 'Lịch hẹn' },
+      { name: 'event',              label: 'Sự kiện' },
+      { name: 'calendar_today',     label: 'Hôm nay' },
+      { name: 'date_range',         label: 'Khoảng ngày' },
+      // Ký số / Bảo mật
+      { name: 'draw',               label: 'Ký tay' },
+      { name: 'signature',          label: 'Chữ ký' },
+      { name: 'fingerprint',        label: 'Vân tay' },
+      { name: 'verified_user',      label: 'Xác thực' },
+      { name: 'security',           label: 'Bảo mật' },
+      { name: 'key',                label: 'Khoá' },
+      { name: 'encrypted',          label: 'Mã hoá' },
+    ];
+
+    const iconGrid   = document.getElementById('icon-grid');
+    const iconSearch = document.getElementById('icon-search');
+
+    function renderIcons(filter) {
+      const q = (filter || '').toLowerCase().trim();
+      const filtered = q
+        ? ICONS.filter(ic => ic.name.includes(q) || ic.label.toLowerCase().includes(q))
+        : ICONS;
+
+      iconGrid.innerHTML = '';
+      if (!filtered.length) {
+        iconGrid.innerHTML = '<div class="icon-no-result">Không tìm thấy icon nào</div>';
+        return;
+      }
+      filtered.forEach(ic => {
+        const div = document.createElement('div');
+        div.className = 'icon-item';
+        div.title = ic.name;
+        div.innerHTML = `<span class="material-symbols-outlined">${ic.name}</span>
+                         <span class="icon-name">${ic.name}</span>`;
+        div.addEventListener('click', () => {
+          // Điền vào builder
+          document.getElementById('b-icon').value = ic.name;
+          // Highlight
+          document.querySelectorAll('.icon-item').forEach(el => el.classList.remove('selected'));
+          div.classList.add('selected');
+          // Cuộn xuống builder
+          document.getElementById('b-variant').scrollIntoView({ behavior: 'smooth', block: 'center' });
+          renderBuilder();
+        });
+        iconGrid.appendChild(div);
+      });
+    }
+
+    iconSearch.addEventListener('input', () => renderIcons(iconSearch.value));
+    renderIcons();
+    /* ===================== END ICON BROWSER ===================== */
+
+    /* ===================== BUILDER ===================== */
+    const bVariant      = document.getElementById('b-variant');
+    const bSize         = document.getElementById('b-size');
+    const bLabel        = document.getElementById('b-label');
+    const bIcon         = document.getElementById('b-icon');
+    const bIconPos      = document.getElementById('b-icon-pos');
+    const bPreview      = document.getElementById('b-preview');
+    const bCode         = document.getElementById('b-code');
+    const bCopyBtn      = document.getElementById('b-copy-btn');
+    const bColorDisp    = document.getElementById('b-color-display');
+    const bPicker       = document.getElementById('b-color-picker');
+    const bIsDropdown   = document.getElementById('b-is-dropdown');
+    const bDropSection  = document.getElementById('b-dropdown-section');
+    const bItemsList    = document.getElementById('b-items-list');
+    const bMenuAlign    = document.getElementById('b-menu-align');
+
+    let selectedColor = '';
+
+    // ---- Dropdown items state ----
+    let dropItems = [
+      { type: 'item', icon: 'save',    label: 'Lưu hồ sơ',   danger: false },
+      { type: 'item', icon: 'save_as', label: 'Lưu bản nháp', danger: false },
+      { type: 'divider' },
+      { type: 'item', icon: 'delete',  label: 'Xoá',          danger: true  },
+    ];
+
+    function addItemRow(item, idx) {
+      const row = document.createElement('div');
+      if (item.type === 'divider') {
+        row.className = 'b-divider-row';
+        row.innerHTML = `<span>── Divider ──</span>
+          <button class="b-item-del" data-idx="${idx}" title="Xoá">✕</button>`;
+      } else {
+        row.className = 'b-item-row';
+        row.innerHTML = `
+          <input type="text" placeholder="Icon" value="${item.icon || ''}" data-field="icon" data-idx="${idx}" style="width:90px;flex:none;">
+          <input type="text" placeholder="Label" value="${item.label || ''}" data-field="label" data-idx="${idx}">
+          <select data-field="danger" data-idx="${idx}">
+            <option value="0" ${!item.danger ? 'selected' : ''}>Thường</option>
+            <option value="1" ${item.danger  ? 'selected' : ''}>Danger</option>
+          </select>
+          <button class="b-item-del" data-idx="${idx}" title="Xoá">✕</button>`;
+      }
+      bItemsList.appendChild(row);
+    }
+
+    function renderItemRows() {
+      bItemsList.innerHTML = '';
+      dropItems.forEach((item, idx) => addItemRow(item, idx));
+
+      // Xoá item
+      bItemsList.querySelectorAll('.b-item-del').forEach(btn => {
+        btn.addEventListener('click', () => {
+          dropItems.splice(+btn.dataset.idx, 1);
+          renderItemRows();
+          renderBuilder();
+        });
+      });
+      // Sửa item
+      bItemsList.querySelectorAll('[data-field]').forEach(el => {
+        el.addEventListener('input', () => {
+          const idx   = +el.dataset.idx;
+          const field = el.dataset.field;
+          if (field === 'danger') dropItems[idx].danger = el.value === '1';
+          else dropItems[idx][field] = el.value;
+          renderBuilder();
+        });
+      });
+    }
+
+    document.getElementById('b-add-item').addEventListener('click', () => {
+      dropItems.push({ type: 'item', icon: '', label: 'Item mới', danger: false });
+      renderItemRows(); renderBuilder();
+    });
+    document.getElementById('b-add-divider').addEventListener('click', () => {
+      dropItems.push({ type: 'divider' });
+      renderItemRows(); renderBuilder();
+    });
+
+    // ---- Build button HTML ----
+    function buildBtnHTML() {
+      const variant    = bVariant.value;
+      const size       = bSize.value;
+      const label      = bLabel.value.trim();
+      const icon       = bIcon.value.trim();
+      const pos        = bIconPos.value;
+      const color      = selectedColor;
+      const isDropdown = bIsDropdown.checked;
+
+      const extraClass = isDropdown ? ' dlk-dropdown-toggle' : '';
+      const classes    = ['dlk-btn', variant, size].filter(Boolean).join(' ') + extraClass;
+      const colorAttr  = color ? ` style="color:${color};"` : '';
+      const iconSpan   = icon
+        ? `<span class="material-symbols-outlined dlk-btn-icon-${pos}"${colorAttr}>${icon}</span>`
+        : '';
+
+      let inner = '';
+      if (icon && pos === 'start') inner = `\n  ${iconSpan}\n  ${label}\n`;
+      else if (icon && pos === 'end') inner = `\n  ${label}\n  ${iconSpan}\n`;
+      else inner = `\n  ${label}\n`;
+
+      return `<button class="${classes}">${inner}</button>`;
+    }
+
+    function buildMenuHTML() {
+      const align      = bMenuAlign.value;
+      const alignClass = align ? ` ${align}` : '';
+      const itemLines  = dropItems.map(item => {
+        if (item.type === 'divider') return `  <hr class="dlk-dropdown-divider">`;
+        const dangerClass = item.danger ? ' dlk-dropdown-item-danger' : '';
+        const iconPart    = item.icon
+          ? `\n      <span class="material-symbols-outlined">${item.icon}</span>` : '';
+        return `  <li><button class="dlk-dropdown-item${dangerClass}">${iconPart}\n      ${item.label}\n    </button></li>`;
+      }).join('\n');
+      return `<ul class="dlk-dropdown-menu${alignClass}">\n${itemLines}\n</ul>`;
+    }
+
+    function buildCode() {
+      const btn = buildBtnHTML();
+      if (!bIsDropdown.checked) return btn;
+      return `<div class="dlk-dropdown">\n  ${btn.replace(/\n/g, '\n  ')}\n  ${buildMenuHTML().replace(/\n/g, '\n  ')}\n</div>`;
+    }
+
+    function renderBuilder() {
+      const code = buildCode();
+      bCode.textContent = code;
+      bPreview.innerHTML = code;
+
+      // Gắn lại dropdown logic cho preview
+      const dd = bPreview.querySelector('.dlk-dropdown');
+      if (dd) {
+        const tog = dd.querySelector('.dlk-dropdown-toggle');
+        if (tog) {
+          tog.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dd.classList.toggle('open');
+          });
+        }
+        dd.querySelectorAll('.dlk-dropdown-item').forEach(it => {
+          it.addEventListener('click', (e) => { e.stopPropagation(); dd.classList.remove('open'); });
+        });
+      }
+    }
+
+    // Dropdown toggle show/hide section
+    bIsDropdown.addEventListener('change', () => {
+      bDropSection.style.display = bIsDropdown.checked ? 'flex' : 'none';
+      renderItemRows();
+      renderBuilder();
+    });
+    bMenuAlign.addEventListener('change', renderBuilder);
+
+    // Swatches
+    document.querySelectorAll('#b-swatches .swatch, #b-swatches .swatch-none').forEach(sw => {
+      sw.addEventListener('click', () => {
+        document.querySelectorAll('#b-swatches .swatch, #b-swatches .swatch-none').forEach(s => s.classList.remove('active'));
+        sw.classList.add('active');
+        selectedColor = sw.dataset.color || '';
+        bColorDisp.textContent = selectedColor || 'kế thừa';
+        bColorDisp.style.color = selectedColor || '#727784';
+        renderBuilder();
+      });
+    });
+
+    bPicker.addEventListener('input', () => {
+      document.querySelectorAll('#b-swatches .swatch, #b-swatches .swatch-none').forEach(s => s.classList.remove('active'));
+      selectedColor = bPicker.value;
+      bColorDisp.textContent = selectedColor;
+      bColorDisp.style.color = selectedColor;
+      renderBuilder();
+    });
+
+    [bVariant, bSize, bLabel, bIcon, bIconPos].forEach(el => el.addEventListener('input', renderBuilder));
+
+    bCopyBtn.addEventListener('click', () => {
+      const code = buildCode();
+      navigator.clipboard.writeText(code).then(() => {
+        bCopyBtn.classList.add('copied');
+        bCopyBtn.innerHTML = '<span class="material-symbols-outlined">check</span> Đã copy!';
+        setTimeout(() => {
+          bCopyBtn.classList.remove('copied');
+          bCopyBtn.innerHTML = '<span class="material-symbols-outlined">content_copy</span> Copy';
+        }, 2000);
+        showToast();
+      });
+    });
+
+    renderBuilder();
+    /* ===================== END BUILDER ===================== */
+
+    // Format HTML gọn lại
+    function formatBtnHTML(el) {
+      const clone = el.cloneNode(true);
+      // Xoá attribute thừa của browser
+      clone.removeAttribute('data-copyable');
+      const raw = clone.outerHTML;
+      // Indent spans bên trong
+      return raw
+        .replace(/>\s*</g, '>\n  <')
+        .replace(/\n  <\/button>/, '\n</button>')
+        .trim();
+    }
+
+    function showToast() {
+      const t = document.getElementById('dlk-toast');
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2000);
+    }
+
+    function showPanel(code) {
+      document.getElementById('dlk-code-content').textContent = code;
+      document.getElementById('dlk-code-panel').classList.add('show');
+    }
+
+    document.getElementById('dlk-code-close').addEventListener('click', () => {
+      document.getElementById('dlk-code-panel').classList.remove('show');
+    });
+
+    // Bọc dlk-btn trong copyable wrapper — bỏ qua dropdown-toggle và item
+    document.querySelectorAll('.dlk-btn:not(.dlk-dropdown-toggle)').forEach(btn => {
+      const wrapper = document.createElement('span');
+      wrapper.className = 'dlk-copyable';
+      btn.parentNode.insertBefore(wrapper, btn);
+      wrapper.appendChild(btn);
+
+      wrapper.addEventListener('click', (e) => {
+        e.preventDefault();
+        const code = formatBtnHTML(btn);
+        navigator.clipboard.writeText(code).then(() => {
+          showToast();
+          showPanel(code);
+        });
+      });
+    });
+
+    /* ===================== DROPDOWN ===================== */
+    function closeAllDropdowns(except) {
+      document.querySelectorAll('.dlk-dropdown.open').forEach(d => {
+        if (d !== except) d.classList.remove('open');
+      });
+    }
+
+    document.querySelectorAll('.dlk-dropdown-toggle').forEach(toggle => {
+      toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const dropdown = toggle.closest('.dlk-dropdown');
+        const isOpen = dropdown.classList.contains('open');
+        closeAllDropdowns();
+        dropdown.classList.toggle('open', !isOpen);
+      });
+    });
+
+    // Click ngoài để đóng
+    document.addEventListener('click', () => closeAllDropdowns());
+
+    // Click item thì đóng menu
+    document.querySelectorAll('.dlk-dropdown-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeAllDropdowns();
+      });
+    });
+    /* ===================== END DROPDOWN ===================== */
+
+    /* ===================== DOWNLOAD CSS ===================== */
+    function downloadCSS() {
+      const a = document.createElement('a');
+      a.href     = 'css/dlk-design-system.css';
+      a.download = 'dlk-design-system.css';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+  </script>
+
+</body>
+</html>
