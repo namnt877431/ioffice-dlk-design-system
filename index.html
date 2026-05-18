@@ -322,17 +322,29 @@
       </div>
     </div>
 
-    <!-- Nút tải CSS -->
-    <button onclick="downloadCSS()" style="
-      display:inline-flex; align-items:center; gap:8px;
-      background:rgba(255,255,255,0.15); color:#fff; border:1px solid rgba(255,255,255,0.3);
-      padding:8px 16px; border-radius:8px; cursor:pointer;
-      font-family:'Inter',sans-serif; font-size:13px; font-weight:600;
-      transition:background 0.15s;
-    " onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">
-      <span class="material-symbols-outlined" style="font-size:18px;">download</span>
-      Tải dlk-design-system.css
-    </button>
+    <!-- Nhóm nút góc phải -->
+    <div style="display:flex; align-items:center; gap:8px;">
+      <a href="index3.html" target="_blank" style="
+        display:inline-flex; align-items:center; gap:8px;
+        background:rgba(255,255,255,0.15); color:#fff; border:1px solid rgba(255,255,255,0.3);
+        padding:8px 16px; border-radius:8px; cursor:pointer;
+        font-family:'Inter',sans-serif; font-size:13px; font-weight:600;
+        text-decoration:none; transition:background 0.15s;
+      " onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">
+        <span class="material-symbols-outlined" style="font-size:18px;">open_in_new</span>
+        Xem giao diện
+      </a>
+      <button onclick="downloadCSS()" style="
+        display:inline-flex; align-items:center; gap:8px;
+        background:rgba(255,255,255,0.15); color:#fff; border:1px solid rgba(255,255,255,0.3);
+        padding:8px 16px; border-radius:8px; cursor:pointer;
+        font-family:'Inter',sans-serif; font-size:13px; font-weight:600;
+        transition:background 0.15s;
+      " onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">
+        <span class="material-symbols-outlined" style="font-size:18px;">download</span>
+        Tải dlk-design-system.css
+      </button>
+    </div>
   </div>
 
   <!-- ===== ICON BROWSER ===== -->
