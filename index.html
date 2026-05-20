@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 
   <!-- Iconify (Material Symbols và các bộ icon khác) -->
-  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@2.1.0/dist/iconify-icon.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- DLK Design System -->
@@ -402,7 +402,7 @@
 <br>&lt;<span style="color:#7ee787;">link</span> <span style="color:#79c0ff;">rel</span>=<span style="color:#a5d6ff;">"stylesheet"</span>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#79c0ff;">href</span>=<span style="color:#a5d6ff;">"dlk-design-system.css"</span>&gt;
 <br><br><span style="color:#8b949e;"><!-- 2. Iconify (nếu dùng icon) --></span>
-<br>&lt;<span style="color:#7ee787;">script</span> <span style="color:#79c0ff;">src</span>=<span style="color:#a5d6ff;">"https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"</span>&gt;&lt;/<span style="color:#7ee787;">script</span>&gt;
+<br>&lt;<span style="color:#7ee787;">script</span> <span style="color:#79c0ff;">src</span>=<span style="color:#a5d6ff;">"https://cdn.jsdelivr.net/npm/iconify-icon@2.1.0/dist/iconify-icon.min.js"</span>&gt;&lt;/<span style="color:#7ee787;">script</span>&gt;
           <button onclick="copyStep1(this)" style="position:absolute;top:8px;right:8px;background:#30363d;border:none;border-radius:5px;color:#e6edf3;font-size:11px;font-family:'Inter',sans-serif;padding:3px 9px;cursor:pointer;display:flex;align-items:center;gap:4px;">
             <iconify-icon icon="material-symbols:content-copy" style="font-size:13px;"></iconify-icon> Copy
           </button>
@@ -1577,7 +1577,7 @@
 
     /* ===================== COPY STEP 1 ===================== */
     function copyStep1(btn) {
-      const code = `<!-- DLK Design System CSS -->\n<link rel="stylesheet" href="dlk-design-system.css">\n\n<!-- Iconify (nếu dùng icon) -->\n<script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"><\/script>`;
+      const code = `<!-- DLK Design System CSS -->\n<link rel="stylesheet" href="dlk-design-system.css">\n\n<!-- Iconify (nếu dùng icon) -->\n<script src="https://cdn.jsdelivr.net/npm/iconify-icon@2.1.0/dist/iconify-icon.min.js"><\/script>`;
       navigator.clipboard.writeText(code).then(() => {
         const orig = btn.innerHTML;
         btn.innerHTML = '<iconify-icon icon="material-symbols:check" style="font-size:13px;"></iconify-icon> Đã copy!';
