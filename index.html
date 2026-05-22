@@ -340,6 +340,29 @@
       padding: 2px; line-height: 1; background: none; border: none;
       margin-left: auto;
     }
+
+    /* ---- Builder Tabs ---- */
+    .builder-tabs {
+      display: flex; gap: 2px;
+      border-bottom: 2px solid #e1e3e4;
+      margin-bottom: 20px;
+    }
+    .builder-tab {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: none; border: none;
+      padding: 10px 20px; cursor: pointer;
+      font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
+      color: #727784; border-bottom: 2px solid transparent; margin-bottom: -2px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .builder-tab:hover { color: #003f87; }
+    .builder-tab.active { color: #003f87; border-bottom-color: #003f87; }
+    .builder-tab iconify-icon { font-size: 18px; }
+
+    /* Icon Builder — checkbox inline */
+    .ib-check { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+    .ib-check input { width: 15px; height: 15px; accent-color: #003f87; cursor: pointer; }
+    .ib-check span { font-size: 13px; font-weight: 400; color: #424752; }
   </style>
 </head>
 <body>
@@ -382,6 +405,16 @@
         <span class="material-symbols-outlined" style="font-size:18px;">download</span>
         Tải dlk-design-system.css
       </button>
+      <button onclick="downloadJS()" style="
+        display:inline-flex; align-items:center; gap:8px;
+        background:rgba(255,255,255,0.15); color:#fff; border:1px solid rgba(255,255,255,0.3);
+        padding:8px 16px; border-radius:8px; cursor:pointer;
+        font-family:'Inter',sans-serif; font-size:13px; font-weight:600;
+        transition:background 0.15s;
+      " onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">
+        <span class="material-symbols-outlined" style="font-size:18px;">download</span>
+        Tải iconify-icon.min.js
+      </button>
     </div>
   </div>
 
@@ -401,8 +434,8 @@
 <span style="color:#8b949e;"><!-- 1. DLK Design System CSS --></span>
 <br>&lt;<span style="color:#7ee787;">link</span> <span style="color:#79c0ff;">rel</span>=<span style="color:#a5d6ff;">"stylesheet"</span>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#79c0ff;">href</span>=<span style="color:#a5d6ff;">"dlk-design-system.css"</span>&gt;
-<br><br><span style="color:#8b949e;"><!-- 2. Iconify (nếu dùng icon) --></span>
-<br>&lt;<span style="color:#7ee787;">script</span> <span style="color:#79c0ff;">src</span>=<span style="color:#a5d6ff;">"https://cdn.jsdelivr.net/npm/iconify-icon@2.1.0/dist/iconify-icon.min.js"</span>&gt;&lt;/<span style="color:#7ee787;">script</span>&gt;
+<br><br><span style="color:#8b949e;"><!-- 2. Iconify (nếu dùng icon) — tải file js bằng nút ở góc trên --></span>
+<br>&lt;<span style="color:#7ee787;">script</span> <span style="color:#79c0ff;">src</span>=<span style="color:#a5d6ff;">"js/iconify-icon.min.js"</span>&gt;&lt;/<span style="color:#7ee787;">script</span>&gt;
           <button onclick="copyStep1(this)" style="position:absolute;top:8px;right:8px;background:#30363d;border:none;border-radius:5px;color:#e6edf3;font-size:11px;font-family:'Inter',sans-serif;padding:3px 9px;cursor:pointer;display:flex;align-items:center;gap:4px;">
             <iconify-icon icon="material-symbols:content-copy" style="font-size:13px;"></iconify-icon> Copy
           </button>
@@ -437,6 +470,8 @@
           <span><span style="color:#003f87;">dlk-btn-filled</span> — Nền xanh</span>
           <span><span style="color:#003f87;">dlk-btn-outlined</span> — Viền</span>
           <span><span style="color:#003f87;">dlk-btn-tonal</span> — Nền xám nhạt</span>
+          <span><span style="color:#003f87;">dlk-btn-default</span> — Trắng/viền xám</span>
+          <span><span style="color:#003f87;">dlk-btn-primary-soft</span> — Xanh nhạt</span>
           <span><span style="color:#003f87;">dlk-btn-danger</span> — Đỏ</span>
           <span><span style="color:#003f87;">dlk-btn-danger-outlined</span> — Viền đỏ</span>
         </div>
@@ -445,6 +480,7 @@
       <div style="background:#f8f9fa;border-radius:8px;padding:12px 14px;">
         <div style="font-size:11px;font-weight:700;color:#003f87;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Size &amp; Icon</div>
         <div style="display:flex;flex-direction:column;gap:4px;font-family:'Consolas',monospace;font-size:11px;color:#424752;line-height:1.6;">
+          <span><span style="color:#003f87;">dlk-btn-xs</span> — Rất nhỏ (bảng/file)</span>
           <span><span style="color:#003f87;">dlk-btn-sm</span> — Nhỏ</span>
           <span><span style="color:#8b949e;">(trống)</span> — Vừa (mặc định)</span>
           <span><span style="color:#003f87;">dlk-btn-lg</span> — Lớn</span>
@@ -502,8 +538,24 @@
 
   <!-- ===== BUILDER ===== -->
   <div class="demo-section" style="border: 2px solid #003f87;">
-    <div class="demo-label" style="color:#003f87;">Button Builder — tạo & copy code</div>
 
+    <!-- Thanh tab -->
+    <div class="builder-tabs">
+      <button class="builder-tab active" data-tab="b1">
+        <iconify-icon icon="material-symbols:smart-button-outline"></iconify-icon>
+        Button Builder 1
+      </button>
+      <button class="builder-tab" data-tab="b2">
+        <iconify-icon icon="material-symbols:smart-button"></iconify-icon>
+        Button Builder 2
+      </button>
+    </div>
+
+    <!-- ===== TAB: BUTTON BUILDER 1 (.dlk-btn) ===== -->
+    <div class="builder-panel" data-panel="b1">
+    <div style="font-size:11px;color:#727784;margin-bottom:14px;">
+      Hệ nút <code style="background:#f3f4f5;padding:1px 5px;border-radius:3px;">.dlk-btn</code> — variant · size · icon · dropdown
+    </div>
     <div class="builder-grid" style="margin-bottom:16px;">
       <!-- Cột trái: tuỳ chỉnh -->
       <div style="display:flex;flex-direction:column;gap:14px;">
@@ -620,8 +672,267 @@
         </div>
       </div>
     </div>
+    </div>
+    <!-- ===== END TAB: BUTTON BUILDER 1 ===== -->
+
+    <!-- ===== TAB: BUTTON BUILDER 2 (.dlk_v2_file_btn) ===== -->
+    <div class="builder-panel" data-panel="b2" style="display:none;">
+    <div style="font-size:11px;color:#727784;margin-bottom:14px;">
+      Hệ nút <code style="background:#f3f4f5;padding:1px 5px;border-radius:3px;">.dlk_v2_file_btn</code> — kiểu · màu · cỡ · bo góc
+    </div>
+    <div class="builder-grid" style="margin-bottom:16px;">
+
+      <!-- Cột trái: tuỳ chỉnh -->
+      <div style="display:flex;flex-direction:column;gap:14px;">
+
+        <div style="display:flex;gap:12px;">
+          <div class="builder-field" style="flex:1;">
+            <label>Kiểu</label>
+            <select id="b2-style">
+              <option value="">Default</option>
+              <option value="dlk_v2_file_btn_solid">Solid</option>
+              <option value="dlk_v2_file_btn_soft">Soft</option>
+              <option value="dlk_v2_file_btn_outline">Outline</option>
+              <option value="dlk_v2_file_btn_ghost">Ghost</option>
+            </select>
+          </div>
+          <div class="builder-field" style="flex:1;">
+            <label>Màu theme</label>
+            <select id="b2-color">
+              <option value="">Default (xám)</option>
+              <option value="dlk_v2_file_btn_primary">Primary</option>
+              <option value="dlk_v2_file_btn_success">Success</option>
+              <option value="dlk_v2_file_btn_danger">Danger</option>
+              <option value="dlk_v2_file_btn_warning">Warning</option>
+              <option value="dlk_v2_file_btn_neutral">Neutral</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:12px;">
+          <div class="builder-field" style="flex:1;">
+            <label>Cỡ</label>
+            <select id="b2-size">
+              <option value="dlk_v2_file_btn_sm">Small</option>
+              <option value="" selected>Medium (mặc định)</option>
+              <option value="dlk_v2_file_btn_lg">Large</option>
+            </select>
+          </div>
+          <div class="builder-field" style="flex:1;">
+            <label>Bo góc</label>
+            <select id="b2-radius">
+              <option value="dlk_v2_file_btn_radius_square">Vuông</option>
+              <option value="" selected>Mặc định (4px)</option>
+              <option value="dlk_v2_file_btn_radius_lg">Bo nhiều</option>
+              <option value="dlk_v2_file_btn_radius_pill">Pill</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="builder-field">
+          <label>Label</label>
+          <input type="text" id="b2-label" value="Tải xuống">
+        </div>
+
+        <div class="builder-field">
+          <label>Iconify icon ID — để trống nếu không dùng</label>
+          <input type="text" id="b2-icon" value="material-symbols:download" placeholder="vd: material-symbols:download, mdi:file-word...">
+        </div>
+
+        <div class="builder-field">
+          <label>Vị trí icon</label>
+          <select id="b2-icon-pos">
+            <option value="start">Trước (start)</option>
+            <option value="end">Sau (end)</option>
+          </select>
+        </div>
+
+        <div class="builder-field">
+          <label>Màu theme tuỳ chỉnh — <code style="background:#f3f4f5;padding:1px 4px;border-radius:3px;font-family:Consolas;">--fbtn-color</code></label>
+          <div class="builder-swatches" id="b2-sw-theme"></div>
+        </div>
+
+        <div class="builder-field" style="gap:10px;">
+          <label class="ib-check">
+            <input type="checkbox" id="b2-same-color" checked>
+            <span>Chữ &amp; icon cùng màu</span>
+          </label>
+          <div>
+            <label id="b2-lbl-text" style="font-size:12px;font-weight:600;color:#424752;display:block;margin-bottom:6px;">Màu chữ &amp; icon</label>
+            <div class="builder-swatches" id="b2-sw-text"></div>
+          </div>
+          <div id="b2-field-icon" style="display:none;">
+            <label style="font-size:12px;font-weight:600;color:#424752;display:block;margin-bottom:6px;">Màu icon</label>
+            <div class="builder-swatches" id="b2-sw-icon"></div>
+          </div>
+        </div>
+
+        <div class="builder-field">
+          <label class="ib-check">
+            <input type="checkbox" id="b2-disabled">
+            <span>Disabled — vô hiệu hoá nút</span>
+          </label>
+        </div>
+
+      </div>
+
+      <!-- Cột phải: preview + code -->
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="builder-field">
+          <label>Preview</label>
+          <div class="builder-preview-box" id="b2-preview" style="min-height:80px;"></div>
+        </div>
+        <div class="builder-field" style="flex:1;">
+          <label>Code</label>
+          <div class="builder-code-box" style="position:relative;">
+            <code id="b2-code"></code>
+            <button class="builder-copy-btn" id="b2-copy-btn">
+              <iconify-icon icon="material-symbols:content-copy" style="font-size:12px;"></iconify-icon>
+              Copy
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <!-- ===== END TAB: BUTTON BUILDER 2 ===== -->
+
   </div>
   <!-- ===== END BUILDER ===== -->
+
+  <!-- File Action Buttons -->
+  <div class="demo-section">
+    <div class="demo-label">File Action Buttons — dlk-btn-xs · dlk-btn-default · dlk-btn-primary-soft</div>
+    <div class="demo-row" style="margin-bottom:8px;">
+      <button class="dlk-btn dlk-btn-xs dlk-btn-default">
+        <iconify-icon icon="material-symbols:download" style="font-size:13px;"></iconify-icon>
+        Tải
+      </button>
+      <button class="dlk-btn dlk-btn-xs dlk-btn-default">
+        <iconify-icon icon="material-symbols:summarize" style="font-size:13px;"></iconify-icon>
+        Tóm tắt
+      </button>
+      <button class="dlk-btn dlk-btn-xs dlk-btn-primary-soft">
+        <iconify-icon icon="material-symbols:visibility" style="font-size:13px;"></iconify-icon>
+        Xem
+      </button>
+      <button class="dlk-btn dlk-btn-xs dlk-btn-default">
+        <iconify-icon icon="material-symbols:open-in-new" style="font-size:13px;"></iconify-icon>
+        Tab mới
+      </button>
+    </div>
+    <div style="font-size:11px;color:#727784;margin-top:4px;">
+      Kết hợp: <code style="background:#f3f4f5;padding:1px 5px;border-radius:3px;">dlk-btn dlk-btn-xs dlk-btn-default</code>
+      &nbsp;·&nbsp;
+      <code style="background:#f3f4f5;padding:1px 5px;border-radius:3px;">dlk-btn dlk-btn-xs dlk-btn-primary-soft</code>
+    </div>
+  </div>
+
+  <!-- File Action Buttons v2 (.dlk_v2_file_btn) -->
+  <div class="demo-section">
+    <div class="demo-label">File Action Buttons v2 — .dlk_v2_file_btn</div>
+
+    <!-- Ví dụ thực tế -->
+    <div style="font-size:11px;font-weight:700;color:#003f87;text-transform:uppercase;letter-spacing:.06em;margin:2px 0 6px;">Ví dụ — hàng thao tác file</div>
+    <div class="dlk_v2_file_actions" style="margin-bottom:6px;">
+      <button class="dlk_v2_file_btn">
+        <iconify-icon icon="material-symbols:download"></iconify-icon> Tải
+      </button>
+      <button class="dlk_v2_file_btn">
+        <iconify-icon icon="material-symbols:summarize"></iconify-icon> Tóm tắt
+      </button>
+      <button class="dlk_v2_file_btn dlk_v2_file_btn_primary">
+        <iconify-icon icon="material-symbols:visibility"></iconify-icon> Xem
+      </button>
+      <button class="dlk_v2_file_btn">
+        <iconify-icon icon="material-symbols:open-in-new"></iconify-icon> Tab mới
+      </button>
+    </div>
+
+    <!-- Kiểu nút × Màu -->
+    <div style="font-size:11px;font-weight:700;color:#003f87;text-transform:uppercase;letter-spacing:.06em;margin:16px 0 6px;">Kiểu nút × Màu theme</div>
+
+    <div class="demo-row" style="margin-bottom:6px;">
+      <button class="dlk_v2_file_btn"><iconify-icon icon="material-symbols:visibility"></iconify-icon> Default</button>
+      <button class="dlk_v2_file_btn" disabled><iconify-icon icon="material-symbols:lock"></iconify-icon> Disabled</button>
+      <span style="font-size:10px;color:#9aa0ab;align-self:center;">← không thêm class kiểu/màu</span>
+    </div>
+    <div class="demo-row" style="margin-bottom:6px;">
+      <button class="dlk_v2_file_btn dlk_v2_file_btn_primary dlk_v2_file_btn_soft"><iconify-icon icon="material-symbols:circle"></iconify-icon> Soft Primary</button>
+      <button class="dlk_v2_file_btn dlk_v2_file_btn_success dlk_v2_file_btn_soft"><iconify-icon icon="material-symbols:circle"></iconify-icon> Success</button>
+      <button class="dlk_v2_file_btn dlk_v2_file_btn_danger dlk_v2_file_btn_soft"><iconify-icon icon="material-symbols:circle"></iconify-icon> Danger</button>
+      <button class="dlk_v2_file_btn dlk_v2_file_btn_warning dlk_v2_file_btn_soft"><iconify-icon icon="material-symbols:circle"></iconify-icon> Warning</button>
+      <button class="dlk_v2_file_btn dlk_v2_file_btn_neutral dlk_v2_file_btn_soft"><iconify-icon icon="material-symbols:circle"></iconify-icon> Neutral</button>
+    </div>
+    <div class="demo-row" style="margin-bottom:6px;">
+      <button class="dlk_v2_file_btn dlk_v2_file_btn_primary dlk_v2_file_btn_solid"><iconify-icon icon="material-symbols:circle"></iconify-icon> Solid Primary</button>
+      <button class="dlk_v2_file_btn dlk_v2_file_btn_success dlk_v2_file_btn_solid"><iconify-icon icon="material-symbols:circle"></iconify-icon> Success</button>
+      <button class="dlk_v2_file_btn dlk_v2_file_btn_danger dlk_v2_file_btn_solid"><iconify-icon icon="material-symbols:circle"></iconify-icon> Danger</button>
+      <button class="dlk_v2_file_btn dlk_v2_file_btn_warning dlk_v2_file_btn_solid"><iconify-icon icon="material-symbols:circle"></iconify-icon> Warning</button>
+      <button class="dlk_v2_file_btn dlk_v2_file_btn_neutral dlk_v2_file_btn_solid"><iconify-icon icon="material-symbols:circle"></iconify-icon> Neutral</button>
+    </div>
+    <div class="demo-row" style="margin-bottom:6px;">
+      <button class="dlk_v2_file_btn dlk_v2_file_btn_primary dlk_v2_file_btn_outline"><iconify-icon icon="material-symbols:circle"></iconify-icon> Outline Primary</button>
+      <button class="dlk_v2_file_btn dlk_v2_file_btn_success dlk_v2_file_btn_outline"><iconify-icon icon="material-symbols:circle"></iconify-icon> Success</button>
+      <button class="dlk_v2_file_btn dlk_v2_file_btn_danger dlk_v2_file_btn_outline"><iconify-icon icon="material-symbols:circle"></iconify-icon> Danger</button>
+      <button class="dlk_v2_file_btn dlk_v2_file_btn_warning dlk_v2_file_btn_outline"><iconify-icon icon="material-symbols:circle"></iconify-icon> Warning</button>
+      <button class="dlk_v2_file_btn dlk_v2_file_btn_neutral dlk_v2_file_btn_outline"><iconify-icon icon="material-symbols:circle"></iconify-icon> Neutral</button>
+    </div>
+    <div class="demo-row">
+      <button class="dlk_v2_file_btn dlk_v2_file_btn_primary dlk_v2_file_btn_ghost"><iconify-icon icon="material-symbols:circle"></iconify-icon> Ghost Primary</button>
+      <button class="dlk_v2_file_btn dlk_v2_file_btn_success dlk_v2_file_btn_ghost"><iconify-icon icon="material-symbols:circle"></iconify-icon> Success</button>
+      <button class="dlk_v2_file_btn dlk_v2_file_btn_danger dlk_v2_file_btn_ghost"><iconify-icon icon="material-symbols:circle"></iconify-icon> Danger</button>
+      <button class="dlk_v2_file_btn dlk_v2_file_btn_warning dlk_v2_file_btn_ghost"><iconify-icon icon="material-symbols:circle"></iconify-icon> Warning</button>
+      <button class="dlk_v2_file_btn dlk_v2_file_btn_neutral dlk_v2_file_btn_ghost"><iconify-icon icon="material-symbols:circle"></iconify-icon> Neutral</button>
+    </div>
+
+    <!-- Cỡ -->
+    <div style="font-size:11px;font-weight:700;color:#003f87;text-transform:uppercase;letter-spacing:.06em;margin:16px 0 6px;">Cỡ — _sm · (md mặc định) · _lg</div>
+    <div class="demo-row" style="align-items:center;">
+      <button class="dlk_v2_file_btn dlk_v2_file_btn_primary dlk_v2_file_btn_solid dlk_v2_file_btn_sm"><iconify-icon icon="material-symbols:download"></iconify-icon> Small</button>
+      <button class="dlk_v2_file_btn dlk_v2_file_btn_primary dlk_v2_file_btn_solid"><iconify-icon icon="material-symbols:download"></iconify-icon> Medium</button>
+      <button class="dlk_v2_file_btn dlk_v2_file_btn_primary dlk_v2_file_btn_solid dlk_v2_file_btn_lg"><iconify-icon icon="material-symbols:download"></iconify-icon> Large</button>
+    </div>
+
+    <!-- Bo góc -->
+    <div style="font-size:11px;font-weight:700;color:#003f87;text-transform:uppercase;letter-spacing:.06em;margin:16px 0 6px;">Bo góc — _radius_square · (4px mặc định) · _radius_lg · _radius_pill</div>
+    <div class="demo-row">
+      <button class="dlk_v2_file_btn dlk_v2_file_btn_primary dlk_v2_file_btn_solid dlk_v2_file_btn_radius_square"><iconify-icon icon="material-symbols:crop-square"></iconify-icon> Vuông</button>
+      <button class="dlk_v2_file_btn dlk_v2_file_btn_primary dlk_v2_file_btn_solid"><iconify-icon icon="material-symbols:check-box-outline-blank"></iconify-icon> Mặc định</button>
+      <button class="dlk_v2_file_btn dlk_v2_file_btn_primary dlk_v2_file_btn_solid dlk_v2_file_btn_radius_lg"><iconify-icon icon="material-symbols:rounded-corner"></iconify-icon> Bo nhiều</button>
+      <button class="dlk_v2_file_btn dlk_v2_file_btn_primary dlk_v2_file_btn_solid dlk_v2_file_btn_radius_pill"><iconify-icon icon="material-symbols:medication"></iconify-icon> Pill</button>
+    </div>
+
+    <!-- Màu tùy biến qua CSS variables -->
+    <div style="font-size:11px;font-weight:700;color:#003f87;text-transform:uppercase;letter-spacing:.06em;margin:16px 0 6px;">Màu tùy biến — CSS variables</div>
+    <div class="demo-row">
+      <button class="dlk_v2_file_btn dlk_v2_file_btn_solid" style="--fbtn-color:#7c3aed;--fbtn-color-dark:#6d28d9;"><iconify-icon icon="material-symbols:palette"></iconify-icon> Theme tím</button>
+      <button class="dlk_v2_file_btn dlk_v2_file_btn_outline" style="--fbtn-color:#0f766e;"><iconify-icon icon="material-symbols:spa"></iconify-icon> Theme teal</button>
+      <button class="dlk_v2_file_btn dlk_v2_file_btn_primary dlk_v2_file_btn_soft" style="--fbtn-icon-color:#f59e0b;"><iconify-icon icon="material-symbols:star"></iconify-icon> Icon vàng riêng</button>
+      <button class="dlk_v2_file_btn dlk_v2_file_btn_neutral dlk_v2_file_btn_soft" style="--fbtn-text-color:#dc2626;--fbtn-icon-color:#dc2626;"><iconify-icon icon="material-symbols:delete"></iconify-icon> Chữ + icon đỏ</button>
+    </div>
+
+    <!-- Cheat sheet -->
+    <pre style="background:#f8f9fa;border-radius:8px;padding:12px 14px;font-family:'Consolas',monospace;font-size:11px;color:#424752;line-height:1.7;overflow:auto;margin:14px 0 0;"><span style="color:#003f87;">.dlk_v2_file_btn</span>              Nút cơ bản (kiểu default)
+<span style="color:#727784;">Cỡ    :</span> _sm  _lg                  <span style="color:#9aa0ab;">(md = mặc định)</span>
+<span style="color:#727784;">Bo góc:</span> _radius_square  _radius_lg  _radius_pill  <span style="color:#9aa0ab;">(4px = mặc định)</span>
+<span style="color:#727784;">Màu   :</span> _primary _success _danger _warning _neutral
+<span style="color:#727784;">Kiểu  :</span> _solid _soft _outline _ghost  <span style="color:#9aa0ab;">(default = không thêm class)</span>
+<span style="color:#727784;">Biến  :</span> --fbtn-color  --fbtn-color-dark  --fbtn-text-color  --fbtn-icon-color
+
+<span style="color:#9aa0ab;">&lt;!-- Ví dụ: nút Solid màu danger, cỡ nhỏ, bo pill --&gt;</span>
+&lt;<span style="color:#7ee787;">button</span> <span style="color:#79c0ff;">class</span>=<span style="color:#a5d6ff;">"dlk_v2_file_btn dlk_v2_file_btn_danger dlk_v2_file_btn_solid dlk_v2_file_btn_sm dlk_v2_file_btn_radius_pill"</span>&gt;
+  &lt;<span style="color:#7ee787;">iconify-icon</span> <span style="color:#79c0ff;">icon</span>=<span style="color:#a5d6ff;">"material-symbols:delete"</span>&gt;&lt;/<span style="color:#7ee787;">iconify-icon</span>&gt; Xóa
+&lt;/<span style="color:#7ee787;">button</span>&gt;</pre>
+
+    <div style="font-size:11px;color:#727784;line-height:1.7;margin-top:8px;">
+      <strong style="color:#424752;">Ghi chú:</strong><br>
+      • Không còn bắt buộc wrapper <code style="background:#f3f4f5;padding:1px 5px;border-radius:3px;">dlk-detail-v2</code> — dùng được ở mọi nơi.<br>
+      • Icon: dùng được cả <code style="background:#f3f4f5;padding:1px 5px;border-radius:3px;">&lt;iconify-icon&gt;</code> (Iconify) lẫn <code style="background:#f3f4f5;padding:1px 5px;border-radius:3px;">&lt;i class="fa"&gt;</code> (FontAwesome) — icon tự co theo cỡ nút.<br>
+      • Class màu khi đứng riêng = kiểu Soft của màu đó; thêm <code style="background:#f3f4f5;padding:1px 5px;border-radius:3px;">_solid/_outline/_ghost</code> để đổi.<br>
+      • Màu riêng: đặt inline <code style="background:#f3f4f5;padding:1px 5px;border-radius:3px;">style="--fbtn-text-color:…; --fbtn-icon-color:…"</code> — icon mặc định theo màu chữ.
+    </div>
+  </div>
 
   <!-- Variants -->
   <div class="demo-section">
@@ -1501,6 +1812,140 @@
     renderBuilder();
     /* ===================== END BUILDER ===================== */
 
+    /* ===================== BUILDER TABS ===================== */
+    document.querySelectorAll('.builder-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const name = tab.getAttribute('data-tab');
+        document.querySelectorAll('.builder-tab').forEach(t =>
+          t.classList.toggle('active', t === tab));
+        document.querySelectorAll('.builder-panel').forEach(p =>
+          p.style.display = (p.getAttribute('data-panel') === name) ? '' : 'none');
+      });
+    });
+
+    /* ===================== BUTTON BUILDER 2 (.dlk_v2_file_btn) ===================== */
+    (function () {
+      const $ = id => document.getElementById(id);
+      const elStyle  = $('b2-style'),  elColor  = $('b2-color'),
+            elSize   = $('b2-size'),   elRadius = $('b2-radius'),
+            elLabel  = $('b2-label'),  elIcon   = $('b2-icon'),
+            elPos    = $('b2-icon-pos'), elDis  = $('b2-disabled'),
+            elSame   = $('b2-same-color'), elLblText = $('b2-lbl-text'),
+            elFieldIcon = $('b2-field-icon'),
+            elPrev   = $('b2-preview'), elCode = $('b2-code'),
+            elCopy   = $('b2-copy-btn');
+
+      const PALETTE = ['#003f87','#7c3aed','#0f766e','#1a7f37','#e8952a','#dc3545','#6c757d','#191c1d'];
+      const colors  = { theme: '', text: '', icon: '' };
+
+      // Sinh 1 hàng swatch — chọn xong lưu vào colors[key]
+      function buildSwatchRow(container, key, pickerDefault) {
+        const none = document.createElement('span');
+        none.className = 'swatch-none active';
+        none.dataset.color = '';
+        none.title = 'Không đặt — theo mặc định';
+        none.textContent = '–';
+        container.appendChild(none);
+        PALETTE.forEach(c => {
+          const s = document.createElement('span');
+          s.className = 'swatch';
+          s.style.background = c;
+          s.dataset.color = c;
+          s.title = c;
+          container.appendChild(s);
+        });
+        const picker = document.createElement('input');
+        picker.type = 'color';
+        picker.className = 'swatch-picker';
+        picker.value = pickerDefault;
+        picker.title = 'Chọn màu tuỳ ý';
+        container.appendChild(picker);
+
+        function setActive(el) {
+          container.querySelectorAll('.swatch,.swatch-none').forEach(x => x.classList.remove('active'));
+          if (el) el.classList.add('active');
+        }
+        container.addEventListener('click', e => {
+          const s = e.target.closest('.swatch,.swatch-none');
+          if (!s) return;
+          setActive(s);
+          colors[key] = s.dataset.color;
+          render();
+        });
+        picker.addEventListener('input', () => {
+          setActive(null);
+          colors[key] = picker.value;
+          render();
+        });
+      }
+      buildSwatchRow($('b2-sw-theme'), 'theme', '#7c3aed');
+      buildSwatchRow($('b2-sw-text'),  'text',  '#003f87');
+      buildSwatchRow($('b2-sw-icon'),  'icon',  '#e8952a');
+
+      function buildCode() {
+        const classes = ['dlk_v2_file_btn', elColor.value, elStyle.value,
+                         elSize.value, elRadius.value].filter(Boolean).join(' ');
+        const label = elLabel.value.trim();
+        const icon  = elIcon.value.trim();
+        const pos   = elPos.value;
+
+        // CSS variables màu
+        const vars = [];
+        if (colors.theme) vars.push(`--fbtn-color:${colors.theme}`);
+        if (elSame.checked) {
+          // Chữ & icon cùng màu
+          if (colors.text) vars.push(`--fbtn-text-color:${colors.text}`,
+                                     `--fbtn-icon-color:${colors.text}`);
+        } else {
+          // Tách riêng
+          if (colors.text) vars.push(`--fbtn-text-color:${colors.text}`);
+          if (colors.icon) vars.push(`--fbtn-icon-color:${colors.icon}`);
+        }
+        const styleAttr = vars.length ? ` style="${vars.join(';')};"` : '';
+        const disAttr   = elDis.checked ? ' disabled' : '';
+
+        const iconPart = icon ? `<iconify-icon icon="${icon}"></iconify-icon>` : '';
+        let inner;
+        if (iconPart && pos === 'start')    inner = `\n  ${iconPart}\n  ${label}\n`;
+        else if (iconPart && pos === 'end') inner = `\n  ${label}\n  ${iconPart}\n`;
+        else                                inner = `\n  ${label}\n`;
+
+        return `<button class="${classes}"${styleAttr}${disAttr}>${inner}</button>`;
+      }
+
+      function render() {
+        const code = buildCode();
+        elCode.textContent = code;
+        elPrev.innerHTML = code;
+      }
+
+      [elStyle, elColor, elSize, elRadius, elPos].forEach(el =>
+        el.addEventListener('change', render));
+      [elLabel, elIcon].forEach(el => el.addEventListener('input', render));
+      elDis.addEventListener('change', render);
+
+      elSame.addEventListener('change', () => {
+        elFieldIcon.style.display = elSame.checked ? 'none' : '';
+        elLblText.textContent = elSame.checked ? 'Màu chữ & icon' : 'Màu chữ';
+        render();
+      });
+
+      elCopy.addEventListener('click', () => {
+        navigator.clipboard.writeText(elCode.textContent).then(() => {
+          elCopy.classList.add('copied');
+          elCopy.innerHTML = '<iconify-icon icon="material-symbols:check" style="font-size:12px;"></iconify-icon> Đã copy!';
+          setTimeout(() => {
+            elCopy.classList.remove('copied');
+            elCopy.innerHTML = '<iconify-icon icon="material-symbols:content-copy" style="font-size:12px;"></iconify-icon> Copy';
+          }, 2000);
+          showToast();
+        });
+      });
+
+      render();
+    })();
+    /* ===================== END BUTTON BUILDER 2 ===================== */
+
     // Format HTML gọn lại
     function formatBtnHTML(el) {
       const clone = el.cloneNode(true);
@@ -1577,7 +2022,7 @@
 
     /* ===================== COPY STEP 1 ===================== */
     function copyStep1(btn) {
-      const code = `<!-- DLK Design System CSS -->\n<link rel="stylesheet" href="dlk-design-system.css">\n\n<!-- Iconify (nếu dùng icon) -->\n<script src="https://cdn.jsdelivr.net/npm/iconify-icon@2.1.0/dist/iconify-icon.min.js"><\/script>`;
+      const code = `<!-- DLK Design System CSS -->\n<link rel="stylesheet" href="dlk-design-system.css">\n\n<!-- Iconify (nếu dùng icon) -->\n<script src="js/iconify-icon.min.js"><\/script>`;
       navigator.clipboard.writeText(code).then(() => {
         const orig = btn.innerHTML;
         btn.innerHTML = '<iconify-icon icon="material-symbols:check" style="font-size:13px;"></iconify-icon> Đã copy!';
@@ -1592,6 +2037,15 @@
       const a = document.createElement('a');
       a.href     = 'css/dlk-design-system.css';
       a.download = 'dlk-design-system.css';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
+    function downloadJS() {
+      const a = document.createElement('a');
+      a.href     = 'js/iconify-icon.min.js';
+      a.download = 'iconify-icon.min.js';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);

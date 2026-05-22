@@ -43,6 +43,7 @@
 
   /* Typography */
   --dlk-font-family:               'Inter', sans-serif;
+  --dlk-font-size-xs:              11px;
   --dlk-font-size-sm:              12px;
   --dlk-font-size-md:              14px;
   --dlk-font-size-lg:              16px;
@@ -51,6 +52,8 @@
   --dlk-line-height-label:         16px;
 
   /* Spacing */
+  --dlk-btn-padding-x-xs:          9px;
+  --dlk-btn-padding-y-xs:          4px;
   --dlk-btn-padding-x-sm:          10px;
   --dlk-btn-padding-y-sm:          4px;
   --dlk-btn-padding-x-md:          14px;
@@ -375,4 +378,230 @@
   background: var(--dlk-outline-variant);
   margin:     4px 0;
   border:     none;
+}
+
+
+/* ==========================================================================
+   Button — Extra Small (xs)
+   Dùng cho nút hành động nhỏ gọn trong bảng, danh sách file
+   ========================================================================== */
+.dlk-btn-xs {
+  padding:       var(--dlk-btn-padding-y-xs) var(--dlk-btn-padding-x-xs);
+  font-size:     var(--dlk-font-size-xs);
+  line-height:   1.2;
+  border-radius: var(--dlk-radius-sm);
+  gap:           4px;
+}
+
+.dlk-btn-xs .dlk-btn-icon-start,
+.dlk-btn-xs .dlk-btn-icon-end {
+  font-size: 13px;
+}
+
+
+/* ==========================================================================
+   Button Variants — Default & Primary Soft
+   Dùng trong bảng danh sách, hành động file đính kèm
+   ========================================================================== */
+
+/* --- Default (nền trắng, viền xám) --- */
+.dlk-btn-default {
+  background-color: #ffffff;
+  color:            #374151;
+  border-color:     #d1d5db;
+}
+.dlk-btn-default:hover {
+  background-color: #f3f4f6;
+  border-color:     var(--dlk-primary);
+  color:            var(--dlk-primary);
+}
+.dlk-btn-default:active {
+  background-color: #e5e7eb;
+}
+
+/* --- Primary Soft (nền xanh nhạt, viền xanh nhạt) --- */
+.dlk-btn-primary-soft {
+  background-color: #eff6ff;
+  color:            #0055a5;
+  border-color:     #bfdbfe;
+}
+.dlk-btn-primary-soft:hover {
+  background-color: #dbeafe;
+  border-color:     #0055a5;
+  color:            #0055a5;
+}
+.dlk-btn-primary-soft:active {
+  background-color: #bfdbfe;
+}
+
+
+/* ==========================================================================
+   File Action Buttons (.dlk_v2_file_btn) — v2
+   Nút hành động cho danh sách file đính kèm.
+   Hỗ trợ: Iconify & FontAwesome · 3 cỡ (sm/md/lg) · 4 kiểu bo góc ·
+   5 kiểu nút (default/solid/soft/outline/ghost) · 5 màu theme · CSS variables.
+   Không còn bắt buộc wrapper .dlk-detail-v2.
+   ========================================================================== */
+
+/* --- Container --- */
+.dlk_v2_file_actions {
+  display:     inline-flex;
+  align-items: center;
+  gap:         4px;
+  flex-shrink: 0;
+}
+
+/* --- Nút cơ bản: cỡ md, bo 4px, kiểu default (nền trắng / viền xám) --- */
+.dlk_v2_file_btn {
+  /* Biến theme — mặc định màu primary; ghi đè bằng class màu hoặc inline style.
+     --fbtn-text-color / --fbtn-icon-color: tùy biến màu chữ & icon riêng. */
+  --fbtn-color:         #0055a5;   /* màu nhấn */
+  --fbtn-color-dark:    #004080;   /* màu nhấn khi hover */
+  --fbtn-bg-soft:       #eff6ff;   /* nền nhạt */
+  --fbtn-bg-soft-hover: #dbeafe;
+  --fbtn-border-soft:   #bfdbfe;
+  --fbtn-on-solid:      #ffffff;   /* màu chữ trên nền đặc */
+
+  display:         inline-flex;
+  align-items:     center;
+  justify-content: center;
+  gap:             4px;
+  font-size:       11px;
+  font-weight:     500;
+  padding:         4px 9px;
+  border:          1px solid #d1d5db;
+  border-radius:   4px;
+  background:      #fff;
+  color:           var(--fbtn-text-color, #374151);
+  cursor:          pointer;
+  white-space:     nowrap;
+  line-height:     1.2;
+  box-shadow:      none;
+  transition:      background .15s, border-color .15s, color .15s;
+}
+
+/* Icon bên trong — FontAwesome (.fa) hoặc Iconify (<iconify-icon>) */
+.dlk_v2_file_btn .fa,
+.dlk_v2_file_btn iconify-icon {
+  font-size:   1em;                                  /* co theo cỡ nút */
+  line-height: 1;
+  color:       var(--fbtn-icon-color, currentColor); /* mặc định theo màu chữ */
+  flex-shrink: 0;
+}
+
+/* Hover / focus / disabled cho kiểu default */
+.dlk_v2_file_btn:hover {
+  background:   #f3f4f6;
+  border-color: var(--fbtn-color);
+  color:        var(--fbtn-text-color, var(--fbtn-color));
+}
+.dlk_v2_file_btn:focus-visible {
+  outline:        2px solid var(--fbtn-color);
+  outline-offset: 1px;
+}
+.dlk_v2_file_btn:disabled,
+.dlk_v2_file_btn.is-disabled {
+  opacity:        .5;
+  cursor:         not-allowed;
+  pointer-events: none;
+}
+
+/* --- Cỡ (mặc định = md) --- */
+.dlk_v2_file_btn_sm { font-size: 10px; padding: 3px 7px;  gap: 3px; }
+.dlk_v2_file_btn_lg { font-size: 13px; padding: 6px 13px; gap: 6px; }
+
+/* --- Kiểu bo góc (mặc định = 4px) --- */
+.dlk_v2_file_btn_radius_square { border-radius: 2px;   }
+.dlk_v2_file_btn_radius_lg     { border-radius: 8px;   }
+.dlk_v2_file_btn_radius_pill   { border-radius: 999px; }
+
+/* --- Màu theme: chỉ đặt biến, dùng được với mọi kiểu nút --- */
+.dlk_v2_file_btn_primary {
+  --fbtn-color: #0055a5; --fbtn-color-dark: #004080;
+  --fbtn-bg-soft: #eff6ff; --fbtn-bg-soft-hover: #dbeafe; --fbtn-border-soft: #bfdbfe;
+}
+.dlk_v2_file_btn_success {
+  --fbtn-color: #15803d; --fbtn-color-dark: #166534;
+  --fbtn-bg-soft: #f0fdf4; --fbtn-bg-soft-hover: #dcfce7; --fbtn-border-soft: #bbf7d0;
+}
+.dlk_v2_file_btn_danger {
+  --fbtn-color: #dc2626; --fbtn-color-dark: #b91c1c;
+  --fbtn-bg-soft: #fef2f2; --fbtn-bg-soft-hover: #fee2e2; --fbtn-border-soft: #fecaca;
+}
+.dlk_v2_file_btn_warning {
+  --fbtn-color: #b45309; --fbtn-color-dark: #92400e;
+  --fbtn-bg-soft: #fffbeb; --fbtn-bg-soft-hover: #fef3c7; --fbtn-border-soft: #fde68a;
+}
+.dlk_v2_file_btn_neutral {
+  --fbtn-color: #374151; --fbtn-color-dark: #1f2937;
+  --fbtn-bg-soft: #f3f4f6; --fbtn-bg-soft-hover: #e5e7eb; --fbtn-border-soft: #d1d5db;
+}
+
+/* Có class màu mà KHÔNG kèm class kiểu → mặc định hiển thị dạng Soft */
+.dlk_v2_file_btn_primary,
+.dlk_v2_file_btn_success,
+.dlk_v2_file_btn_danger,
+.dlk_v2_file_btn_warning,
+.dlk_v2_file_btn_neutral {
+  background:   var(--fbtn-bg-soft);
+  border-color: var(--fbtn-border-soft);
+  color:        var(--fbtn-text-color, var(--fbtn-color));
+}
+.dlk_v2_file_btn_primary:hover,
+.dlk_v2_file_btn_success:hover,
+.dlk_v2_file_btn_danger:hover,
+.dlk_v2_file_btn_warning:hover,
+.dlk_v2_file_btn_neutral:hover {
+  background:   var(--fbtn-bg-soft-hover);
+  border-color: var(--fbtn-color);
+  color:        var(--fbtn-text-color, var(--fbtn-color));
+}
+
+/* --- Kiểu nút (đặt SAU class màu để ghi đè) --- */
+
+/* Solid — nền đặc */
+.dlk_v2_file_btn_solid {
+  background:   var(--fbtn-color);
+  border-color: var(--fbtn-color);
+  color:        var(--fbtn-text-color, var(--fbtn-on-solid));
+}
+.dlk_v2_file_btn_solid:hover {
+  background:   var(--fbtn-color-dark);
+  border-color: var(--fbtn-color-dark);
+  color:        var(--fbtn-text-color, var(--fbtn-on-solid));
+}
+
+/* Soft — nền nhạt */
+.dlk_v2_file_btn_soft {
+  background:   var(--fbtn-bg-soft);
+  border-color: var(--fbtn-border-soft);
+  color:        var(--fbtn-text-color, var(--fbtn-color));
+}
+.dlk_v2_file_btn_soft:hover {
+  background:   var(--fbtn-bg-soft-hover);
+  border-color: var(--fbtn-color);
+  color:        var(--fbtn-text-color, var(--fbtn-color));
+}
+
+/* Outline — chỉ viền */
+.dlk_v2_file_btn_outline {
+  background:   transparent;
+  border-color: var(--fbtn-color);
+  color:        var(--fbtn-text-color, var(--fbtn-color));
+}
+.dlk_v2_file_btn_outline:hover {
+  background:   var(--fbtn-bg-soft);
+  border-color: var(--fbtn-color-dark);
+  color:        var(--fbtn-text-color, var(--fbtn-color-dark));
+}
+
+/* Ghost — không nền, không viền */
+.dlk_v2_file_btn_ghost {
+  background:   transparent;
+  border-color: transparent;
+  color:        var(--fbtn-text-color, var(--fbtn-color));
+}
+.dlk_v2_file_btn_ghost:hover {
+  background: var(--fbtn-bg-soft);
+  color:     var(--fbtn-text-color, var(--fbtn-color-dark));
 }
