@@ -400,6 +400,15 @@
 
 
 /* ==========================================================================
+   Button Radius — bo góc tuỳ chọn (mặc định = bo tròn full)
+   ========================================================================== */
+.dlk-btn-radius-square { border-radius: 2px; }
+.dlk-btn-radius-sm     { border-radius: var(--dlk-radius-sm); }    /* 4px  */
+.dlk-btn-radius-md     { border-radius: var(--dlk-radius-md); }    /* 8px  */
+.dlk-btn-radius-pill   { border-radius: var(--dlk-radius-full); }  /* mặc định */
+
+
+/* ==========================================================================
    Button Variants — Default & Primary Soft
    Dùng trong bảng danh sách, hành động file đính kèm
    ========================================================================== */

@@ -575,9 +575,20 @@
         <div class="builder-field">
           <label>Size</label>
           <select id="b-size">
-            <option value="">Medium (mặc định)</option>
+            <option value="dlk-btn-xs">Super small (nhỏ như Builder 2)</option>
             <option value="dlk-btn-sm">Small</option>
+            <option value="" selected>Medium (mặc định)</option>
             <option value="dlk-btn-lg">Large</option>
+          </select>
+        </div>
+
+        <div class="builder-field">
+          <label>Bo góc</label>
+          <select id="b-radius">
+            <option value="dlk-btn-radius-square">Vuông (2px)</option>
+            <option value="dlk-btn-radius-sm">Bo nhỏ (4px)</option>
+            <option value="dlk-btn-radius-md">Bo vừa (8px)</option>
+            <option value="dlk-btn-radius-pill" selected>Bo tròn (mặc định)</option>
           </select>
         </div>
 
@@ -617,6 +628,28 @@
           </div>
           <div style="font-size:11px;color:#727784;margin-top:4px;">
             Màu đang chọn: <code id="b-color-display" style="color:#003f87;">kế thừa</code>
+          </div>
+        </div>
+
+        <div class="builder-field">
+          <label>Màu chữ</label>
+          <div class="builder-swatches" id="b-text-swatches">
+            <span class="swatch-none active" data-color="" title="Không màu riêng (kế thừa)">–</span>
+            <span class="swatch" style="background:#1a56a0;" data-color="#1a56a0" title="#1a56a0 Navy"></span>
+            <span class="swatch" style="background:#337ab7;" data-color="#337ab7" title="#337ab7 Blue"></span>
+            <span class="swatch" style="background:#e8952a;" data-color="#e8952a" title="#e8952a Amber"></span>
+            <span class="swatch" style="background:#fd8b18;" data-color="#fd8b18" title="#fd8b18 Orange"></span>
+            <span class="swatch" style="background:#dc3545;" data-color="#dc3545" title="#dc3545 Red"></span>
+            <span class="swatch" style="background:#ba1a1a;" data-color="#ba1a1a" title="#ba1a1a Error"></span>
+            <span class="swatch" style="background:#5bc0de;" data-color="#5bc0de" title="#5bc0de Teal"></span>
+            <span class="swatch" style="background:#006081;" data-color="#006081" title="#006081 Tertiary"></span>
+            <span class="swatch" style="background:#6c757d;" data-color="#6c757d" title="#6c757d Gray"></span>
+            <span class="swatch" style="background:#003f87;" data-color="#003f87" title="#003f87 Primary"></span>
+            <span class="swatch" style="background:#191c1d;" data-color="#191c1d" title="#191c1d Đen"></span>
+            <input type="color" class="swatch-picker" id="b-text-color-picker" value="#003f87" title="Chọn màu tuỳ ý">
+          </div>
+          <div style="font-size:11px;color:#727784;margin-top:4px;">
+            Màu đang chọn: <code id="b-text-color-display" style="color:#003f87;">kế thừa</code>
           </div>
         </div>
 
@@ -1619,6 +1652,7 @@
     /* ===================== BUILDER ===================== */
     const bVariant      = document.getElementById('b-variant');
     const bSize         = document.getElementById('b-size');
+    const bRadius       = document.getElementById('b-radius');
     const bLabel        = document.getElementById('b-label');
     const bIcon         = document.getElementById('b-icon');
     const bIconPos      = document.getElementById('b-icon-pos');
@@ -1627,12 +1661,15 @@
     const bCopyBtn      = document.getElementById('b-copy-btn');
     const bColorDisp    = document.getElementById('b-color-display');
     const bPicker       = document.getElementById('b-color-picker');
+    const bTextColorDisp= document.getElementById('b-text-color-display');
+    const bTextPicker   = document.getElementById('b-text-color-picker');
     const bIsDropdown   = document.getElementById('b-is-dropdown');
     const bDropSection  = document.getElementById('b-dropdown-section');
     const bItemsList    = document.getElementById('b-items-list');
     const bMenuAlign    = document.getElementById('b-menu-align');
 
     let selectedColor = '';
+    let selectedTextColor = '';
 
     // ---- Dropdown items state ----
     let dropItems = [
@@ -1705,8 +1742,9 @@
       const color      = selectedColor;
       const isDropdown = bIsDropdown.checked;
 
+      const radius     = bRadius.value;
       const extraClass = isDropdown ? ' dlk-dropdown-toggle' : '';
-      const classes    = ['dlk-btn', variant, size].filter(Boolean).join(' ') + extraClass;
+      const classes    = ['dlk-btn', variant, size, radius].filter(Boolean).join(' ') + extraClass;
 
       let iconPart = '';
       if (icon) {
@@ -1719,7 +1757,8 @@
       else if (iconPart && pos === 'end') inner = `\n  ${label}\n  ${iconPart}\n`;
       else inner = `\n  ${label}\n`;
 
-      return `<button class="${classes}">${inner}</button>`;
+      const btnStyle = selectedTextColor ? ` style="color:${selectedTextColor};"` : '';
+      return `<button class="${classes}"${btnStyle}>${inner}</button>`;
     }
 
     function buildMenuHTML() {
@@ -1790,7 +1829,27 @@
       renderBuilder();
     });
 
-    [bVariant, bSize, bLabel, bIconPos].forEach(el => el.addEventListener('input', renderBuilder));
+    // Swatches màu chữ
+    document.querySelectorAll('#b-text-swatches .swatch, #b-text-swatches .swatch-none').forEach(sw => {
+      sw.addEventListener('click', () => {
+        document.querySelectorAll('#b-text-swatches .swatch, #b-text-swatches .swatch-none').forEach(s => s.classList.remove('active'));
+        sw.classList.add('active');
+        selectedTextColor = sw.dataset.color || '';
+        bTextColorDisp.textContent = selectedTextColor || 'kế thừa';
+        bTextColorDisp.style.color = selectedTextColor || '#727784';
+        renderBuilder();
+      });
+    });
+
+    bTextPicker.addEventListener('input', () => {
+      document.querySelectorAll('#b-text-swatches .swatch, #b-text-swatches .swatch-none').forEach(s => s.classList.remove('active'));
+      selectedTextColor = bTextPicker.value;
+      bTextColorDisp.textContent = selectedTextColor;
+      bTextColorDisp.style.color = selectedTextColor;
+      renderBuilder();
+    });
+
+    [bVariant, bSize, bRadius, bLabel, bIconPos].forEach(el => el.addEventListener('input', renderBuilder));
     bIcon.addEventListener('input', () => {
       document.querySelectorAll('.icon-item').forEach(el => el.classList.remove('selected'));
       renderBuilder();
