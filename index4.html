@@ -233,65 +233,183 @@
 <div class="flex-grow overflow-y-auto custom-scrollbar p-4 space-y-3">
 <!-- Title -->
 <p id="detail-title" class="text-[11px] font-semibold text-gray-800 leading-snug">[1861/CV-UBND - 05/05/2026] V/v rà soát, báo cáo kết quả tiến độ triển khai thực hiện các nội dung tại các Kết luận của Chủ tọa Kỳ họp HĐND tỉnh năm 2025</p>
-<!-- Document selectors: Tài liệu đính kèm | Văn bản gửi kèm -->
-<div class="flex gap-4 items-end">
-<!-- Left: Tài liệu đính kèm -->
-<div class="flex-1 min-w-0">
-<div class="flex items-center mb-1.5">
+<!-- Row 1: Tài liệu đính kèm — full width -->
+<div class="border border-gray-200 rounded flex flex-col min-h-0">
+<div class="bg-gray-50 px-3 py-2 border-b border-gray-200 flex items-center flex-shrink-0">
 <svg class="w-3.5 h-3.5 mr-1.5 text-gray-500" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M15.172 7l-6.586 6.586a2 2 0 11-2.828-2.828l6.414-6.414a4 4 0 015.656 5.656l-6.415 6.415a6 6 0 11-8.486-8.486L10 5.172"></path></svg>
 <span class="text-[11px] font-bold text-gray-600 uppercase tracking-tight">Tài liệu đính kèm (5)</span>
 </div>
-<div class="relative">
-<select id="att-select" onchange="showInlineDoc(this.value, 'att')" class="w-full text-[11px] font-semibold text-primary border border-gray-300 rounded px-2.5 py-2 pr-7 bg-white focus:ring-1 focus:ring-primary outline-none cursor-pointer appearance-none truncate">
-<option value="att1">1861_CV-UBND_PhuongHoaHiep.pdf</option>
-<option value="att2">Phieu_trinh_ky.docx</option>
-<option value="att3">Phu_luc_01_Bao_cao_tien_do.pdf</option>
-<option value="att4">Bieu_mau_tong_hop_ket_qua.docx</option>
-<option value="att5">Danh_sach_don_vi_trien_khai.xlsx</option>
-</select>
-<svg class="w-3 h-3 text-gray-500 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
+<div class="p-2 space-y-1 overflow-y-auto custom-scrollbar" style="max-height: 260px;">
+<div class="flex items-center gap-2 bg-white p-2 rounded border border-gray-100 hover:border-blue-200 transition-colors">
+<div onclick="openViewer('pdf')" class="flex items-center min-w-0 flex-grow text-[11px] text-primary hover:underline cursor-pointer">
+<svg class="w-4 h-4 mr-2 text-red-500 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20"><path d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"></path></svg>
+<span class="truncate">1861_CV-UBND_PhuongHoaHiep.pdf</span>
+</div>
+<div class="flex items-center flex-shrink-0">
+<button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-blue-600" icon="material-symbols:download"></iconify-icon> Tải</button>
+<button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-violet-600" icon="material-symbols:draw"></iconify-icon> Ký số</button>
+<button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-green-600" icon="material-symbols:verified"></iconify-icon> Xác thực</button>
+<button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-orange-600" icon="material-symbols:summarize"></iconify-icon> Tóm tắt</button>
+<button onclick="openViewer('pdf')" class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-amber-600" icon="material-symbols:visibility"></iconify-icon> Xem</button>
 </div>
 </div>
-<!-- Right: Văn bản gửi kèm -->
-<div class="flex-1 min-w-0">
-<div class="flex items-center mb-1.5">
+<div class="flex items-center gap-2 bg-white p-2 rounded border border-gray-100 hover:border-blue-200 transition-colors">
+<div onclick="openViewer('docx')" class="flex items-center min-w-0 flex-grow text-[11px] text-primary hover:underline cursor-pointer">
+<svg class="w-4 h-4 mr-2 text-blue-500 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20"><path d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"></path></svg>
+<span class="truncate">Phieu_trinh_ky.docx</span>
+</div>
+<div class="flex items-center flex-shrink-0">
+<button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-blue-600" icon="material-symbols:download"></iconify-icon> Tải</button>
+<button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-violet-600" icon="material-symbols:draw"></iconify-icon> Ký số</button>
+<button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-orange-600" icon="material-symbols:summarize"></iconify-icon> Tóm tắt</button>
+<button onclick="openViewer('docx')" class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-amber-600" icon="material-symbols:visibility"></iconify-icon> Xem</button>
+</div>
+</div>
+<div class="flex items-center gap-2 bg-white p-2 rounded border border-gray-100 hover:border-blue-200 transition-colors">
+<div onclick="openViewer('pdf')" class="flex items-center min-w-0 flex-grow text-[11px] text-primary hover:underline cursor-pointer">
+<svg class="w-4 h-4 mr-2 text-red-500 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20"><path d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"></path></svg>
+<span class="truncate">Phu_luc_01_Bao_cao_tien_do.pdf</span>
+</div>
+<div class="flex items-center flex-shrink-0">
+<button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-blue-600" icon="material-symbols:download"></iconify-icon> Tải</button>
+<button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-violet-600" icon="material-symbols:draw"></iconify-icon> Ký số</button>
+<button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-green-600" icon="material-symbols:verified"></iconify-icon> Xác thực</button>
+<button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-orange-600" icon="material-symbols:summarize"></iconify-icon> Tóm tắt</button>
+<button onclick="openViewer('pdf')" class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-amber-600" icon="material-symbols:visibility"></iconify-icon> Xem</button>
+</div>
+</div>
+<div class="flex items-center gap-2 bg-white p-2 rounded border border-gray-100 hover:border-blue-200 transition-colors">
+<div onclick="openViewer('docx')" class="flex items-center min-w-0 flex-grow text-[11px] text-primary hover:underline cursor-pointer">
+<svg class="w-4 h-4 mr-2 text-blue-500 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20"><path d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"></path></svg>
+<span class="truncate">Bieu_mau_tong_hop_ket_qua.docx</span>
+</div>
+<div class="flex items-center flex-shrink-0">
+<button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-blue-600" icon="material-symbols:download"></iconify-icon> Tải</button>
+<button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-violet-600" icon="material-symbols:draw"></iconify-icon> Ký số</button>
+<button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-orange-600" icon="material-symbols:summarize"></iconify-icon> Tóm tắt</button>
+<button onclick="openViewer('docx')" class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-amber-600" icon="material-symbols:visibility"></iconify-icon> Xem</button>
+</div>
+</div>
+<div class="flex items-center gap-2 bg-white p-2 rounded border border-gray-100 hover:border-blue-200 transition-colors">
+<div onclick="openViewer('pdf')" class="flex items-center min-w-0 flex-grow text-[11px] text-primary hover:underline cursor-pointer">
+<svg class="w-4 h-4 mr-2 text-green-600 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20"><path d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"></path></svg>
+<span class="truncate">Danh_sach_don_vi_trien_khai.xlsx</span>
+</div>
+<div class="flex items-center flex-shrink-0">
+<button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-blue-600" icon="material-symbols:download"></iconify-icon> Tải</button>
+<button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-violet-600" icon="material-symbols:draw"></iconify-icon> Ký số</button>
+<button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-orange-600" icon="material-symbols:summarize"></iconify-icon> Tóm tắt</button>
+<button onclick="openViewer('pdf')" class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-amber-600" icon="material-symbols:visibility"></iconify-icon> Xem</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Row 2: Văn bản liên quan (60%) | Văn bản gửi kèm (40%) -->
+<div class="flex gap-4 items-stretch">
+<!-- Left 60%: Văn bản liên quan -->
+<div class="flex-[3_3_0%] min-w-0 border border-gray-200 rounded flex flex-col">
+<div class="bg-gray-50 px-3 py-2 border-b border-gray-200 flex items-center justify-between flex-shrink-0">
+<div class="flex items-center">
+<svg class="w-3.5 h-3.5 mr-1.5 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+<span class="text-[11px] font-bold text-gray-600 uppercase tracking-tight">Văn bản liên quan</span>
+<span class="ml-2 bg-primary text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full">3</span>
+</div>
+<button class="text-[10px] text-primary hover:underline font-medium">Thêm liên kết</button>
+</div>
+<div class="divide-y divide-gray-100">
+<div class="p-3 hover:bg-blue-50/40 transition-colors group">
+<div class="flex items-start gap-2">
+<span class="flex-shrink-0 w-5 h-5 rounded-full bg-blue-100 text-primary text-[10px] font-bold flex items-center justify-center mt-0.5">1</span>
+<div class="min-w-0 flex-grow">
+<p class="text-[11px] font-semibold text-primary hover:underline cursor-pointer leading-snug line-clamp-2">Kế hoạch Khắc phục khuyết điểm, hạn chế sau Hội nghị kiểm điểm Ban Thường vụ Đảng ủy Ủy ban nhân dân tỉnh, năm 2025</p>
+<div class="flex items-center gap-3 mt-1.5 flex-wrap">
+<span class="inline-flex items-center gap-1 text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded font-medium">
+<svg class="w-3 h-3" fill="currentColor" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" fill-rule="evenodd"></path></svg>
+53-KH/ĐU
+</span>
+<span class="inline-flex items-center gap-1 text-[10px] text-gray-500">
+<svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+Lý Thị Đức Hạnh
+</span>
+<span class="inline-flex items-center gap-1 text-[10px] text-gray-400">
+<svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+14/05/2026 18:27
+</span>
+</div>
+</div>
+<button class="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity text-gray-400 hover:text-red-500 p-1">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"></path></svg>
+</button>
+</div>
+</div>
+<div class="p-3 hover:bg-blue-50/40 transition-colors group">
+<div class="flex items-start gap-2">
+<span class="flex-shrink-0 w-5 h-5 rounded-full bg-blue-100 text-primary text-[10px] font-bold flex items-center justify-center mt-0.5">2</span>
+<div class="min-w-0 flex-grow">
+<p class="text-[11px] font-semibold text-primary hover:underline cursor-pointer leading-snug line-clamp-2">Báo cáo kết quả thực hiện các Kết luận của Chủ tọa tại Kỳ họp thứ 10 HĐND tỉnh khóa X</p>
+<div class="flex items-center gap-3 mt-1.5 flex-wrap">
+<span class="inline-flex items-center gap-1 text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded font-medium">
+<svg class="w-3 h-3" fill="currentColor" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" fill-rule="evenodd"></path></svg>
+412/BC-UBND
+</span>
+<span class="inline-flex items-center gap-1 text-[10px] text-gray-500">
+<svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+Trần Văn Minh
+</span>
+<span class="inline-flex items-center gap-1 text-[10px] text-gray-400">
+<svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+12/05/2026 09:15
+</span>
+</div>
+</div>
+<button class="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity text-gray-400 hover:text-red-500 p-1">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"></path></svg>
+</button>
+</div>
+</div>
+<div class="p-3 hover:bg-blue-50/40 transition-colors group">
+<div class="flex items-start gap-2">
+<span class="flex-shrink-0 w-5 h-5 rounded-full bg-blue-100 text-primary text-[10px] font-bold flex items-center justify-center mt-0.5">3</span>
+<div class="min-w-0 flex-grow">
+<p class="text-[11px] font-semibold text-primary hover:underline cursor-pointer leading-snug line-clamp-2">Thông báo Kết luận của Chủ tọa Kỳ họp HĐND tỉnh về nhiệm vụ trọng tâm năm 2025</p>
+<div class="flex items-center gap-3 mt-1.5 flex-wrap">
+<span class="inline-flex items-center gap-1 text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded font-medium">
+<svg class="w-3 h-3" fill="currentColor" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" fill-rule="evenodd"></path></svg>
+85-TB/HĐND
+</span>
+<span class="inline-flex items-center gap-1 text-[10px] text-gray-500">
+<svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+Nguyễn Thị Lan
+</span>
+<span class="inline-flex items-center gap-1 text-[10px] text-gray-400">
+<svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+08/05/2026 14:42
+</span>
+</div>
+</div>
+<button class="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity text-gray-400 hover:text-red-500 p-1">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Right 40%: Văn bản gửi kèm -->
+<div class="flex-[2_2_0%] min-w-0 border border-gray-200 rounded flex flex-col">
+<div class="bg-gray-50 px-3 py-2 border-b border-gray-200 flex items-center flex-shrink-0">
 <svg class="w-3.5 h-3.5 mr-1.5 text-gray-500" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
 <span class="text-[11px] font-bold text-gray-600 uppercase tracking-tight">Văn bản gửi kèm (2)</span>
 </div>
-<div class="relative">
-<select id="send-select" onchange="showInlineDoc(this.value, 'send')" class="w-full text-[11px] font-semibold text-primary border border-gray-300 rounded px-2.5 py-2 pr-7 bg-white focus:ring-1 focus:ring-primary outline-none cursor-pointer appearance-none truncate">
-<option value="send1">1502_CV-UBND_huong_dan.pdf</option>
-<option value="send2">Du_thao_ke_hoach_trien_khai.docx</option>
-</select>
-<svg class="w-3 h-3 text-gray-500 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
+<div class="p-2 space-y-1.5 overflow-y-auto custom-scrollbar flex-grow">
+<div onclick="openViewer('pdf')" class="flex items-center text-[11px] text-primary hover:underline cursor-pointer bg-white p-2 rounded border border-gray-100 hover:border-blue-200 transition-colors">
+<svg class="w-4 h-4 mr-2 text-red-500 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20"><path d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"></path></svg>
+<span class="truncate">1502_CV-UBND_huong_dan.pdf</span>
+</div>
+<div onclick="openViewer('docx')" class="flex items-center text-[11px] text-primary hover:underline cursor-pointer bg-white p-2 rounded border border-gray-100 hover:border-blue-200 transition-colors">
+<svg class="w-4 h-4 mr-2 text-blue-500 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20"><path d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"></path></svg>
+<span class="truncate">Du_thao_ke_hoach_trien_khai.docx</span>
 </div>
 </div>
-<!-- Far right: Văn bản liên quan -->
-<div class="flex-1 min-w-0">
-<div class="flex items-center mb-1.5">
-<svg class="w-3.5 h-3.5 mr-1.5 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
-<span class="text-[11px] font-bold text-gray-600 uppercase tracking-tight">Văn bản liên quan (3)</span>
-</div>
-<div class="relative">
-<select id="rel-select" onchange="showInlineDoc(this.value, 'rel')" class="w-full text-[11px] font-semibold text-primary border border-gray-300 rounded px-2.5 py-2 pr-7 bg-white focus:ring-1 focus:ring-primary outline-none cursor-pointer appearance-none truncate">
-<option value="rel1">53-KH/ĐU - Kế hoạch Khắc phục khuyết điểm, hạn chế</option>
-<option value="rel2">412/BC-UBND - Báo cáo kết quả thực hiện các Kết luận</option>
-<option value="rel3">85-TB/HĐND - Thông báo Kết luận của Chủ tọa</option>
-</select>
-<svg class="w-3 h-3 text-gray-500 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
-</div>
-</div>
-</div>
-<!-- Inline document viewer -->
-<div class="border border-gray-200 rounded overflow-hidden flex flex-col">
-<div class="bg-gray-100 px-3 py-1.5 border-b border-gray-200 flex items-center gap-2 flex-shrink-0">
-<svg id="inline-doc-icon" class="w-4 h-4 flex-shrink-0 text-red-500" fill="currentColor" viewbox="0 0 20 20"><path d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"></path></svg>
-<span id="inline-doc-name" class="text-[11px] font-semibold text-gray-700 truncate">1861_CV-UBND_PhuongHoaHiep.pdf</span>
-<span class="ml-auto text-[10px] text-gray-400 flex-shrink-0">Số trang: <span id="inline-doc-pages">24</span></span>
-<button onclick="openViewer(currentInlineKey)" class="dlk-btn dlk-btn-xs dlk-btn-text !text-primary flex-shrink-0" title="Mở rộng"><iconify-icon class="dlk-btn-icon-start" icon="material-symbols:open-in-full"></iconify-icon> Mở rộng</button>
-</div>
-<div class="bg-[#525659] overflow-y-auto custom-scrollbar flex justify-center py-4 px-3" style="height:540px;">
-<div id="inline-doc-content" class="w-full max-w-[620px] bg-white shadow-xl rounded-sm min-h-[760px] p-12 text-sm leading-relaxed"></div>
 </div>
 </div>
 <!-- Hidden fields for JS compatibility -->
@@ -671,8 +789,8 @@
     <span class="text-[11px] font-bold text-gray-500 uppercase tracking-widest">Danh sách tài liệu</span>
     <div class="relative">
       <select id="viewer-file-select" onchange="switchViewerFile()" class="text-[11px] font-semibold text-primary border border-gray-300 rounded px-2.5 py-1.5 pr-7 bg-white focus:ring-1 focus:ring-primary outline-none cursor-pointer appearance-none">
-        <option value="att1">1861_CV-UBND_PhuongHoaHiep.pdf</option>
-        <option value="att2">Phieu_trinh_ky.docx</option>
+        <option value="pdf">1861_CV-UBND_PhuongHoaHiep.pdf</option>
+        <option value="docx">Phieu_trinh_ky.docx</option>
       </select>
       <svg class="w-3 h-3 text-gray-500 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
     </div>
@@ -991,12 +1109,9 @@ function closeYKien() {
 }
 
 // ---- Viewer ----
-const iconColorByType = { pdf: 'text-red-500', doc: 'text-blue-500', xls: 'text-green-600' };
-
 const viewerFiles = {
-  att1: {
+  pdf: {
     name: '1861_CV-UBND_PhuongHoaHiep.pdf',
-    type: 'pdf',
     pages: 24,
     html: `
       <div class="text-center space-y-3 mb-8">
@@ -1020,9 +1135,8 @@ const viewerFiles = {
         <p class="pl-8">2. Việc xây dựng kế hoạch khắc phục phải nghiêm túc, cụ thể, gắn với trách nhiệm của từng cá nhân và tập thể; xác định rõ lộ trình, thời gian hoàn thành.</p>
       </div>`
   },
-  att2: {
+  docx: {
     name: 'Phieu_trinh_ky.docx',
-    type: 'doc',
     pages: 2,
     html: `
       <div class="text-center mb-6 space-y-2">
@@ -1048,244 +1162,15 @@ const viewerFiles = {
           <div class="p-2 col-span-2">Nguyễn Xuân Phong - Phòng Tổng hợp</div>
         </div>
       </div>`
-  },
-  att3: {
-    name: 'Phu_luc_01_Bao_cao_tien_do.pdf',
-    type: 'pdf',
-    pages: 8,
-    html: `
-      <div class="text-center mb-6">
-        <p class="font-bold text-base uppercase">Phụ lục 01</p>
-        <p class="font-bold text-[13px] mt-1">Báo cáo tiến độ triển khai thực hiện các Kết luận<br/>của Chủ tọa Kỳ họp HĐND tỉnh năm 2025</p>
-        <p class="mt-1 text-[13px]">(Kèm theo Công văn số 1861/CV-UBND ngày 05/5/2026)</p>
-        <p class="mt-1 text-[13px]">-----</p>
-      </div>
-      <div class="text-[12px] leading-7 space-y-3 text-justify">
-        <p class="font-bold">1. Tình hình chung</p>
-        <p class="pl-8">Tính đến hết tháng 4/2026, các sở, ban, ngành và địa phương đã cơ bản triển khai các nhiệm vụ được giao tại các Kết luận của Chủ tọa Kỳ họp HĐND tỉnh năm 2025. Tỷ lệ hoàn thành đạt 78% so với kế hoạch đề ra.</p>
-        <p class="font-bold">2. Kết quả cụ thể theo từng nhóm nhiệm vụ</p>
-        <div class="overflow-hidden border border-gray-300 rounded">
-          <table class="w-full text-[11px] border-collapse">
-            <thead><tr class="bg-gray-100"><th class="border border-gray-300 p-1.5">TT</th><th class="border border-gray-300 p-1.5 text-left">Nhóm nhiệm vụ</th><th class="border border-gray-300 p-1.5">Đã hoàn thành</th><th class="border border-gray-300 p-1.5">Đang thực hiện</th></tr></thead>
-            <tbody>
-              <tr><td class="border border-gray-300 p-1.5 text-center">1</td><td class="border border-gray-300 p-1.5">Phát triển kinh tế - xã hội</td><td class="border border-gray-300 p-1.5 text-center">12/15</td><td class="border border-gray-300 p-1.5 text-center">3</td></tr>
-              <tr><td class="border border-gray-300 p-1.5 text-center">2</td><td class="border border-gray-300 p-1.5">Cải cách hành chính</td><td class="border border-gray-300 p-1.5 text-center">8/10</td><td class="border border-gray-300 p-1.5 text-center">2</td></tr>
-              <tr><td class="border border-gray-300 p-1.5 text-center">3</td><td class="border border-gray-300 p-1.5">Quản lý đất đai, tài nguyên</td><td class="border border-gray-300 p-1.5 text-center">6/9</td><td class="border border-gray-300 p-1.5 text-center">3</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="pl-8">Chi tiết tiến độ từng nhiệm vụ được thể hiện tại các trang tiếp theo của Phụ lục.</p>
-      </div>`
-  },
-  att4: {
-    name: 'Bieu_mau_tong_hop_ket_qua.docx',
-    type: 'doc',
-    pages: 3,
-    html: `
-      <div class="text-center mb-6 space-y-2">
-        <p class="font-bold text-[13px] uppercase">Biểu mẫu tổng hợp kết quả</p>
-        <p class="text-[12px] italic">(Đơn vị báo cáo điền đầy đủ các thông tin dưới đây)</p>
-        <div class="border-b-2 border-gray-800 w-24 mx-auto mt-1"></div>
-      </div>
-      <div class="text-[12px] leading-7 space-y-3">
-        <div class="grid grid-cols-3 gap-2 border border-gray-300 rounded">
-          <div class="bg-gray-50 p-2 font-semibold border-r">Tên đơn vị</div>
-          <div class="p-2 col-span-2">.....................................................</div>
-        </div>
-        <div class="grid grid-cols-3 gap-2 border border-gray-300 rounded">
-          <div class="bg-gray-50 p-2 font-semibold border-r">Người phụ trách</div>
-          <div class="p-2 col-span-2">.....................................................</div>
-        </div>
-        <div class="grid grid-cols-3 gap-2 border border-gray-300 rounded">
-          <div class="bg-gray-50 p-2 font-semibold border-r">Số nhiệm vụ được giao</div>
-          <div class="p-2 col-span-2">.....................................................</div>
-        </div>
-        <div class="grid grid-cols-3 gap-2 border border-gray-300 rounded">
-          <div class="bg-gray-50 p-2 font-semibold border-r">Số nhiệm vụ hoàn thành</div>
-          <div class="p-2 col-span-2">.....................................................</div>
-        </div>
-        <div class="grid grid-cols-3 gap-2 border border-gray-300 rounded">
-          <div class="bg-gray-50 p-2 font-semibold border-r">Kiến nghị, đề xuất</div>
-          <div class="p-2 col-span-2">.....................................................</div>
-        </div>
-      </div>`
-  },
-  att5: {
-    name: 'Danh_sach_don_vi_trien_khai.xlsx',
-    type: 'xls',
-    pages: 1,
-    html: `
-      <div class="text-center mb-6">
-        <p class="font-bold text-base uppercase">Danh sách đơn vị triển khai</p>
-        <p class="text-[12px] mt-1 italic">Cập nhật ngày 05/5/2026</p>
-      </div>
-      <div class="overflow-hidden border border-gray-300 rounded">
-        <table class="w-full text-[11px] border-collapse">
-          <thead><tr class="bg-green-50"><th class="border border-gray-300 p-1.5">STT</th><th class="border border-gray-300 p-1.5 text-left">Đơn vị</th><th class="border border-gray-300 p-1.5">Đầu mối</th><th class="border border-gray-300 p-1.5">Hạn báo cáo</th></tr></thead>
-          <tbody>
-            <tr><td class="border border-gray-300 p-1.5 text-center">1</td><td class="border border-gray-300 p-1.5">Sở Tài chính</td><td class="border border-gray-300 p-1.5 text-center">P. Tổng hợp</td><td class="border border-gray-300 p-1.5 text-center">15/5/2026</td></tr>
-            <tr><td class="border border-gray-300 p-1.5 text-center">2</td><td class="border border-gray-300 p-1.5">Sở Công Thương</td><td class="border border-gray-300 p-1.5 text-center">Văn phòng</td><td class="border border-gray-300 p-1.5 text-center">15/5/2026</td></tr>
-            <tr><td class="border border-gray-300 p-1.5 text-center">3</td><td class="border border-gray-300 p-1.5">Sở Y tế</td><td class="border border-gray-300 p-1.5 text-center">P. KH-TC</td><td class="border border-gray-300 p-1.5 text-center">16/5/2026</td></tr>
-            <tr><td class="border border-gray-300 p-1.5 text-center">4</td><td class="border border-gray-300 p-1.5">UBND Phường Hòa Hiệp</td><td class="border border-gray-300 p-1.5 text-center">Văn phòng</td><td class="border border-gray-300 p-1.5 text-center">16/5/2026</td></tr>
-            <tr><td class="border border-gray-300 p-1.5 text-center">5</td><td class="border border-gray-300 p-1.5">UBND Xã Quảng Phú</td><td class="border border-gray-300 p-1.5 text-center">Văn phòng</td><td class="border border-gray-300 p-1.5 text-center">17/5/2026</td></tr>
-          </tbody>
-        </table>
-      </div>`
-  },
-  send1: {
-    name: '1502_CV-UBND_huong_dan.pdf',
-    type: 'pdf',
-    pages: 5,
-    html: `
-      <div class="text-center space-y-3 mb-8">
-        <div class="flex justify-between text-[12px] font-bold leading-snug">
-          <div>ỦY BAN NHÂN DÂN<br/><span class="uppercase">Tỉnh Đắk Lắk</span><br/><span class="font-normal">Số: 1502/CV-UBND</span></div>
-          <div class="font-bold uppercase">Cộng hòa xã hội chủ nghĩa Việt Nam<br/><span class="underline">Độc lập - Tự do - Hạnh phúc</span><br/><span class="font-normal normal-case no-underline italic text-[11px] mt-2 block">Đắk Lắk, ngày 28 tháng 4 năm 2026</span></div>
-        </div>
-      </div>
-      <div class="text-center mb-6">
-        <p class="font-bold text-[13px] uppercase">V/v hướng dẫn rà soát, báo cáo tiến độ<br/>triển khai các Kết luận của Chủ tọa Kỳ họp HĐND tỉnh</p>
-      </div>
-      <div class="text-[12px] leading-7 space-y-3 text-justify">
-        <p>Kính gửi: Các sở, ban, ngành; UBND các xã, phường trên địa bàn tỉnh.</p>
-        <p class="pl-8">Để bảo đảm việc tổng hợp, báo cáo kết quả triển khai thực hiện các Kết luận của Chủ tọa Kỳ họp HĐND tỉnh năm 2025 được thống nhất, đầy đủ và đúng tiến độ, Ủy ban nhân dân tỉnh hướng dẫn một số nội dung như sau:</p>
-        <p class="pl-8"><b>1.</b> Các đơn vị căn cứ nhiệm vụ được giao, rà soát toàn bộ tiến độ thực hiện, đối chiếu với mốc thời gian đã cam kết.</p>
-        <p class="pl-8"><b>2.</b> Báo cáo lập theo biểu mẫu thống nhất (đính kèm), gửi về Văn phòng UBND tỉnh trước ngày 17/5/2026.</p>
-        <p class="pl-8"><b>3.</b> Đối với các nhiệm vụ chậm tiến độ, đơn vị nêu rõ nguyên nhân và đề xuất giải pháp khắc phục.</p>
-      </div>`
-  },
-  send2: {
-    name: 'Du_thao_ke_hoach_trien_khai.docx',
-    type: 'doc',
-    pages: 4,
-    html: `
-      <div class="text-center mb-6 space-y-2">
-        <p class="font-bold text-[13px] uppercase">Dự thảo</p>
-        <p class="font-bold text-base uppercase">Kế hoạch triển khai</p>
-        <p class="font-bold text-[12px]">các Kết luận của Chủ tọa Kỳ họp HĐND tỉnh năm 2025</p>
-        <div class="border-b-2 border-gray-800 w-24 mx-auto mt-1"></div>
-      </div>
-      <div class="text-[12px] leading-7 space-y-3 text-justify">
-        <p class="font-bold">I. MỤC TIÊU</p>
-        <p class="pl-8">Tổ chức triển khai đồng bộ, hiệu quả các nhiệm vụ được giao tại các Kết luận của Chủ tọa Kỳ họp; bảo đảm hoàn thành đúng tiến độ, chất lượng.</p>
-        <p class="font-bold">II. NHIỆM VỤ VÀ PHÂN CÔNG</p>
-        <p class="pl-8"><b>1.</b> Các sở, ngành chủ trì xây dựng kế hoạch chi tiết theo lĩnh vực phụ trách.</p>
-        <p class="pl-8"><b>2.</b> Văn phòng UBND tỉnh làm đầu mối tổng hợp, theo dõi, đôn đốc.</p>
-        <p class="font-bold">III. TIẾN ĐỘ THỰC HIỆN</p>
-        <p class="pl-8">Hoàn thành xây dựng kế hoạch chi tiết trong tháng 5/2026; báo cáo định kỳ hằng tháng về kết quả thực hiện.</p>
-        <p class="italic text-gray-500 mt-4">(Dự thảo - đang lấy ý kiến các đơn vị)</p>
-      </div>`
-  },
-  rel1: {
-    name: '53-KH/ĐU - Kế hoạch Khắc phục khuyết điểm, hạn chế',
-    type: 'doc',
-    pages: 6,
-    html: `
-      <div class="text-center space-y-3 mb-8">
-        <div class="flex justify-between text-[12px] font-bold leading-snug">
-          <div>ĐẢNG BỘ TỈNH ĐẮK LẮK<br/><span class="uppercase">Đảng ủy Ủy ban nhân dân tỉnh</span><br/><span class="font-normal">Số: 53-KH/ĐU</span></div>
-          <div class="font-bold uppercase underline">Đảng cộng sản Việt Nam<br/><span class="font-normal normal-case no-underline italic text-[11px] mt-2 block">Đắk Lắk, ngày 14 tháng 5 năm 2026</span></div>
-        </div>
-      </div>
-      <div class="text-center mb-6">
-        <p class="font-bold text-base uppercase">Kế hoạch</p>
-        <p class="font-bold text-[13px] mt-1">Khắc phục khuyết điểm, hạn chế sau Hội nghị kiểm điểm<br/>Ban Thường vụ Đảng ủy Ủy ban nhân dân tỉnh, năm 2025</p>
-        <p class="mt-1 text-[13px]">-----</p>
-      </div>
-      <div class="text-[12px] leading-7 space-y-3 text-justify">
-        <p class="pl-8">Đảng ủy Ủy ban nhân dân tỉnh Đắk Lắk xây dựng Kế hoạch khắc phục khuyết điểm, hạn chế sau Hội nghị kiểm điểm Ban Thường vụ Đảng ủy năm 2025, cụ thể như sau:</p>
-        <p class="font-bold">I. MỤC ĐÍCH, YÊU CẦU</p>
-        <p class="pl-8">1. Xác định rõ nội dung, biện pháp, lộ trình và trách nhiệm khắc phục các hạn chế, khuyết điểm đã được chỉ ra.</p>
-        <p class="pl-8">2. Việc khắc phục phải nghiêm túc, thực chất, gắn với trách nhiệm của từng tập thể, cá nhân.</p>
-        <p class="font-bold">II. NỘI DUNG KHẮC PHỤC</p>
-        <p class="pl-8">Tập trung khắc phục các nhóm hạn chế về công tác lãnh đạo, chỉ đạo điều hành; công tác cán bộ; và việc thực hiện quy chế làm việc.</p>
-      </div>`
-  },
-  rel2: {
-    name: '412/BC-UBND - Báo cáo kết quả thực hiện các Kết luận',
-    type: 'pdf',
-    pages: 12,
-    html: `
-      <div class="text-center space-y-3 mb-8">
-        <div class="flex justify-between text-[12px] font-bold leading-snug">
-          <div>ỦY BAN NHÂN DÂN<br/><span class="uppercase">Tỉnh Đắk Lắk</span><br/><span class="font-normal">Số: 412/BC-UBND</span></div>
-          <div class="font-bold uppercase">Cộng hòa xã hội chủ nghĩa Việt Nam<br/><span class="underline">Độc lập - Tự do - Hạnh phúc</span><br/><span class="font-normal normal-case no-underline italic text-[11px] mt-2 block">Đắk Lắk, ngày 12 tháng 5 năm 2026</span></div>
-        </div>
-      </div>
-      <div class="text-center mb-6">
-        <p class="font-bold text-base uppercase">Báo cáo</p>
-        <p class="font-bold text-[13px] mt-1">Kết quả thực hiện các Kết luận của Chủ tọa<br/>tại Kỳ họp thứ 10 HĐND tỉnh khóa X</p>
-        <p class="mt-1 text-[13px]">-----</p>
-      </div>
-      <div class="text-[12px] leading-7 space-y-3 text-justify">
-        <p class="pl-8">Thực hiện các Kết luận của Chủ tọa tại Kỳ họp thứ 10 HĐND tỉnh khóa X, Ủy ban nhân dân tỉnh báo cáo kết quả thực hiện như sau:</p>
-        <p class="font-bold">1. Về phát triển kinh tế - xã hội</p>
-        <p class="pl-8">Tốc độ tăng trưởng kinh tế (GRDP) đạt 7,2%; thu ngân sách nhà nước đạt 105% dự toán; giải ngân vốn đầu tư công đạt 82%.</p>
-        <p class="font-bold">2. Về văn hóa - xã hội</p>
-        <p class="pl-8">Các chính sách an sinh xã hội được triển khai đầy đủ, kịp thời; tỷ lệ hộ nghèo giảm 1,8% so với năm trước.</p>
-      </div>`
-  },
-  rel3: {
-    name: '85-TB/HĐND - Thông báo Kết luận của Chủ tọa',
-    type: 'pdf',
-    pages: 4,
-    html: `
-      <div class="text-center space-y-3 mb-8">
-        <div class="flex justify-between text-[12px] font-bold leading-snug">
-          <div>HỘI ĐỒNG NHÂN DÂN<br/><span class="uppercase">Tỉnh Đắk Lắk</span><br/><span class="font-normal">Số: 85-TB/HĐND</span></div>
-          <div class="font-bold uppercase">Cộng hòa xã hội chủ nghĩa Việt Nam<br/><span class="underline">Độc lập - Tự do - Hạnh phúc</span><br/><span class="font-normal normal-case no-underline italic text-[11px] mt-2 block">Đắk Lắk, ngày 08 tháng 5 năm 2026</span></div>
-        </div>
-      </div>
-      <div class="text-center mb-6">
-        <p class="font-bold text-base uppercase">Thông báo</p>
-        <p class="font-bold text-[13px] mt-1">Kết luận của Chủ tọa Kỳ họp HĐND tỉnh<br/>về nhiệm vụ trọng tâm năm 2025</p>
-        <p class="mt-1 text-[13px]">-----</p>
-      </div>
-      <div class="text-[12px] leading-7 space-y-3 text-justify">
-        <p class="pl-8">Tại Kỳ họp HĐND tỉnh, sau khi nghe các báo cáo và ý kiến thảo luận, Chủ tọa Kỳ họp kết luận một số nội dung trọng tâm như sau:</p>
-        <p class="pl-8"><b>1.</b> Tập trung hoàn thành các chỉ tiêu phát triển kinh tế - xã hội năm 2025 đã đề ra.</p>
-        <p class="pl-8"><b>2.</b> Đẩy mạnh cải cách hành chính, chuyển đổi số trong hoạt động của các cơ quan nhà nước.</p>
-        <p class="pl-8"><b>3.</b> Tăng cường công tác kiểm tra, giám sát việc thực hiện các nghị quyết của HĐND tỉnh.</p>
-      </div>`
   }
 };
 
-let currentInlineKey = 'att1';
-
-function renderInlineDoc(key) {
-  const file = viewerFiles[key];
-  if (!file) return;
-  currentInlineKey = key;
-  document.getElementById('inline-doc-content').innerHTML = file.html;
-  document.getElementById('inline-doc-name').textContent = file.name;
-  document.getElementById('inline-doc-pages').textContent = file.pages;
-  document.getElementById('inline-doc-icon').setAttribute(
-    'class', 'w-4 h-4 flex-shrink-0 ' + (iconColorByType[file.type] || 'text-gray-500')
-  );
-  document.getElementById('inline-doc-content').parentElement.scrollTop = 0;
-}
-
-// Chọn văn bản ở 1 trong 3 selectbox -> hiển thị ở pdf view; bỏ chọn 2 selectbox còn lại
-function showInlineDoc(key, side) {
-  renderInlineDoc(key);
-  ['att', 'send', 'rel'].forEach(function(s) {
-    if (s === side) return;
-    const el = document.getElementById(s + '-select');
-    if (el) el.selectedIndex = -1;
-  });
-}
-
-function buildViewerSelectOptions(selectedKey) {
-  const sel = document.getElementById('viewer-file-select');
-  sel.innerHTML = Object.keys(viewerFiles).map(function(k) {
-    return '<option value="' + k + '"' + (k === selectedKey ? ' selected' : '') + '>' + viewerFiles[k].name + '</option>';
-  }).join('');
-}
+let currentViewerFile = 'pdf';
 
 function openViewer(fileKey) {
-  const key = (fileKey && viewerFiles[fileKey]) ? fileKey : 'att1';
-  const file = viewerFiles[key];
-  buildViewerSelectOptions(key);
+  currentViewerFile = fileKey || 'pdf';
+  const file = viewerFiles[currentViewerFile];
+  document.getElementById('viewer-file-select').value = currentViewerFile;
   document.getElementById('viewer-doc-content').innerHTML = file.html;
   document.querySelector('#viewer-overlay .pdf-page-total').textContent = file.pages;
   document.getElementById('viewer-overlay').classList.remove('hidden');
@@ -1299,8 +1184,5 @@ function switchViewerFile() {
   const sel = document.getElementById('viewer-file-select').value;
   openViewer(sel);
 }
-
-// Khởi tạo pdf view với tài liệu đính kèm đầu tiên
-renderInlineDoc('att1');
 </script>
 </body></html>

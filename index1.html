@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Hệ thống Quản lý Văn bản và Điều hành - Đắk Lắk</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="css/dlk-design-system.css" rel="stylesheet"/>
+<script src="js/iconify-icon.min.js"></script>
+<style>
+  body { font-family: 'Inter', sans-serif; }
+  .bg-vnpt-blue { background-color: #0055a5; }
+  .text-vnpt-blue { color: #0055a5; }
+  .border-vnpt-blue { border-color: #0055a5; }
+  .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
+  .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
+  .custom-scrollbar::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #999; }
+  .pane-height { height: calc(100vh - 128px); }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  .table-fixed-layout { table-layout: fixed; }
+</style>
+<script id="tailwind-config">
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          "primary": "#0055a5",
+          "surface": "#fcf9f8",
+          "surface-container": "#f0eded",
+          "outline": "#727783"
+        },
+        borderRadius: { "DEFAULT": "8px" }
+      }
+    }
+  }
+</script>
+</head>
+<body class="bg-[#f0f2f5] text-sm antialiased overflow-hidden">
+
+<!-- Header -->
+<header class="bg-primary text-white h-[64px] flex justify-between items-center px-4 shadow-md z-50 relative">
+  <div class="flex items-center space-x-4">
+    <div class="p-1 rounded-sm">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 105.27 132.26" class="h-10 w-auto"><defs><style>.cls-1{fill:#fff;}</style></defs><g><g><path class="cls-1" d="M99.26,42.33C97.45,50,93.21,58.89,86.87,67.67a113.28,113.28,0,0,1-10.3,12.24c-8.42,8.65-17.42,15.12-25.7,19a48.91,48.91,0,0,0,36-16A48.6,48.6,0,0,0,99.26,42.33Z"/><path class="cls-1" d="M86.87,52.41c8.35-12.31,14.4-24.77,16.27-34.78a43.7,43.7,0,0,0,.72-6.33v-.72c-.07-4.83-1.65-8.28-5.83-10-2.88-.94-6.69-.72-11.16.65a54.65,54.65,0,0,0-12,5.83,48.9,48.9,0,0,0-61.2,10.3C1.19,30.88-2.26,52.91,5.58,69.55l.08-.08C2.42,61.63,2.2,52.27,4.07,43.84a35.16,35.16,0,0,1,1.37-5c.14-.43.29-.79.43-1.22A15.86,15.86,0,0,1,7,35.13c5.12-10.8,14.19-17.06,21-13.9s8.35,13.83,3.31,25.56c-1.44,3-4.82,9.51-8.78,16.42-9.87,17.14-18.15,39.46-3.89,41.9,4.39.44,9.36-.79,14.68-3.31C51.37,94.53,72.47,73.65,86.87,52.41ZM86.87,5C95.58,2.51,98.75,8,92,23.18a33.52,33.52,0,0,0-5.11-6.7A70,70,0,0,0,78.16,9,35.83,35.83,0,0,1,86.87,5Z"/><polygon class="cls-1" points="87.11 115.01 87.04 118.06 94.42 118.06 94.42 132.2 97.83 132.2 97.83 117.99 105.27 117.99 105.27 115.01 87.11 115.01"/><path class="cls-1" d="M74.18,115H62.54V132.2h3.6v-6.28h5.42l2.62-.06c5.43.06,6.46-3.54,6.46-5.37S79.73,115,74.18,115Zm-.36,7.92H66.14v-5h7.68c2.13.06,3.17,1.22,3.17,2.44C77.05,121.77,76,122.81,73.82,122.87Z"/><polygon class="cls-1" points="46.08 128.05 34.38 115.01 30.11 115.01 30.11 132.2 33.53 132.2 33.53 119.21 45.29 132.2 49.44 132.2 49.44 115.01 46.08 115.01 46.08 128.05"/><polygon class="cls-1" points="10.67 128.54 3.72 114.95 8.78 132.26 12.44 132.26 21.33 115.01 17.68 115.01 10.67 128.54"/></g></g></svg>
+    </div>
+    <div>
+      <h1 class="font-bold text-base leading-tight uppercase tracking-tight">Hệ thống Quản lý Văn bản và Điều hành</h1>
+      <h2 class="text-xs font-semibold uppercase opacity-90">Ủy ban nhân dân tỉnh Đắk Lắk</h2>
+    </div>
+  </div>
+  <div class="flex items-center space-x-6">
+    <div class="text-right">
+      <p class="font-semibold text-xs">Nguyễn Xuân Phong</p>
+      <p class="text-[10px] opacity-80 uppercase">Phòng Tổng hợp</p>
+    </div>
+    <div class="relative">
+      <div class="w-10 h-10 rounded-full bg-blue-100 border-2 border-white overflow-hidden flex items-center justify-center">
+        <svg class="w-6 h-6 text-primary" fill="currentColor" viewbox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>
+      </div>
+      <span class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-primary">3</span>
+    </div>
+  </div>
+</header>
+
+<!-- Horizontal Menu -->
+<nav class="bg-white border-b border-gray-200 h-[64px] flex items-center justify-between px-2 shadow-sm">
+  <ul class="flex items-center h-full overflow-x-auto no-scrollbar">
+    <li class="px-4 h-full flex flex-col justify-center items-center hover:bg-blue-50 cursor-pointer transition-colors border-b-2 border-transparent hover:border-primary group">
+      <div class="text-red-500 group-hover:scale-110 transition-transform"><svg class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg></div>
+      <span class="text-[10px] font-bold mt-1 text-gray-600">Trang chủ</span>
+    </li>
+    <li class="px-4 h-full flex flex-col justify-center items-center hover:bg-blue-50 cursor-pointer transition-colors group">
+      <div class="text-orange-400"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg></div>
+      <span class="text-[10px] font-bold mt-1 text-gray-600">Danh bạ</span>
+    </li>
+    <li class="px-4 h-full flex flex-col justify-center items-center hover:bg-blue-50 cursor-pointer transition-colors group">
+      <div class="text-blue-400"><svg class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" fill-rule="evenodd"></path></svg></div>
+      <span class="text-[10px] font-bold mt-1 text-gray-600 text-center">Thông tin cá nhân</span>
+    </li>
+    <li class="px-4 h-full flex flex-col justify-center items-center hover:bg-blue-50 cursor-pointer transition-colors group">
+      <div class="text-blue-600"><svg class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM14 11a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1h-1a1 1 0 110-2h1v-1a1 1 0 011-1z"></path></svg></div>
+      <span class="text-[10px] font-bold mt-1 text-gray-600">Bộ cài plugin</span>
+    </li>
+    <li class="px-4 h-full flex flex-col justify-center items-center hover:bg-blue-50 cursor-pointer transition-colors group">
+      <div class="text-yellow-500"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg></div>
+      <span class="text-[10px] font-bold mt-1 text-gray-600 text-center">Hướng dẫn sử dụng</span>
+    </li>
+    <li class="px-4 h-full flex flex-col justify-center items-center hover:bg-blue-50 cursor-pointer transition-colors group">
+      <div class="text-blue-700"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg></div>
+      <span class="text-[10px] font-bold mt-1 text-gray-600 text-center">Văn bản giao NV</span>
+    </li>
+    <li class="px-4 h-full flex flex-col justify-center items-center hover:bg-blue-50 cursor-pointer transition-colors group">
+      <div class="text-red-600"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M12 4v16m8-8H4"></path></svg></div>
+      <span class="text-[10px] font-bold mt-1 text-gray-600">Tạo văn bản</span>
+    </li>
+    <li class="px-4 h-full flex flex-col justify-center items-center hover:bg-blue-50 cursor-pointer transition-colors group">
+      <div class="text-blue-500"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg></div>
+      <span class="text-[10px] font-bold mt-1 text-gray-600">Lịch công tác</span>
+    </li>
+  </ul>
+  <div class="flex items-center space-x-2 mr-2">
+    <input class="border border-gray-300 rounded px-3 py-1.5 text-xs w-64 focus:ring-1 focus:ring-primary outline-none" placeholder="Nhập từ khóa tìm kiếm" type="text"/>
+    <button class="bg-primary text-white text-[11px] font-semibold px-3 py-2 rounded-md flex items-center hover:bg-blue-800 transition shadow-sm">
+      <svg class="w-3 h-3 mr-1.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+      CẬP NHẬT SỐ ĐẾM MENU
+    </button>
+  </div>
+</nav>
+
+<div class="flex pane-height overflow-hidden">
+
+  <!-- Left Sidebar -->
+  <aside class="bg-white border-r border-gray-200 overflow-y-auto custom-scrollbar flex-shrink-0" style="width:220px">
+    <div class="py-2">
+      <div class="border-b border-gray-100">
+        <button class="w-full flex items-center justify-between px-4 py-3 text-xs font-bold text-gray-700 hover:bg-gray-50 uppercase tracking-tight">
+          <span class="flex items-center"><svg class="w-4 h-4 mr-3 text-gray-500" fill="currentColor" viewbox="0 0 20 20"><path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path></svg> Quản trị hệ thống</span>
+          <span class="text-[10px] text-gray-400">田</span>
+        </button>
+      </div>
+      <div class="bg-blue-50/50">
+        <button class="w-full flex items-center justify-between px-4 py-3 text-xs font-bold text-primary bg-blue-50 border-l-4 border-primary">
+          <span class="flex items-center uppercase tracking-tight"><svg class="w-4 h-4 mr-3 text-primary" fill="currentColor" viewbox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg> Văn bản đến <span class="text-red-600 ml-1">(19)</span></span>
+          <span class="text-[10px] text-primary">⊟</span>
+        </button>
+        <ul class="text-[11px] py-1">
+          <li class="pl-11 pr-4 py-2 text-red-600 font-bold hover:bg-white cursor-pointer transition-colors">Văn bản đến xử lý chính (7)</li>
+          <li class="pl-11 pr-4 py-2 text-red-600 font-semibold hover:bg-white cursor-pointer transition-colors">Văn bản đến phối hợp (1)</li>
+          <li class="pl-11 pr-4 py-2 text-gray-600 hover:bg-white cursor-pointer transition-colors">Văn bản đến trả lại</li>
+          <li class="pl-11 pr-4 py-2 text-gray-600 hover:bg-white cursor-pointer transition-colors">Văn bản đến đã xử lý</li>
+          <li class="pl-11 pr-4 py-2 text-red-600 font-semibold hover:bg-white cursor-pointer transition-colors">Văn bản xem để biết (11)</li>
+        </ul>
+      </div>
+      <div class="border-b border-gray-100">
+        <button class="w-full flex items-center justify-between px-4 py-3 text-xs font-bold text-gray-700 hover:bg-gray-50 uppercase tracking-tight">
+          <span class="flex items-center"><svg class="w-4 h-4 mr-3 text-gray-500" fill="currentColor" viewbox="0 0 20 20"><path d="M2 3a1 1 0 011-1h10a1 1 0 011 1v1a1 1 0 01-1 1H3a1 1 0 01-1-1V3zM2 9a1 1 0 011-1h10a1 1 0 011 1v1a1 1 0 01-1 1H3a1 1 0 01-1-1V9z"></path></svg> Văn bản đi <span class="text-red-600 ml-1 font-bold">(2)</span></span>
+          <span class="text-[10px] text-gray-400">田</span>
+        </button>
+      </div>
+      <div class="px-4 py-3 text-xs font-bold text-gray-700 hover:bg-gray-50 cursor-pointer flex items-center uppercase tracking-tight border-b border-gray-100">
+        <svg class="w-4 h-4 mr-3 text-blue-500" fill="currentColor" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" fill-rule="evenodd"></path></svg> Văn bản đánh dấu
+      </div>
+      <div class="px-4 py-3 text-xs font-bold text-gray-700 hover:bg-gray-50 cursor-pointer flex items-center uppercase tracking-tight border-b border-gray-100">
+        <svg class="w-4 h-4 mr-3 text-gray-500" fill="currentColor" viewbox="0 0 20 20"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path></svg> Tra cứu văn bản
+      </div>
+      <div class="px-4 py-3 text-xs font-bold text-gray-700 hover:bg-gray-50 cursor-pointer flex items-center justify-between uppercase tracking-tight border-b border-gray-100">
+        <span class="flex items-center"><svg class="w-4 h-4 mr-3 text-gray-500" fill="currentColor" viewbox="0 0 20 20"><path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7z"></path></svg> Văn bản toàn đơn vị <span class="text-red-600 ml-1">(73)</span></span>
+        <span class="text-[10px] text-gray-400">田</span>
+      </div>
+      <div class="px-4 py-3 text-xs font-bold text-gray-700 hover:bg-gray-50 cursor-pointer flex items-center justify-between uppercase tracking-tight border-b border-gray-100">
+        <span class="flex items-center"><svg class="w-4 h-4 mr-3 text-gray-500" fill="currentColor" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5z" fill-rule="evenodd"></path></svg> Hồ sơ công việc</span>
+        <span class="text-[10px] text-gray-400">田</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Right Pane: toggles between list and detail -->
+  <section class="flex flex-col bg-white overflow-hidden flex-1">
+
+    <!-- ===== LIST VIEW ===== -->
+    <div id="view-list" class="flex flex-col h-full" style="display:none !important">
+      <!-- List toolbar -->
+      <div class="h-12 border-b border-gray-200 bg-gray-50 flex items-center px-4 justify-between flex-shrink-0">
+        <h3 class="text-[11px] font-bold text-gray-700 uppercase tracking-tight">Văn bản đến xử lý chính</h3>
+        <div class="flex items-center gap-1.5 justify-end">
+          <input class="border border-gray-300 rounded px-2.5 py-1.5 text-[11px] w-40 focus:ring-1 focus:ring-primary outline-none" placeholder="Nhập từ khoá" type="text"/>
+          <button class="dlk_v2_file_btn dlk_v2_file_btn_primary dlk_v2_file_btn_soft dlk_v2_file_btn_lg">
+            <iconify-icon icon="material-symbols:search"></iconify-icon> Tìm kiếm
+          </button>
+          <button class="dlk_v2_file_btn dlk_v2_file_btn_success dlk_v2_file_btn_soft dlk_v2_file_btn_lg">
+            <iconify-icon icon="material-symbols:check-circle"></iconify-icon> Kết thúc hàng loạt
+          </button>
+          <button class="dlk_v2_file_btn dlk_v2_file_btn_warning dlk_v2_file_btn_soft dlk_v2_file_btn_lg">
+            <iconify-icon icon="material-symbols:swap-horiz"></iconify-icon> Chuyển đồng thời
+          </button>
+          <button class="dlk_v2_file_btn dlk_v2_file_btn_neutral dlk_v2_file_btn_soft dlk_v2_file_btn_lg">
+            <iconify-icon icon="material-symbols:flag"></iconify-icon> Đánh dấu
+          </button>
+          <button class="dlk_v2_file_btn dlk_v2_file_btn_primary dlk_v2_file_btn_soft dlk_v2_file_btn_lg">
+            <iconify-icon icon="material-symbols:bookmark"></iconify-icon> Lưu hồ sơ hàng loạt
+          </button>
+        </div>
+      </div>
+
+      <!-- Legend -->
+      <div class="px-4 py-1.5 border-b border-gray-100 bg-gray-50/50 flex-shrink-0 flex items-center gap-1.5 flex-wrap">
+        <span class="text-[10px] font-bold px-2 py-0.5 rounded-full border bg-red-50 border-red-300 text-red-600">Hoả tốc</span>
+        <span class="text-[10px] font-bold px-2 py-0.5 rounded-full border bg-orange-50 border-orange-300 text-orange-600">Khẩn</span>
+        <span class="text-[10px] font-bold px-2 py-0.5 rounded-full border bg-blue-50 border-blue-300 text-blue-500">Chỉ đạo</span>
+        <span class="text-[10px] font-bold px-2 py-0.5 rounded-full border bg-amber-50 border-amber-300 text-amber-600">Quá hạn</span>
+      </div>
+
+      <!-- Table -->
+      <div class="flex-grow overflow-y-auto custom-scrollbar">
+        <div class="overflow-x-auto">
+          <table class="w-full text-[11px] border-collapse table-fixed-layout">
+            <thead class="bg-[#1e5ba3] text-white sticky top-0 z-10">
+              <tr>
+                <th class="w-8 border-r border-blue-400 p-2 text-center"><input class="rounded" type="checkbox"/></th>
+                <th class="w-10 border-r border-blue-400 p-2">STT</th>
+                <th class="w-20 border-r border-blue-400 p-2">Số đến <span class="inline-block scale-75">⇅</span></th>
+                <th class="border-r border-blue-400 p-2 text-left">Trích yếu <span class="inline-block scale-75">⇅</span></th>
+                <th class="w-32 border-r border-blue-400 p-2">Số ký hiệu <span class="inline-block scale-75">⇅</span></th>
+                <th class="w-24 border-r border-blue-400 p-2">Hình thức <span class="inline-block scale-75">⇅</span></th>
+                <th class="w-24 border-r border-blue-400 p-2">Ngày VB <span class="inline-block scale-75">⇅</span></th>
+                <th class="w-24 border-r border-blue-400 p-2">Ngày đến <span class="inline-block scale-75">⇅</span></th>
+                <th class="w-44 border-r border-blue-400 p-2 text-left">Đơn vị ban hành <span class="inline-block scale-75">⇅</span></th>
+                <th class="w-14 border-r border-blue-400 p-2">Vai trò</th>
+                <th class="w-14 p-2">Files</th>
+              </tr>
+            </thead>
+            <tbody id="list-tbody" class="divide-y divide-gray-200"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="px-4 py-2 border-t border-gray-200 bg-gray-50 flex items-center space-x-2 flex-shrink-0">
+        <span class="text-[10px] text-gray-500">Hiển thị</span>
+        <select class="border border-gray-300 rounded px-1 py-0.5 text-[10px] focus:ring-0">
+          <option>10</option><option>20</option><option>50</option>
+        </select>
+        <span class="text-[10px] text-gray-500">bản ghi</span>
+        <span class="text-[10px] text-gray-500 ml-4">1 - 7 / 7</span>
+      </div>
+    </div>
+
+    <!-- ===== DETAIL VIEW ===== -->
+    <div id="view-detail" class="flex flex-col h-full">
+      <!-- Toolbar -->
+      <div class="h-12 border-b border-gray-200 bg-gray-50 flex items-center px-4 justify-between flex-shrink-0">
+        <div class="flex items-center space-x-3">
+          <button onclick="showList()" class="flex items-center text-[11px] font-bold text-primary hover:text-blue-800 transition-colors group">
+            <svg class="w-4 h-4 mr-1.5 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            Quay lại
+          </button>
+          <div class="h-4 w-px bg-gray-300"></div>
+          <h3 class="text-[11px] font-bold text-gray-700 uppercase tracking-tight">Thông tin văn bản đến</h3>
+        </div>
+        <div class="flex items-center gap-1.5 flex-wrap justify-end">
+          <button class="dlk_v2_file_btn dlk_v2_file_btn_warning dlk_v2_file_btn_soft dlk_v2_file_btn_lg">
+            <iconify-icon icon="material-symbols:undo"></iconify-icon> Trả lại VB
+          </button>
+          <button class="dlk_v2_file_btn dlk_v2_file_btn_primary dlk_v2_file_btn_soft dlk_v2_file_btn_lg">
+            <iconify-icon icon="material-symbols:swap-horiz"></iconify-icon> Chuyển xử lý
+          </button>
+          <div class="dlk-dropdown">
+            <button class="dlk_v2_file_btn dlk_v2_file_btn_primary dlk_v2_file_btn_soft dlk_v2_file_btn_lg dlk-dropdown-toggle" onclick="dlkToggleDropdown(this)">
+              <iconify-icon icon="material-symbols:reply"></iconify-icon> Văn bản trả lời
+            </button>
+            <ul class="dlk-dropdown-menu dlk-dropdown-menu-end">
+              <li><button class="dlk-dropdown-item"><iconify-icon icon="material-symbols:add"></iconify-icon> Tạo văn bản trả lời</button></li>
+              <li><button class="dlk-dropdown-item"><iconify-icon icon="material-symbols:link"></iconify-icon> Liên kết văn bản</button></li>
+            </ul>
+          </div>
+          <button class="dlk_v2_file_btn dlk_v2_file_btn_primary dlk_v2_file_btn_soft dlk_v2_file_btn_lg">
+            <iconify-icon icon="material-symbols:add-task"></iconify-icon> Tạo việc
+          </button>
+          <button class="dlk_v2_file_btn dlk_v2_file_btn_primary dlk_v2_file_btn_soft dlk_v2_file_btn_lg">
+            <iconify-icon icon="material-symbols:check-circle"></iconify-icon> Kết thúc văn bản
+          </button>
+          <div class="dlk-dropdown">
+            <button class="dlk_v2_file_btn dlk_v2_file_btn_neutral dlk_v2_file_btn_soft dlk_v2_file_btn_lg dlk-dropdown-toggle" onclick="dlkToggleDropdown(this)" title="Thêm">
+              <iconify-icon icon="material-symbols:more-horiz"></iconify-icon>
+            </button>
+            <ul class="dlk-dropdown-menu dlk-dropdown-menu-end">
+              <li><button class="dlk-dropdown-item"><iconify-icon icon="material-symbols:forward"></iconify-icon> Chuyển</button></li>
+              <li><button class="dlk-dropdown-item"><iconify-icon icon="material-symbols:sync"></iconify-icon> Luân chuyển</button></li>
+              <li><button class="dlk-dropdown-item" onclick="openYKien()"><iconify-icon icon="material-symbols:forum"></iconify-icon> Tổng hợp ý kiến xử lý</button></li>
+              <li><hr class="dlk-dropdown-divider"/></li>
+              <li><button class="dlk-dropdown-item"><iconify-icon icon="material-symbols:bookmark"></iconify-icon> Lưu hồ sơ</button></li>
+              <li><button class="dlk-dropdown-item"><iconify-icon icon="material-symbols:print"></iconify-icon> In phiếu trình</button></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Detail body -->
+      <div class="flex-grow overflow-y-auto custom-scrollbar p-4 space-y-4">
+        <!-- Header info -->
+        <div class="bg-blue-50/30 p-3 rounded-lg border border-blue-100">
+          <h4 id="detail-title" class="text-xs font-bold text-gray-800 mb-2"></h4>
+          <div class="grid grid-cols-12 gap-4">
+            <!-- Documents column -->
+            <div class="col-span-4 space-y-4">
+              <!-- Tài liệu đính kèm -->
+              <div>
+                <h5 class="text-[10px] font-bold uppercase text-gray-500 mb-2 flex items-center">
+                  <svg class="w-3 h-3 mr-1" fill="currentColor" viewbox="0 0 20 20"><path d="M15.172 7l-6.586 6.586a2 2 0 11-2.828-2.828l6.414-6.414a4 4 0 015.656 5.656l-6.415 6.415a6 6 0 11-8.486-8.486L10 5a1 1 0 012 0l-7.071 7.071a4 4 0 005.657 5.657l6.414-6.414a2 2 0 00-2.828-2.828L7.757 12.071a1 1 0 11-1.414-1.414l6.414-6.414A4 4 0 0115.172 7z"></path></svg> Tài liệu đính kèm (2)
+                </h5>
+                <div class="space-y-1.5">
+                  <div class="bg-white p-1.5 rounded border border-gray-100 hover:border-blue-200 transition-colors">
+                    <div class="flex items-center text-[11px] text-primary">
+                      <svg class="w-3.5 h-3.5 mr-2 text-red-500 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20"><path d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"></path></svg>
+                      <span class="truncate hover:underline cursor-pointer">1861_CV-UBND_PhuongHoaHiep.pdf</span>
+                    </div>
+                    <div class="flex items-center flex-wrap gap-0.5 mt-1 pl-5">
+                      <button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-blue-600" icon="material-symbols:download"></iconify-icon> Tải</button>
+                      <button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-violet-600" icon="material-symbols:draw"></iconify-icon> Ký số</button>
+                      <button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-green-600" icon="material-symbols:verified"></iconify-icon> Xác thực</button>
+                      <button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-orange-600" icon="material-symbols:summarize"></iconify-icon> Tóm tắt</button>
+                      <button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-amber-600" icon="material-symbols:visibility"></iconify-icon> Xem</button>
+                    </div>
+                  </div>
+                  <div class="bg-white p-1.5 rounded border border-gray-100 hover:border-blue-200 transition-colors">
+                    <div class="flex items-center text-[11px] text-primary">
+                      <svg class="w-3.5 h-3.5 mr-2 text-blue-500 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20"><path d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"></path></svg>
+                      <span class="truncate hover:underline cursor-pointer">Phieu_trinh_ky.docx</span>
+                    </div>
+                    <div class="flex items-center flex-wrap gap-0.5 mt-1 pl-5">
+                      <button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-blue-600" icon="material-symbols:download"></iconify-icon> Tải</button>
+                      <button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-violet-600" icon="material-symbols:draw"></iconify-icon> Ký số</button>
+                      <button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-orange-600" icon="material-symbols:summarize"></iconify-icon> Tóm tắt</button>
+                      <button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-amber-600" icon="material-symbols:visibility"></iconify-icon> Xem</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Tài liệu gửi kèm -->
+              <div>
+                <h5 class="text-[10px] font-bold uppercase text-gray-500 mb-2 flex items-center">
+                  <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg> Tài liệu gửi kèm (2)
+                </h5>
+                <div class="space-y-1.5">
+                  <div class="bg-white p-1.5 rounded border border-gray-100 hover:border-blue-200 transition-colors">
+                    <div class="flex items-center text-[11px] text-primary">
+                      <svg class="w-3.5 h-3.5 mr-2 text-red-500 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20"><path d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"></path></svg>
+                      <span class="truncate hover:underline cursor-pointer">1502_CV-UBND_huong_dan.pdf</span>
+                    </div>
+                    <div class="flex items-center flex-wrap gap-0.5 mt-1 pl-5">
+                      <button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-blue-600" icon="material-symbols:download"></iconify-icon> Tải</button>
+                      <button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-violet-600" icon="material-symbols:draw"></iconify-icon> Ký số</button>
+                      <button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-green-600" icon="material-symbols:verified"></iconify-icon> Xác thực</button>
+                      <button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-orange-600" icon="material-symbols:summarize"></iconify-icon> Tóm tắt</button>
+                      <button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-amber-600" icon="material-symbols:visibility"></iconify-icon> Xem</button>
+                    </div>
+                  </div>
+                  <div class="bg-white p-1.5 rounded border border-gray-100 hover:border-blue-200 transition-colors">
+                    <div class="flex items-center text-[11px] text-primary">
+                      <svg class="w-3.5 h-3.5 mr-2 text-blue-500 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20"><path d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"></path></svg>
+                      <span class="truncate hover:underline cursor-pointer">Du_thao_ke_hoach_trien_khai.docx</span>
+                    </div>
+                    <div class="flex items-center flex-wrap gap-0.5 mt-1 pl-5">
+                      <button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-blue-600" icon="material-symbols:download"></iconify-icon> Tải</button>
+                      <button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-violet-600" icon="material-symbols:draw"></iconify-icon> Ký số</button>
+                      <button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-orange-600" icon="material-symbols:summarize"></iconify-icon> Tóm tắt</button>
+                      <button class="dlk-btn dlk-btn-xs dlk-btn-text !text-gray-700"><iconify-icon class="dlk-btn-icon-start text-amber-600" icon="material-symbols:visibility"></iconify-icon> Xem</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Văn bản liên quan -->
+              <div>
+                <h5 class="text-[10px] font-bold uppercase text-gray-500 mb-2 flex items-center">
+                  <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg> Văn bản liên quan (3)
+                </h5>
+                <div class="space-y-1.5">
+                  <div class="bg-white p-1.5 rounded border border-gray-100 hover:border-blue-200 cursor-pointer transition-colors">
+                    <p class="text-[11px] font-semibold text-primary leading-snug line-clamp-2">Kế hoạch Khắc phục khuyết điểm, hạn chế sau Hội nghị kiểm điểm Ban Thường vụ Đảng ủy UBND tỉnh, năm 2025</p>
+                    <p class="text-[9px] text-gray-400 mt-0.5">53-KH/ĐU · 14/05/2026</p>
+                  </div>
+                  <div class="bg-white p-1.5 rounded border border-gray-100 hover:border-blue-200 cursor-pointer transition-colors">
+                    <p class="text-[11px] font-semibold text-primary leading-snug line-clamp-2">Báo cáo kết quả thực hiện các Kết luận của Chủ tọa tại Kỳ họp thứ 10 HĐND tỉnh khóa X</p>
+                    <p class="text-[9px] text-gray-400 mt-0.5">412/BC-UBND · 12/05/2026</p>
+                  </div>
+                  <div class="bg-white p-1.5 rounded border border-gray-100 hover:border-blue-200 cursor-pointer transition-colors">
+                    <p class="text-[11px] font-semibold text-primary leading-snug line-clamp-2">Thông báo Kết luận của Chủ tọa Kỳ họp HĐND tỉnh về nhiệm vụ trọng tâm năm 2025</p>
+                    <p class="text-[9px] text-gray-400 mt-0.5">85-TB/HĐND · 08/05/2026</p>
+                  </div>
+                </div>
+              </div>
+              <!-- Tổng hợp ý kiến xử lý -->
+              <button onclick="openYKien()" class="w-full flex items-center justify-center gap-2 bg-blue-50 hover:bg-blue-100 border border-blue-200 text-primary font-bold text-[12px] py-2.5 rounded-lg transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                Tổng hợp ý kiến xử lý
+              </button>
+            </div>
+            <!-- Embedded viewer -->
+            <div class="col-span-8 flex flex-col bg-gray-200 border border-gray-300 rounded overflow-hidden min-h-[400px]">
+              <div class="bg-gray-800 text-white p-1.5 flex justify-between items-center text-[10px]">
+                <div class="flex items-center space-x-2">
+                  <button class="hover:bg-gray-700 p-1 rounded"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"></path></svg></button>
+                  <span>Trang 1 / 3</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                  <button class="hover:bg-gray-700 px-2 py-0.5 rounded">-</button>
+                  <span class="bg-gray-700 px-2 rounded">100%</span>
+                  <button class="hover:bg-gray-700 px-2 py-0.5 rounded">+</button>
+                </div>
+                <div class="flex items-center space-x-2">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2"></path></svg>
+                </div>
+              </div>
+              <div class="flex-grow bg-white p-12 overflow-y-auto custom-scrollbar shadow-inner flex flex-col items-center">
+                <div id="detail-doc-content" class="w-full max-w-[500px] text-center space-y-4">
+                  <div class="flex justify-between text-[11px] font-bold">
+                    <div>ỦY BAN NHÂN DÂN<br/>PHƯỜNG HÒA HIỆP</div>
+                    <div>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM<br/>Độc lập - Tự do - Hạnh phúc</div>
+                  </div>
+                  <div class="text-[10px] italic text-right">Hòa Hiệp, ngày 05 tháng 5 năm 2026</div>
+                  <div class="font-bold text-sm pt-4">CÔNG VĂN</div>
+                  <div class="font-semibold text-xs italic">V/v rà soát, báo cáo kết quả tiến độ triển khai thực hiện các nội dung tại các Kết luận của Chủ tọa Kỳ họp HĐND tỉnh năm 2025</div>
+                  <div class="text-left text-xs leading-relaxed pt-4">
+                    <p class="font-bold mb-2">Kính gửi: UBND tỉnh</p>
+                    <p class="mb-2">Thực hiện Công văn số 5583/UBND-TH ngày 24/4/2026 của UBND tỉnh về việc rà soát, báo cáo kết quả, tiến độ triển khai thực hiện các nội dung tại các Kết luận của Chủ tọa Kỳ họp HĐND tỉnh năm 2025. UBND phường Hòa Hiệp báo cáo cập nhật tình hình, kết quả tiếp thu, giải quyết ý kiến, kiến nghị của cử tri cụ thể như sau:</p>
+                    <p class="mb-2">1. Cử tri phường Hòa Hiệp Trung, thị xã Đông Hòa phản ánh: Hiện nay, lạch Sông Ngọn (đoạn qua phường Hòa Hiệp Trung) bị bồi lấp cạn, ghe, tàu thuyền ngư dân không tham gia lưu thông được. Đề nghị UBND tỉnh chỉ đạo các cơ quan chức năng kiểm tra, nạo vét lạch sông này, để tạo điều kiện thuận lợi cho ghe, thuyền của bà con ngư dân tham gia đánh bắt...</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+</div>
+
+<!-- Ý kiến xử lý popup -->
+<div id="ykien-modal" class="hidden fixed inset-0 z-[200] flex items-center justify-center p-4">
+  <div class="absolute inset-0 bg-black/50" onclick="closeYKien()"></div>
+  <div class="relative bg-white rounded-lg shadow-2xl w-full max-w-5xl flex flex-col" style="max-height:85vh;">
+    <!-- Header -->
+    <div class="bg-primary text-white px-5 py-3 rounded-t-lg flex items-center justify-between flex-shrink-0">
+      <h3 class="text-[13px] font-bold uppercase tracking-tight flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+        Ý kiến xử lý
+      </h3>
+      <button onclick="closeYKien()" class="hover:bg-white/20 p-1 rounded transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+    </div>
+    <!-- Body -->
+    <div class="overflow-y-auto custom-scrollbar p-4">
+      <table class="w-full text-[11px] border border-gray-200">
+        <thead class="bg-[#1e5ba3] text-white">
+          <tr>
+            <th class="w-10 p-2 border-r border-blue-400">TT</th>
+            <th class="p-2 border-r border-blue-400 text-left">Người gửi</th>
+            <th class="w-24 p-2 border-r border-blue-400">Chưa xử lý</th>
+            <th class="w-24 p-2 border-r border-blue-400">Đang xử lý</th>
+            <th class="w-24 p-2 border-r border-blue-400">Đã xử lý</th>
+            <th class="p-2 text-left">Nội dung</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          <tr class="hover:bg-gray-50">
+            <td class="p-2 text-center border-r">3</td>
+            <td class="p-2 border-r font-medium text-red-600">Nguyễn Ngọc Thanh Huyền</td>
+            <td class="p-2 border-r text-center"></td>
+            <td class="p-2 border-r text-center"></td>
+            <td class="p-2 border-r text-center">
+              <div class="flex flex-col items-center">
+                <svg class="w-3 h-3 text-green-600 mb-0.5" fill="currentColor" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" fill-rule="evenodd"></path></svg>
+                <span class="text-[9px] text-gray-500">11/05/2026 10:45</span>
+              </div>
+            </td>
+            <td class="p-2"><span class="text-red-600 font-bold">Xử lý chính: Nguyễn Xuân Phong;</span><br/><span class="text-blue-600 text-[10px] font-semibold">Thao tác: Chuyển tiếp văn bản</span></td>
+          </tr>
+          <tr class="bg-gray-50/50 hover:bg-gray-50">
+            <td class="p-2 text-center border-r">2</td>
+            <td class="p-2 border-r font-medium">Dương Bá Toàn</td>
+            <td class="p-2 border-r text-center"><span class="text-[9px] text-gray-500">10/05/2026 10:06</span></td>
+            <td class="p-2 border-r text-center"></td>
+            <td class="p-2 border-r text-center">
+              <div class="flex flex-col items-center">
+                <svg class="w-3 h-3 text-green-600 mb-0.5" fill="currentColor" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" fill-rule="evenodd"></path></svg>
+                <span class="text-[9px] text-gray-500">10/05/2026 10:29</span>
+              </div>
+            </td>
+            <td class="p-2"><span class="text-red-600 font-bold">Xử lý chính: Phòng Tổng hợp;</span><br/><span class="text-blue-600 text-[10px] font-semibold">Thao tác: Chuyển xử lý</span></td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+            <td class="p-2 text-center border-r">1</td>
+            <td class="p-2 border-r font-medium">Văn thư UBND tỉnh</td>
+            <td class="p-2 border-r text-center"></td>
+            <td class="p-2 border-r text-center"></td>
+            <td class="p-2 border-r text-center">
+              <div class="flex flex-col items-center">
+                <svg class="w-3 h-3 text-green-600 mb-0.5" fill="currentColor" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" fill-rule="evenodd"></path></svg>
+                <span class="text-[9px] text-gray-500">09/05/2026 08:15</span>
+              </div>
+            </td>
+            <td class="p-2"><span class="text-red-600 font-bold">Xử lý chính: Dương Bá Toàn;</span><br/><span class="text-blue-600 text-[10px] font-semibold">Thao tác: Tiếp nhận và vào sổ văn bản đến</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- Footer -->
+    <div class="border-t border-gray-200 px-5 py-3 flex justify-end flex-shrink-0">
+      <button onclick="closeYKien()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 text-[11px] font-bold px-4 py-2 rounded transition-colors">Đóng</button>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-white border-t border-gray-300 h-[24px] flex items-center justify-center px-4 text-[9px] font-bold text-primary tracking-widest fixed bottom-0 w-full z-50">
+  HỆ THỐNG QUẢN LÝ VĂN BẢN VÀ ĐIỀU HÀNH - ỦY BAN NHÂN DÂN TỈNH ĐẮK LẮK
+</footer>
+
+<script>
+const docs = [
+  { soDen: '11390', soKyHieu: '1861/CV-UBND',    hinhThuc: 'Công văn',  ngayVanBan: '05/05/2026', ngayDen: '09/05/2026', donViBanHanh: 'Phường Hòa Hiệp - tỉnh Đắk Lắk',              trichYeu: 'V/v rà soát, báo cáo kết quả tiến độ triển khai thực hiện các nội dung tại các Kết luận của Chủ tọa Kỳ họp HĐND tỉnh năm 2025', urgent: false },
+  { soDen: '11440', soKyHieu: '100/BC-MTTQ-BTT', hinhThuc: 'Báo cáo',  ngayVanBan: '07/05/2026', ngayDen: '10/05/2026', donViBanHanh: 'Ủy ban MTTQ Việt Nam tỉnh Đắk Lắk',          trichYeu: 'Báo cáo tổng hợp ý kiến, kiến nghị của cử tri và nhân dân sau kỳ họp thứ nhất, Quốc hội khóa XVI', urgent: false },
+  { soDen: '11257', soKyHieu: '352-TB/TU',        hinhThuc: 'Thông báo', ngayVanBan: '08/05/2026', ngayDen: '08/05/2026', donViBanHanh: 'Tỉnh ủy Đắk Lắk',                             trichYeu: 'Thông báo chương trình kiểm tra làm việc với Đoàn kiểm tra giám sát số 26', urgent: false },
+  { soDen: '11388', soKyHieu: '2108/CV/ĐU',       hinhThuc: 'Công văn',  ngayVanBan: '09/05/2026', ngayDen: '09/05/2026', donViBanHanh: 'Đảng ủy Ủy ban nhân dân tỉnh Đắk Lắk',       trichYeu: 'V/v mời làm việc với Đoàn kiểm tra, giám sát số 26 của Bộ Chính trị, Ban Bí thư', urgent: true },
+  { soDen: '11394', soKyHieu: '02865/SYT-VP',     hinhThuc: 'Công văn',  ngayVanBan: '06/05/2026', ngayDen: '09/05/2026', donViBanHanh: 'Sở Y tế - tỉnh Đắk Lắk',                     trichYeu: 'V/v báo cáo kết quả, tiến độ triển khai thực hiện các nội dung tại các Kết luận của Chủ tọa Kỳ họp HĐND tỉnh năm 2025', urgent: false },
+  { soDen: '11398', soKyHieu: '1649/QĐ-UBND',    hinhThuc: 'Quyết định',ngayVanBan: '06/05/2026', ngayDen: '09/05/2026', donViBanHanh: 'Xã Quảng Phú - tỉnh Đắk Lắk',               trichYeu: 'Quyết định kiện toàn Ban chỉ đạo đề án 104', urgent: false },
+  { soDen: '4019',  soKyHieu: '298/BC-UBND',      hinhThuc: 'Báo cáo',  ngayVanBan: '04/05/2026', ngayDen: '05/05/2026', donViBanHanh: 'Phường Ea Kao - tỉnh Đắk Lắk',               trichYeu: 'Báo cáo về kết quả, tiến độ triển khai thực hiện các nội dung tại các Kết luận của Chủ tọa Kỳ họp HĐND tỉnh năm 2025', urgent: false },
+];
+
+const viewList   = document.getElementById('view-list');
+const viewDetail = document.getElementById('view-detail');
+
+function showList() {
+  viewList.style.display   = 'flex';
+  viewDetail.style.display = 'none';
+}
+
+function showDetail(i) {
+  const doc = docs[i];
+  document.getElementById('detail-title').textContent =
+    '[' + doc.soKyHieu + ' - ' + doc.ngayVanBan + '] ' + doc.trichYeu;
+  viewList.style.display   = 'none';
+  viewDetail.style.display = 'flex';
+}
+
+function openYKien() {
+  document.getElementById('ykien-modal').classList.remove('hidden');
+}
+function closeYKien() {
+  document.getElementById('ykien-modal').classList.add('hidden');
+}
+
+function dlkToggleDropdown(btn) {
+  const dd = btn.closest('.dlk-dropdown');
+  const wasOpen = dd.classList.contains('open');
+  document.querySelectorAll('.dlk-dropdown.open').forEach(function (el) { el.classList.remove('open'); });
+  if (!wasOpen) dd.classList.add('open');
+}
+document.addEventListener('click', function (e) {
+  if (!e.target.closest('.dlk-dropdown')) {
+    document.querySelectorAll('.dlk-dropdown.open').forEach(function (el) { el.classList.remove('open'); });
+  }
+});
+
+function renderList() {
+  const tbody = document.getElementById('list-tbody');
+  tbody.innerHTML = docs.map((doc, i) => {
+    const rowCls  = doc.urgent ? 'text-red-600 font-bold' : (i % 2 === 1 ? 'bg-gray-50' : '');
+    const hoverCls = 'hover:bg-blue-50 transition-colors cursor-pointer';
+    return `<tr class="${rowCls} ${hoverCls}" onclick="showDetail(${i})">
+      <td class="p-2 text-center border-r"><input class="rounded" type="checkbox" onclick="event.stopPropagation()"/></td>
+      <td class="p-2 text-center border-r font-bold">${i + 1}</td>
+      <td class="p-2 text-center border-r">${doc.soDen}</td>
+      <td class="p-2 border-r">${doc.trichYeu}</td>
+      <td class="p-2 border-r">${doc.soKyHieu}</td>
+      <td class="p-2 border-r text-center">${doc.hinhThuc}</td>
+      <td class="p-2 border-r text-center">${doc.ngayVanBan}</td>
+      <td class="p-2 border-r text-center">${doc.ngayDen}</td>
+      <td class="p-2 border-r">${doc.donViBanHanh}</td>
+      <td class="p-2 border-r text-center">XLC</td>
+      <td class="p-2 text-center">
+        <div class="flex justify-center space-x-1 text-blue-700">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+renderList();
+showList();
+</script>
+</body></html>
